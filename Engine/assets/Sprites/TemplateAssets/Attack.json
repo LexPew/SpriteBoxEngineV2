@@ -1,0 +1,13 @@
+{
+  "id": "Knight_Idle",
+  "texturePath": "C:/Users/James/source/repos/SpriteBoxEngine/Engine/assets/Sprites/TemplateAssets/Knight/_Idle.png",
+  "animations": {
+    "idle": {
+      "startFrame": 0,
+      "frameCount": 10,
+      "frameDuration": 0.1
+    }
+  },
+  "spriteSheetRows": 1,
+  "spriteSheetColumns": 10
+}
