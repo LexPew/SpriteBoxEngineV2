@@ -33,6 +33,16 @@ bld/
 [Ll]og/
 [Ll]ogs/
 
+# Include the specific build directory for SFML DLLs
+!CMakeLists.txt
+!CMakeSettings.json
+!CMakePresets.json
+!CMakeUserPresets.json
+!build/
+!build/x64/
+!build/x64/Debug/
+!build/x64/Release/
+
 # Visual Studio 2015/2017 cache/options directory
 .vs/
 # Uncomment if you have tasks that create the project's static files in wwwroot
