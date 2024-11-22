@@ -8,7 +8,8 @@
 #include "Core/SceneSerializer.h"
 #include <Utils/json.hpp>
 
-#include "Core/ECS/CameraComponent.h"
+#include "Core/ECS/FancyCameraComponent.h"
+
 
 void RunTests()
 {
@@ -22,7 +23,7 @@ void RunTests()
     auto player = std::make_shared<Entity>("Player", Vector2(100, 100), Vector2(4, 4));
     player->AddComponent(std::make_shared<SpriteComponent>("Adventurer", assetManager));
 	Vector2 cameraSize = { 800, 600 };
-    player->AddComponent(std::make_shared<CameraComponent>(cameraSize));
+    player->AddComponent(std::make_shared<FancyCameraComponent>(cameraSize));
     auto player2 = std::make_shared<Entity>("Player2", Vector2(150, 100), Vector2(4, 4));
     player2->AddComponent(std::make_shared<SpriteComponent>("Adventurer", assetManager));
     
@@ -64,33 +65,19 @@ void RunTests()
                 {
                     SceneSerializer::SaveScene(*scene, "scene.json");
                 }
-                else if(event.key.code == sf::Keyboard::Up)
-                {
-                    std::shared_ptr<CameraComponent> camera = player->GetComponent<CameraComponent>();
-                    camera->SetZoom(camera->GetZoom() - 0.1f);
-                }
-				else if (event.key.code == sf::Keyboard::Down)
-				{
-					std::shared_ptr<CameraComponent> camera = player->GetComponent<CameraComponent>();
-					camera->SetZoom(camera->GetZoom() + 0.1f);
-				}
-				else if (event.key.code == sf::Keyboard::T)
-				{
-                    std::shared_ptr<CameraComponent> camera = player->GetComponent<CameraComponent>();
-                    camera->SetRotation(camera->GetRotation() + .1f);
-				}
-				else if (event.key.code == sf::Keyboard::R)
-				{
-					std::shared_ptr<CameraComponent> camera = player->GetComponent<CameraComponent>();
-					camera->SetRotation(camera->GetRotation() - .1f);
-				}
                 break;
+            case sf::Event::MouseWheelMoved:
+				player->GetComponent<FancyCameraComponent>()->ZoomToFactor
+            	(player->GetComponent<FancyCameraComponent>()->GetCurrentZoom() + event.mouseWheel.delta);
+				break;
             }
         }
 
         float deltaTime = clock.restart().asSeconds();
 
         window.clear();
+
+
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
         {
@@ -106,7 +93,15 @@ void RunTests()
         }
         else
         {
-            player->GetComponent<SpriteComponent>()->PlayAnimation("Idle");
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::C))
+            {
+                player->GetComponent<SpriteComponent>()->PlayAnimation("Attack");
+            }
+            else
+            {
+                player->GetComponent<SpriteComponent>()->PlayAnimation("Idle");
+            }
+
         }
 
         sceneManager.Update(deltaTime);

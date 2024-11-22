@@ -36,7 +36,10 @@
     <ClCompile Include="Engine\src\Core\EngineTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\src\Core\ECS\CameraComponent.cpp">
+    <ClCompile Include="Engine\src\Core\ECS\RawCameraComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\src\Core\ECS\FancyCameraComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -83,7 +86,10 @@
     <ClInclude Include="Engine\include\Core\EngineTest.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\include\Core\ECS\CameraComponent.h">
+    <ClInclude Include="Engine\include\Core\ECS\RawCameraComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\include\Core\ECS\FancyCameraComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

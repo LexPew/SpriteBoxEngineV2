@@ -5,7 +5,7 @@
             "components": [
                 {
                     "position": {
-                        "x": 400.3668212890625,
+                        "x": 24.010971069335938,
                         "y": 100.0
                     },
                     "scale": {
@@ -21,15 +21,20 @@
                     "type": "SpriteComponent"
                 },
                 {
-                    "current_rotation": -5.299997329711914,
-                    "current_zoom": 1.0,
-                    "maxZoom": 10.0,
-                    "minZoom": 0.10000000149011612,
-                    "type": "CameraComponent",
+                    "currentZoom": 1.9829126596450806,
+                    "maxZoomIn": 2.0,
+                    "maxZoomOut": 0.5,
+                    "positionSmoothing": true,
+                    "positionSmoothingFactor": 2.0,
+                    "rotationSmoothing": true,
+                    "targetZoom": 2.0,
+                    "type": "FancyCameraComponent",
                     "view_size": {
                         "x": 800.0,
                         "y": 600.0
-                    }
+                    },
+                    "zoomSmoothing": true,
+                    "zoomSmoothingFactor": 2.0
                 }
             ],
             "name": "Player"

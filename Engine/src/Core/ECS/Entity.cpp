@@ -1,6 +1,7 @@
 #include "Core/ECS/Entity.h"
 #include "Core/AssetManager.h"
-#include "Core/ECS/CameraComponent.h"
+#include "Core/ECS/FancyCameraComponent.h"
+#include "Core/ECS/RawCameraComponent.h"
 #include "Core/ECS/SpriteComponent.h"
 
 void Entity::AddTransform(const Vector2& p_position, const Vector2& p_scale)
@@ -48,29 +49,34 @@ void Entity::Serialize(nlohmann::json& p_json)
 
 void Entity::Deserialize(const nlohmann::json& p_json)
 {
-
-	p_json.at("name").get_to(name);
-	p_json.at("active").get_to(active);
-	for (const auto& component_json : p_json.at("components"))
-	{
-		std::string type = component_json.at("type").get<std::string>();
-		if (type == "TransformComponent")
-		{
-			GetTransform()->Deserialize(component_json);
-		}
-		else if (type == "SpriteComponent")
-		{
-			auto sprite = std::make_shared<SpriteComponent>("Adventurer", AssetManager::GetInstance());
-			sprite->Deserialize(component_json);
-			AddComponent(sprite);
-		}
-		else if (type == "CameraComponent")
-		{
-			Vector2 viewSize{ 0,0 };
-			auto camera = std::make_shared<CameraComponent>(viewSize);
-			camera->Deserialize(component_json);
-			AddComponent(camera);
-		}
-		// Add other component types here future me
-	}
+    p_json.at("name").get_to(name);
+    p_json.at("active").get_to(active);
+    for (const auto& component_json : p_json.at("components"))
+    {
+        std::string type = component_json.at("type").get<std::string>();
+        if (type == "TransformComponent")
+        {
+            GetTransform()->Deserialize(component_json);
+        }
+        else if (type == "SpriteComponent")
+        {
+            auto sprite = std::make_shared<SpriteComponent>("Adventurer", AssetManager::GetInstance());
+            sprite->Deserialize(component_json);
+            AddComponent(sprite);
+        }
+        else if (type == "RawCameraComponent")
+        {
+            auto camera = std::make_shared<RawCameraComponent>();
+            camera->Deserialize(component_json);
+            AddComponent(camera);
+        }
+        else if (type == "FancyCameraComponent")
+        {
+            auto fancyCamera = std::make_shared<FancyCameraComponent>();
+            fancyCamera->Deserialize(component_json);
+            AddComponent(fancyCamera);
+        }
+        // Add other component types here future me
+    }
 }
+

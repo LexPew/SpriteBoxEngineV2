@@ -19,7 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Engine\src\Core\ECS\CameraComponent.cpp" />
+    <ClCompile Include="Engine\src\Core\ECS\RawCameraComponent.cpp" />
     <ClCompile Include="Engine\src\Core\AssetManager.cpp" />
     <ClCompile Include="Engine\src\Core\EngineTest.cpp" />
     <ClCompile Include="Engine\src\Core\Source.cpp" />
@@ -27,9 +27,10 @@
     <ClCompile Include="Engine\src\Core\ECS\TransformComponent.cpp" />
     <ClCompile Include="Engine\src\Graphics\Renderer.cpp" />
     <ClCompile Include="Engine\src\Core\ECS\Entity.cpp" />
+    <ClCompile Include="Engine\src\Core\ECS\FancyCameraComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Engine\include\Core\ECS\CameraComponent.h" />
+    <ClInclude Include="Engine\include\Core\ECS\RawCameraComponent.h" />
     <ClInclude Include="Engine\include\Core\ECS\Component.h" />
     <ClInclude Include="Engine\include\Core\AssetManager.h" />
     <ClInclude Include="Engine\include\Core\EngineTest.h" />
@@ -44,6 +45,7 @@
     <ClInclude Include="Engine\include\Maths\Vector2.h" />
     <ClInclude Include="Engine\include\Core\ECS\Entity.h" />
     <ClInclude Include="Engine\include\Core\SceneSerializer.h" />
+    <ClInclude Include="Engine\include\Core\ECS\FancyCameraComponent.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
