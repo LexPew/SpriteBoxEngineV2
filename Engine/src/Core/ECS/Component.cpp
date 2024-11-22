@@ -1,1 +1,1 @@
-#include "Core/Component.h"
+#include "Core/ECS/Component.h"

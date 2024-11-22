@@ -7,7 +7,7 @@
 #include "Core/SceneManager.h"
 #include "Core/SceneSerializer.h"
 #include <Utils/json.hpp>
-#include "Core/ECS/FancyCameraComponent.h"
+#include "Core/ECS/CamSys/FancyCameraComponent.h"
 
 void RunTests()
 {
@@ -35,8 +35,6 @@ void RunTests()
     sceneManager.AddScene("MainScene", scene);
     sceneManager.SetCurrentScene("MainScene");
 
-    sf::CircleShape debugDot(5.0f);
-    debugDot.setFillColor(sf::Color::Red);
 
     sf::Clock clock;
     while (window.isOpen())
@@ -89,6 +87,9 @@ void RunTests()
 			player->GetComponent<FancyCameraComponent>()
 				->RotateTo(player->GetComponent<FancyCameraComponent>()->GetCurrentRotation() + 10);
 		}
+        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::T)) {
+            player->GetComponent<FancyCameraComponent>()->RotateTo(0);
+        }
 
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
@@ -118,11 +119,6 @@ void RunTests()
 
         sceneManager.Update(deltaTime);
         sceneManager.Render(renderer);
-
-        Vector2 playerPosition = player->GetTransform()->GetPosition();
-        debugDot.setPosition(playerPosition.x - debugDot.getRadius(), playerPosition.y - debugDot.getRadius());
-
-        window.draw(debugDot);
 
         window.display();
     }

@@ -5,7 +5,7 @@
             "components": [
                 {
                     "position": {
-                        "x": 100.0,
+                        "x": 291.21929931640625,
                         "y": 100.0
                     },
                     "scale": {
@@ -15,13 +15,13 @@
                     "type": "TransformComponent"
                 },
                 {
-                    "currentAnimation": "Idle",
+                    "currentAnimation": "Walk",
                     "flipped": false,
                     "sprite_id": "Adventurer",
                     "type": "SpriteComponent"
                 },
                 {
-                    "currentRotation": 0.0,
+                    "currentRotation": 0.378482460975647,
                     "currentZoom": 1.0,
                     "isShaking": false,
                     "maxAngle": 90.0,

@@ -36,10 +36,16 @@
     <ClCompile Include="Engine\src\Core\EngineTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\src\Core\ECS\RawCameraComponent.cpp">
+    <ClCompile Include="Engine\src\Core\ECS\CamSys\RawCameraComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\src\Core\ECS\FancyCameraComponent.cpp">
+    <ClCompile Include="Engine\src\Core\ECS\CamSys\FancyCameraComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\include\Core\ECS\ScriptComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\src\Core\ECS\Component.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -86,10 +92,13 @@
     <ClInclude Include="Engine\include\Core\EngineTest.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\include\Core\ECS\RawCameraComponent.h">
+    <ClInclude Include="Engine\include\Core\ECS\CamSys\RawCameraComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\include\Core\ECS\FancyCameraComponent.h">
+    <ClInclude Include="Engine\include\Core\ECS\CamSys\FancyCameraComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\src\Core\ECS\ScriptComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

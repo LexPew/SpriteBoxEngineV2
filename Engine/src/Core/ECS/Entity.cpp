@@ -1,7 +1,7 @@
 #include "Core/ECS/Entity.h"
 #include "Core/AssetManager.h"
-#include "Core/ECS/FancyCameraComponent.h"
-#include "Core/ECS/RawCameraComponent.h"
+#include "Core/ECS/CamSys/FancyCameraComponent.h"
+#include "Core/ECS/CamSys/RawCameraComponent.h"
 #include "Core/ECS/SpriteComponent.h"
 
 void Entity::AddTransform(const Vector2& p_position, const Vector2& p_scale)
