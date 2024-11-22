@@ -6,7 +6,7 @@
 struct AnimationData
 {
 	int startFrame;
-	int frameCount;
+	int endFrame;
 	float frameDuration;
 };
 

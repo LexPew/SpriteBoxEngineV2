@@ -1,6 +1,12 @@
 #include "Graphics/Renderer.h"
 
-void Renderer::DrawSprite(const SpriteData& p_spriteData, const int p_frameIndex, const Vector2& p_position, const Vector2& p_scale)
+void Renderer::SetView(const sf::View& p_view)
+{
+	window->setView(p_view);
+}
+
+void Renderer::DrawSprite(const SpriteData& p_spriteData, const int p_frameIndex,
+    const Vector2& p_position, const Vector2& p_scale, bool p_flipped)
 {
     sf::Sprite sprite;
     sprite.setTexture(p_spriteData.texture);
@@ -21,8 +27,14 @@ void Renderer::DrawSprite(const SpriteData& p_spriteData, const int p_frameIndex
     ));
     // Set the origin to the center of the sprite
     sprite.setOrigin(frameWidth / 2.0f, frameHeight / 2.0f);
-
-    sprite.setScale(p_scale.x, p_scale.y);
+	if (p_flipped)
+	{
+		sprite.setScale(-p_scale.x, p_scale.y);
+	}
+	else
+	{
+		sprite.setScale(p_scale.x, p_scale.y);
+	}
     sprite.setPosition(p_position.x, p_position.y);
     window->draw(sprite);
 }

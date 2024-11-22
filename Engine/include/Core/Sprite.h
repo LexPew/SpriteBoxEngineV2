@@ -41,14 +41,22 @@ public:
         const auto it = m_data.animations.find(p_animation);
         if (it == m_data.animations.end())
             return;
-
+		if (m_currentAnimation != &it->second)
+		{
+			m_currentFrame = it->second.startFrame;
+		}
         m_currentAnimation = &it->second;
         m_animationTimer += p_deltaTime;
 
         if (m_animationTimer >= m_currentAnimation->frameDuration)
         {
-            m_currentFrame = (m_currentFrame + 1) % m_currentAnimation->frameCount;
             m_animationTimer = 0.0f;
+            m_currentFrame++;
+			if (m_currentFrame >= m_currentAnimation->endFrame)
+			{
+				m_currentFrame = m_currentAnimation->startFrame;
+			}
+
         }
     }
 

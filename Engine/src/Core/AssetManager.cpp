@@ -46,7 +46,7 @@ bool AssetManager::LoadSprite(const std::string& p_path)
 	{
 		AnimationData animationData;
 		animationData.startFrame = animDetails["startFrame"];
-		animationData.frameCount = animDetails["frameCount"];
+		animationData.endFrame = animDetails["endFrame"];
 		animationData.frameDuration = animDetails["frameDuration"];
 		spriteData.animations[animName] = animationData;
 	}

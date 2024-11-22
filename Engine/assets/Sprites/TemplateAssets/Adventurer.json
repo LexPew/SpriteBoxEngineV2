@@ -4,8 +4,13 @@
   "animations": {
     "Idle": {
       "startFrame": 0,
-      "frameCount": 4,
+      "endFrame": 4,
       "frameDuration": 0.2
+    },
+    "Walk": {
+      "startFrame": 9,
+      "endFrame": 14,
+      "frameDuration": 0.3
     }
   },
   "spriteSheetRows": 11,

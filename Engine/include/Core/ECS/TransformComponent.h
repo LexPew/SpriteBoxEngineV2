@@ -1,5 +1,5 @@
 #pragma once
-#include "Core/Component.h"
+#include "Core/ECS/Component.h"
 #include "Maths/Vector2.h"
 
 class TransformComponent : public Component

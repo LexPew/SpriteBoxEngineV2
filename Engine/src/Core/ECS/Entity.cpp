@@ -1,6 +1,7 @@
-#include "Core/Entity.h"
+#include "Core/ECS/Entity.h"
 #include "Core/AssetManager.h"
-#include "Core/SpriteComponent.h"
+#include "Core/ECS/CameraComponent.h"
+#include "Core/ECS/SpriteComponent.h"
 
 void Entity::AddTransform(const Vector2& p_position, const Vector2& p_scale)
 {
@@ -62,6 +63,13 @@ void Entity::Deserialize(const nlohmann::json& p_json)
 			auto sprite = std::make_shared<SpriteComponent>("Adventurer", AssetManager::GetInstance());
 			sprite->Deserialize(component_json);
 			AddComponent(sprite);
+		}
+		else if (type == "CameraComponent")
+		{
+			Vector2 viewSize{ 0,0 };
+			auto camera = std::make_shared<CameraComponent>(viewSize);
+			camera->Deserialize(component_json);
+			AddComponent(camera);
 		}
 		// Add other component types here future me
 	}

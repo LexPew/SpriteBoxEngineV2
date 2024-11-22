@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
 #include <memory>
-#include "Entity.h"
+#include "Core/ECS/Entity.h"
 #include "Graphics/Renderer.h"
 
 class Scene

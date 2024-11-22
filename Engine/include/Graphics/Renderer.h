@@ -9,7 +9,10 @@ private:
     sf::RenderWindow* window;
 
 public:
+    
     Renderer(sf::RenderWindow* p_window) : window(p_window) {};
 
-    void DrawSprite(const SpriteData& p_spriteData,  const int p_frameIndex, const Vector2& p_position, const Vector2& p_scale);
+    void SetView(const sf::View& p_view);
+    void DrawSprite(const SpriteData& p_spriteData,  const int p_frameIndex,
+        const Vector2& p_position, const Vector2& p_scale, bool p_flipped);
 };

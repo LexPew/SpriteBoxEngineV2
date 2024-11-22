@@ -5,18 +5,31 @@
             "components": [
                 {
                     "position": {
-                        "x": 432.49969482421875,
+                        "x": 400.3668212890625,
                         "y": 100.0
                     },
                     "scale": {
-                        "x": 7.0,
-                        "y": 7.0
+                        "x": 4.0,
+                        "y": 4.0
                     },
                     "type": "TransformComponent"
                 },
                 {
+                    "currentAnimation": "Idle",
+                    "flipped": true,
                     "sprite_id": "Adventurer",
                     "type": "SpriteComponent"
+                },
+                {
+                    "current_rotation": -5.299997329711914,
+                    "current_zoom": 1.0,
+                    "maxZoom": 10.0,
+                    "minZoom": 0.10000000149011612,
+                    "type": "CameraComponent",
+                    "view_size": {
+                        "x": 800.0,
+                        "y": 600.0
+                    }
                 }
             ],
             "name": "Player"
@@ -36,6 +49,8 @@
                     "type": "TransformComponent"
                 },
                 {
+                    "currentAnimation": "Idle",
+                    "flipped": false,
                     "sprite_id": "Adventurer",
                     "type": "SpriteComponent"
                 }
