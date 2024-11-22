@@ -93,4 +93,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Engine\build\x64\sfml-graphics-d-2.dll" />
+    <None Include="Engine\build\x64\sfml-system-d-2.dll" />
+    <None Include="Engine\build\x64\sfml-window-d-2.dll" />
+  </ItemGroup>
 </Project>

@@ -5,7 +5,7 @@
             "components": [
                 {
                     "position": {
-                        "x": 24.010971069335938,
+                        "x": 323.2027893066406,
                         "y": 100.0
                     },
                     "scale": {
@@ -16,12 +16,12 @@
                 },
                 {
                     "currentAnimation": "Idle",
-                    "flipped": true,
+                    "flipped": false,
                     "sprite_id": "Adventurer",
                     "type": "SpriteComponent"
                 },
                 {
-                    "currentZoom": 1.9829126596450806,
+                    "currentZoom": 1.9984455108642578,
                     "maxZoomIn": 2.0,
                     "maxZoomOut": 0.5,
                     "positionSmoothing": true,
