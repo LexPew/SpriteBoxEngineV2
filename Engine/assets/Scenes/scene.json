@@ -5,7 +5,7 @@
             "components": [
                 {
                     "position": {
-                        "x": 404.786376953125,
+                        "x": 100.0,
                         "y": 100.0
                     },
                     "scale": {
@@ -21,12 +21,25 @@
                     "type": "SpriteComponent"
                 },
                 {
+                    "currentRotation": 0.0,
                     "currentZoom": 1.0,
+                    "isShaking": false,
+                    "maxAngle": 90.0,
                     "maxZoomIn": 2.0,
                     "maxZoomOut": 0.5,
                     "positionSmoothing": true,
                     "positionSmoothingFactor": 2.0,
                     "rotationSmoothing": true,
+                    "rotationSmoothingFactor": 2.0,
+                    "shakeDuration": 0.0,
+                    "shakeElapsedTime": 0.0,
+                    "shakeFrequency": 0.0,
+                    "shakeMagnitude": 0.0,
+                    "shakeOffset": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "targetRotation": 0.0,
                     "targetZoom": 1.0,
                     "type": "FancyCameraComponent",
                     "view_size": {

@@ -36,9 +36,20 @@ void FancyCameraComponent::CalculateZoomSmoothing(float p_deltaTime)
 
 }
 
+void FancyCameraComponent::CalculateCameraRotation(float p_deltaTime)
+{
+	if (rotationSmoothing)
+	{
+		float diff = targetRotation - currentRotation;
+		currentRotation += diff * p_deltaTime * rotationSmoothingFactor;
+		cameraView.setRotation(currentRotation);
+	}
+}
+
 void FancyCameraComponent::Update(float p_deltaTime)
 {
 	CalculateCameraSmoothing(p_deltaTime);
+	CalculateCameraRotation(p_deltaTime);
 	CalculateZoomSmoothing(p_deltaTime);
 	ApplyCameraShake(p_deltaTime);
 }
@@ -50,12 +61,29 @@ void FancyCameraComponent::Render(Renderer& p_renderer)
 
 void FancyCameraComponent::Serialize(nlohmann::json& p_json)
 {
-	p_json = nlohmann::json{ {"type", "FancyCameraComponent"},
-		{"view_size", viewSize}, {"positionSmoothingFactor", positionSmoothingFactor},
-		{"positionSmoothing", positionSmoothing}, {"zoomSmoothing", zoomSmoothing},
-		{"zoomSmoothingFactor", zoomSmoothingFactor}, {"targetZoom", targetZoom},
-		{"currentZoom", currentZoom}, {"maxZoomOut", maxZoomOut}, {"maxZoomIn", maxZoomIn},
-		{"rotationSmoothing", rotationSmoothing} };
+	p_json = nlohmann::json{
+		{"type", "FancyCameraComponent"},
+		{"view_size", viewSize}, 
+		{"positionSmoothingFactor", positionSmoothingFactor},
+		{"positionSmoothing", positionSmoothing},
+		{"zoomSmoothing", zoomSmoothing},
+		{"zoomSmoothingFactor", zoomSmoothingFactor},
+		{"targetZoom", targetZoom},
+		{"currentZoom", currentZoom}, 
+		{"maxZoomOut", maxZoomOut},
+		{"maxZoomIn", maxZoomIn},
+		{"rotationSmoothing", rotationSmoothing},
+		{"rotationSmoothingFactor", rotationSmoothingFactor},
+		{"targetRotation", targetRotation},
+		{"currentRotation", currentRotation},
+		{"maxAngle", maxAngle },
+		{"shakeOffset", shakeOffset},
+		{"shakeMagnitude", shakeMagnitude},
+		{"shakeFrequency", shakeFrequency},
+		{"shakeDuration", shakeDuration},
+		{"shakeElapsedTime", shakeElapsedTime},
+		{"isShaking", isShaking}
+		 };
 }
 
 void FancyCameraComponent::Deserialize(const nlohmann::json& p_json)
@@ -70,6 +98,17 @@ void FancyCameraComponent::Deserialize(const nlohmann::json& p_json)
 	p_json.at("maxZoomOut").get_to(maxZoomOut);
 	p_json.at("maxZoomIn").get_to(maxZoomIn);
 	p_json.at("rotationSmoothing").get_to(rotationSmoothing);
+	p_json.at("rotationSmoothingFactor").get_to(rotationSmoothingFactor);
+	p_json.at("targetRotation").get_to(targetRotation);
+	p_json.at("currentRotation").get_to(currentRotation);
+	p_json.at("maxAngle").get_to(maxAngle);
+	p_json.at("shakeOffset").get_to(shakeOffset);
+	p_json.at("shakeMagnitude").get_to(shakeMagnitude);
+	p_json.at("shakeFrequency").get_to(shakeFrequency);
+	p_json.at("shakeDuration").get_to(shakeDuration);
+	p_json.at("shakeElapsedTime").get_to(shakeElapsedTime);
+	p_json.at("isShaking").get_to(isShaking);
+
 
 
 	cameraView.setSize(viewSize.x, viewSize.y);
@@ -80,6 +119,11 @@ float FancyCameraComponent::GetCurrentZoom() const
 	return currentZoom;
 }
 
+float FancyCameraComponent::GetCurrentRotation() const
+{
+	return currentRotation;
+}
+
 void FancyCameraComponent::ZoomToFactor(const float p_zoomFactor)
 {
 	targetZoom = std::clamp(p_zoomFactor, maxZoomOut, maxZoomIn);
@@ -87,8 +131,22 @@ void FancyCameraComponent::ZoomToFactor(const float p_zoomFactor)
 	if(!zoomSmoothing)
 	{
 		cameraView.setSize(viewSize.x / targetZoom, viewSize.y / targetZoom);
+	}
+
+}
+void FancyCameraComponent::RotateTo(const float p_angle)
+{
+	float angleClamped = std::clamp(p_angle, -maxAngle, maxAngle);
+	if (!rotationSmoothing)
+	{
+		cameraView.setRotation(angleClamped);
+	}
+	else 
+	{
+		targetRotation = angleClamped;
 
 	}
+
 
 }
 void FancyCameraComponent::ApplyCameraShake(float p_deltaTime)

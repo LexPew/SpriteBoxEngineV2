@@ -29,6 +29,10 @@ public:
 
 	//Rotation
 	bool rotationSmoothing{ true };
+	float rotationSmoothingFactor{ 2.0f };
+	float targetRotation{ 0.0f };
+	float currentRotation{ 0.0f };
+	float maxAngle{ 90.0f };
 
 	//Camera shake
 	Vector2 shakeOffset{ 0,0 };
@@ -37,6 +41,8 @@ public:
 	float shakeDuration{ 0 };
 	float shakeElapsedTime{ 0 };
 	bool isShaking{ false };
+	
+	//Bobbing
 
 	FancyCameraComponent() = default;
 
@@ -49,6 +55,8 @@ public:
 
 	void CalculateZoomSmoothing(float p_deltaTime);
 
+	void CalculateCameraRotation(float p_deltaTime);
+
 	void Update(float p_deltaTime) override;
 
 	void Render(Renderer& p_renderer) override;
@@ -58,8 +66,11 @@ public:
 	void Deserialize(const nlohmann::json& p_json) override;
 
 	float GetCurrentZoom() const;
+	float GetCurrentRotation() const;
+
 
 	void ZoomToFactor(const float p_zoomFactor);
+	void RotateTo(const float p_angle);
 
 	void ApplyCameraShake(float p_deltaTime);
 

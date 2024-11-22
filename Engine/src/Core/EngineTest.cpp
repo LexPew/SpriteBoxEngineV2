@@ -30,6 +30,7 @@ void RunTests()
     scene->AddEntity(player);
     scene->AddEntity(player2);
 
+
     SceneManager sceneManager;
     sceneManager.AddScene("MainScene", scene);
     sceneManager.SetCurrentScene("MainScene");
@@ -72,7 +73,7 @@ void RunTests()
                 break;
             case sf::Event::MouseWheelMoved:
                 player->GetComponent<FancyCameraComponent>()->ZoomToFactor(
-                    player->GetComponent<FancyCameraComponent>()->GetCurrentZoom() + event.mouseWheel.delta);
+                    player->GetComponent<FancyCameraComponent>()->GetCurrentZoom() + event.mouseWheel.delta * 5.0f);
                 break;
             }
         }
@@ -80,6 +81,15 @@ void RunTests()
         float deltaTime = clock.restart().asSeconds();
 
         window.clear();
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q)) {
+			player->GetComponent<FancyCameraComponent>()
+                ->RotateTo(player->GetComponent<FancyCameraComponent>()->GetCurrentRotation() - 10);
+        }
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::E)) {
+			player->GetComponent<FancyCameraComponent>()
+				->RotateTo(player->GetComponent<FancyCameraComponent>()->GetCurrentRotation() + 10);
+		}
+
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
         {
