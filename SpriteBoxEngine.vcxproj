@@ -28,6 +28,7 @@
     <ClCompile Include="Engine\src\Graphics\Renderer.cpp" />
     <ClCompile Include="Engine\src\Core\ECS\Entity.cpp" />
     <ClCompile Include="Engine\src\Core\ECS\FancyCameraComponent.cpp" />
+    <ClCompile Include="ScriptComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\include\Core\ECS\RawCameraComponent.h" />
@@ -46,6 +47,7 @@
     <ClInclude Include="Engine\include\Core\ECS\Entity.h" />
     <ClInclude Include="Engine\include\Core\SceneSerializer.h" />
     <ClInclude Include="Engine\include\Core\ECS\FancyCameraComponent.h" />
+    <ClInclude Include="ScriptComponent.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine\build\x64\sfml-graphics-d-2.dll" />

@@ -1,5 +1,10 @@
 #pragma once
 #include "RawCameraComponent.h"
+/**
+ * Camera component based upon the RawCameraComponent,
+ * adds additional functionality such as camera smoothing,
+ * zooming, rotation and camera shake
+ */
 class FancyCameraComponent :public RawCameraComponent
 {
 private:

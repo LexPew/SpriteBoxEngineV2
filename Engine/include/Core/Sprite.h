@@ -2,6 +2,9 @@
 #include "SpriteData.h"
 #include <string>
 #include "Core/AssetManager.h"
+/**
+ * Sprite class, used to define the base structure of a sprite
+ */
 class Sprite
 {
 private:

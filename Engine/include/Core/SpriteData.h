@@ -3,13 +3,20 @@
 #include <unordered_map>
 #include "SFML/Graphics.hpp"
 
+/**
+ * Contains all the data required to create an animation
+ */
 struct AnimationData
 {
 	int startFrame;
 	int endFrame;
 	float frameDuration;
+
 };
 
+/**
+ * Contains all the data required to create a sprite
+ */
 struct SpriteData
 {
 	std::string id{"Null"};

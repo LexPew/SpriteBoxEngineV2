@@ -5,8 +5,8 @@
 #include "Maths/Vector2.h"
 
 /**
- * Camera component that can be attached to an entity to allow for camera functionality, extremely basic and intended for
- * simple use or to be built upon.
+ * Camera component that can be attached to an entity to allow for camera functionality,
+ * extremely basic and intended for simple use or to be built upon.
  */
 class RawCameraComponent : public Component
 {
