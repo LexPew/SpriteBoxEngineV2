@@ -5,7 +5,7 @@
             "components": [
                 {
                     "position": {
-                        "x": 323.2027893066406,
+                        "x": 404.786376953125,
                         "y": 100.0
                     },
                     "scale": {
@@ -21,13 +21,13 @@
                     "type": "SpriteComponent"
                 },
                 {
-                    "currentZoom": 1.9984455108642578,
+                    "currentZoom": 1.0,
                     "maxZoomIn": 2.0,
                     "maxZoomOut": 0.5,
                     "positionSmoothing": true,
                     "positionSmoothingFactor": 2.0,
                     "rotationSmoothing": true,
-                    "targetZoom": 2.0,
+                    "targetZoom": 1.0,
                     "type": "FancyCameraComponent",
                     "view_size": {
                         "x": 800.0,

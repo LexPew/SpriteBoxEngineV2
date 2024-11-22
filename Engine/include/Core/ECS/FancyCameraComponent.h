@@ -26,10 +26,12 @@ public:
 	bool rotationSmoothing{ true };
 
 	//Camera shake
-	Vector2 positionAddition{ 0,0 };
-	float amplitude{ 0 };
-	float magnitude{ 0 };
-	float shakeTime{ 0 };
+	Vector2 shakeOffset{ 0,0 };
+	float shakeMagnitude{ 0 };
+	float shakeFrequency{ 0 };
+	float shakeDuration{ 0 };
+	float shakeElapsedTime{ 0 };
+	bool isShaking{ false };
 
 	FancyCameraComponent() = default;
 
@@ -53,6 +55,8 @@ public:
 	float GetCurrentZoom() const;
 
 	void ZoomToFactor(const float p_zoomFactor);
+
+	void ApplyCameraShake(float p_deltaTime);
 
 	void AddCameraShake(float p_amplitude, float p_frequency, float p_time);
 };

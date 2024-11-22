@@ -7,9 +7,7 @@
 #include "Core/SceneManager.h"
 #include "Core/SceneSerializer.h"
 #include <Utils/json.hpp>
-
 #include "Core/ECS/FancyCameraComponent.h"
-
 
 void RunTests()
 {
@@ -22,14 +20,16 @@ void RunTests()
 
     auto player = std::make_shared<Entity>("Player", Vector2(100, 100), Vector2(4, 4));
     player->AddComponent(std::make_shared<SpriteComponent>("Adventurer", assetManager));
-	Vector2 cameraSize = { 800, 600 };
+    Vector2 cameraSize = { 800, 600 };
     player->AddComponent(std::make_shared<FancyCameraComponent>(cameraSize));
+
     auto player2 = std::make_shared<Entity>("Player2", Vector2(150, 100), Vector2(4, 4));
     player2->AddComponent(std::make_shared<SpriteComponent>("Adventurer", assetManager));
-    
+
     auto scene = std::make_shared<Scene>();
     scene->AddEntity(player);
     scene->AddEntity(player2);
+
     SceneManager sceneManager;
     sceneManager.AddScene("MainScene", scene);
     sceneManager.SetCurrentScene("MainScene");
@@ -65,19 +65,21 @@ void RunTests()
                 {
                     SceneSerializer::SaveScene(*scene, "scene.json");
                 }
+                else if (event.key.code == sf::Keyboard::P)
+                {
+                    // Add functionality for 'P' key if needed
+                }
                 break;
             case sf::Event::MouseWheelMoved:
-				player->GetComponent<FancyCameraComponent>()->ZoomToFactor
-            	(player->GetComponent<FancyCameraComponent>()->GetCurrentZoom() + event.mouseWheel.delta);
-				break;
+                player->GetComponent<FancyCameraComponent>()->ZoomToFactor(
+                    player->GetComponent<FancyCameraComponent>()->GetCurrentZoom() + event.mouseWheel.delta);
+                break;
             }
         }
 
         float deltaTime = clock.restart().asSeconds();
 
         window.clear();
-
-
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
         {
@@ -96,12 +98,12 @@ void RunTests()
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::C))
             {
                 player->GetComponent<SpriteComponent>()->PlayAnimation("Attack");
+                player->GetComponent<FancyCameraComponent>()->AddCameraShake(4, 4, 0.1f);
             }
             else
             {
                 player->GetComponent<SpriteComponent>()->PlayAnimation("Idle");
             }
-
         }
 
         sceneManager.Update(deltaTime);

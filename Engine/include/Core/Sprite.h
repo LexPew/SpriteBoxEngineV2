@@ -60,6 +60,10 @@ public:
         }
     }
 
+	bool IsAnimationFinished() const
+	{
+		return m_currentFrame == m_currentAnimation->endFrame;
+	}
     int GetCurrentFrame() const { return m_currentFrame; }
     const SpriteData& GetSpriteData() const { return m_data; }
 };

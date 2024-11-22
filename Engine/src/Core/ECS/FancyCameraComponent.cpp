@@ -1,6 +1,7 @@
 #include "Core/ECS/FancyCameraComponent.h"
 
 #include "Core/ECS/Entity.h"
+#include <random>
 
 void FancyCameraComponent::Start()
 {
@@ -39,6 +40,7 @@ void FancyCameraComponent::Update(float p_deltaTime)
 {
 	CalculateCameraSmoothing(p_deltaTime);
 	CalculateZoomSmoothing(p_deltaTime);
+	ApplyCameraShake(p_deltaTime);
 }
 
 void FancyCameraComponent::Render(Renderer& p_renderer)
@@ -89,10 +91,40 @@ void FancyCameraComponent::ZoomToFactor(const float p_zoomFactor)
 	}
 
 }
+void FancyCameraComponent::ApplyCameraShake(float p_deltaTime)
+{
+	if (!isShaking) return;
+
+	shakeElapsedTime += p_deltaTime;
+	if (shakeElapsedTime >= shakeDuration)
+	{
+		isShaking = false;
+		shakeOffset = Vector2::Zero();
+		return;
+	}
+
+	// Initialize random number generator
+	std::random_device rd;
+	std::mt19937 gen(rd());
+	std::uniform_real_distribution<> dis(-1.0, 1.0);
+
+	// Calculate the shake offset
+	float shakeX = dis(gen) * shakeMagnitude;
+	float shakeY = dis(gen) * shakeMagnitude;
+	shakeOffset = Vector2(shakeX, shakeY);
+
+	// Apply the shake to the camera position
+	Vector2 shakenPosition = position + shakeOffset;
+	cameraView.setCenter(shakenPosition.x, shakenPosition.y);
+}
 
 void FancyCameraComponent::AddCameraShake(float p_magnitude, float p_frequency, float p_time)
 {
-
+	shakeMagnitude	 = p_magnitude;
+	shakeFrequency = p_frequency;
+	shakeDuration = p_time;
+	shakeElapsedTime = 0.0f;
+	isShaking = true;
 }
 
 
