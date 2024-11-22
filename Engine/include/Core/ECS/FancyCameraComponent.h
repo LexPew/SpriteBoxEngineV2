@@ -22,20 +22,38 @@ public:
 	float maxZoomOut{ 0.5f };
 	float maxZoomIn{ 2.0f };
 
+	//Rotation
 	bool rotationSmoothing{ true };
 
-	FancyCameraComponent() = default;//
+	//Camera shake
+	Vector2 positionAddition{ 0,0 };
+	float amplitude{ 0 };
+	float magnitude{ 0 };
+	float shakeTime{ 0 };
+
+	FancyCameraComponent() = default;
+
 	FancyCameraComponent(const Vector2& p_viewSize) : RawCameraComponent(p_viewSize) {}
+
 	~FancyCameraComponent() = default;
+
 	void Start() override;
 	void CalculateCameraSmoothing(float p_deltaTime);
+
 	void CalculateZoomSmoothing(float p_deltaTime);
+
 	void Update(float p_deltaTime) override;
+
 	void Render(Renderer& p_renderer) override;
+
 	void Serialize(nlohmann::json& p_json) override;
+
 	void Deserialize(const nlohmann::json& p_json) override;
+
 	float GetCurrentZoom() const;
+
 	void ZoomToFactor(const float p_zoomFactor);
-	const Vector2& GetPosition() const;
+
+	void AddCameraShake(float p_amplitude, float p_frequency, float p_time);
 };
 

@@ -90,8 +90,9 @@ void FancyCameraComponent::ZoomToFactor(const float p_zoomFactor)
 
 }
 
-
-const Vector2& FancyCameraComponent::GetPosition() const
+void FancyCameraComponent::AddCameraShake(float p_magnitude, float p_frequency, float p_time)
 {
-	return position;
+
 }
+
+
