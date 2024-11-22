@@ -1,0 +1,46 @@
+{
+    "entities": [
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": {
+                        "x": 432.49969482421875,
+                        "y": 100.0
+                    },
+                    "scale": {
+                        "x": 7.0,
+                        "y": 7.0
+                    },
+                    "type": "TransformComponent"
+                },
+                {
+                    "sprite_id": "Adventurer",
+                    "type": "SpriteComponent"
+                }
+            ],
+            "name": "Player"
+        },
+        {
+            "active": true,
+            "components": [
+                {
+                    "position": {
+                        "x": 150.0,
+                        "y": 100.0
+                    },
+                    "scale": {
+                        "x": 4.0,
+                        "y": 4.0
+                    },
+                    "type": "TransformComponent"
+                },
+                {
+                    "sprite_id": "Adventurer",
+                    "type": "SpriteComponent"
+                }
+            ],
+            "name": "Player2"
+        }
+    ]
+}

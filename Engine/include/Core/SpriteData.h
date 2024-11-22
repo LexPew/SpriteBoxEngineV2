@@ -12,11 +12,11 @@ struct AnimationData
 
 struct SpriteData
 {
-	std::string id;
+	std::string id{"Null"};
 	sf::Texture texture;
-	int spriteSheetRows;
-	int spriteSheetColumns;
-	std::unordered_map<std::string, AnimationData> animations;
+	int spriteSheetRows{0};
+	int spriteSheetColumns{0};
+	std::unordered_map<std::string, AnimationData> animations{};
 };
 
 //--EXAMPLE JSON FILE--

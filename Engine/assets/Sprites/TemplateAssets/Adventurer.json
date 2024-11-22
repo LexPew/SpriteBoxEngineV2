@@ -1,0 +1,13 @@
+{
+  "id": "Adventurer",
+  "texturePath": "Sprites/TemplateAssets/Adventurer.png",
+  "animations": {
+    "Idle": {
+      "startFrame": 0,
+      "frameCount": 4,
+      "frameDuration": 0.2
+    }
+  },
+  "spriteSheetRows": 11,
+  "spriteSheetColumns": 7
+}

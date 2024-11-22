@@ -19,13 +19,28 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Engine\src\Core\Component.cpp" />
     <ClCompile Include="Engine\src\Core\AssetManager.cpp" />
     <ClCompile Include="Engine\src\Core\Source.cpp" />
+    <ClCompile Include="Engine\src\Core\SpriteComponent.cpp" />
+    <ClCompile Include="Engine\src\Core\TransformComponent.cpp" />
+    <ClCompile Include="Engine\src\Graphics\Renderer.cpp" />
+    <ClCompile Include="Engine\src\Core\Entity.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Engine\include\Core\Component.h" />
     <ClInclude Include="Engine\include\Core\AssetManager.h" />
+    <ClInclude Include="Engine\include\Core\Scene.h" />
+    <ClInclude Include="Engine\include\Core\SceneManager.h" />
     <ClInclude Include="Engine\include\Core\Sprite.h" />
+    <ClInclude Include="Engine\include\Core\SpriteComponent.h" />
     <ClInclude Include="Engine\include\Core\SpriteData.h" />
+    <ClInclude Include="Engine\include\Core\TransformComponent.h" />
+    <ClInclude Include="Engine\include\Graphics\Renderer.h" />
+    <ClInclude Include="Engine\include\Maths\Rect.h" />
+    <ClInclude Include="Engine\include\Maths\Vector2.h" />
+    <ClInclude Include="Engine\include\Core\Entity.h" />
+    <ClInclude Include="Engine\include\Core\SceneSerializer.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>

@@ -1,59 +1,57 @@
 #pragma once
-#include "AssetManager.h"
 #include "SpriteData.h"
-
+#include <string>
+#include "Core/AssetManager.h"
 class Sprite
 {
 private:
-	const SpriteData* spriteData;
-	sf::Sprite sfmlSprite;
-	int currentFrame;
-	float animationTimer;
+    SpriteData m_data;
+    int m_currentFrame = 0;
+    float m_animationTimer = 0.0f;
+    const AnimationData* m_currentAnimation = nullptr;
+
 public:
-	Sprite(const std::string& p_spriteId, const AssetManager& p_assetManager) : currentFrame(0), animationTimer(0.0f)
-	{
-		spriteData = &p_assetManager.GetSprite(p_spriteId);
-		sfmlSprite.setTexture(spriteData->texture);
-	}
-
-    void PlayAnimation(const std::string& p_animationName, const float p_deltaTime)
+    Sprite(const std::string& p_id, const AssetManager& p_assetManager)
     {
-        if (spriteData->animations.find(p_animationName) != spriteData->animations.end())
+        m_data = p_assetManager.GetSprite(p_id);
+    }
+	Sprite(const Sprite& p_copy)
+    {
+        m_data = p_copy.GetSpriteData();
+        m_currentAnimation = p_copy.m_currentAnimation;
+		m_currentFrame = p_copy.m_currentFrame;
+		m_animationTimer = p_copy.m_animationTimer;
+    }
+    Sprite& operator=(const Sprite& p_copy)
+    {
+		if (this == &p_copy)
+		{
+            return *this;
+		}
+		m_data = p_copy.GetSpriteData();
+		m_currentAnimation = p_copy.m_currentAnimation;
+		m_currentFrame = p_copy.m_currentFrame;
+		m_animationTimer = p_copy.m_animationTimer;
+
+        return *this;
+    }
+
+    void PlayAnimation(const std::string& p_animation, const float p_deltaTime)
+    {
+        const auto it = m_data.animations.find(p_animation);
+        if (it == m_data.animations.end())
+            return;
+
+        m_currentAnimation = &it->second;
+        m_animationTimer += p_deltaTime;
+
+        if (m_animationTimer >= m_currentAnimation->frameDuration)
         {
-            const AnimationData& animation = spriteData->animations.at(p_animationName);
-            animationTimer += p_deltaTime;
-
-            if (animationTimer >= animation.frameDuration)
-            {
-                currentFrame = (currentFrame + 1) % animation.frameCount; // Loop back to the beginning frame
-                animationTimer = 0.0f;
-            }
-
-            // Calculate frame dimensions
-            const int frameWidth = spriteData->texture.getSize().x / spriteData->spriteSheetColumns;
-            const int frameHeight = spriteData->texture.getSize().y / spriteData->spriteSheetRows;
-
-            // Determine row and column based on the current frame
-            const int totalColumns = spriteData->spriteSheetColumns;
-            const int currentAnimationFrame = animation.startFrame + currentFrame;
-            const int frameRow = currentAnimationFrame / totalColumns;
-            const int frameColumn = currentAnimationFrame % totalColumns; // Use modulus for column calculation
-
-            // Set the texture rectangle for the current frame
-            sfmlSprite.setTextureRect(sf::IntRect(
-                frameColumn * frameWidth,      // x-coordinate of the frame
-                frameRow * frameHeight,       // y-coordinate of the frame
-                frameWidth,                   // width of the frame
-                frameHeight                   // height of the frame
-            ));
+            m_currentFrame = (m_currentFrame + 1) % m_currentAnimation->frameCount;
+            m_animationTimer = 0.0f;
         }
     }
 
-
-
-	void Draw(sf::RenderWindow& p_window, float p_x, float p_y)
-	{
-		sfmlSprite.setPosition(p_x, p_y);
-		p_window.draw(sfmlSprite);
-	}
+    int GetCurrentFrame() const { return m_currentFrame; }
+    const SpriteData& GetSpriteData() const { return m_data; }
 };

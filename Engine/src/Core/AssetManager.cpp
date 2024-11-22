@@ -2,14 +2,24 @@
 
 #include <iostream>
 #include "fstream"
-#include "Core/Utils/json.hpp"
+#include "Utils/json.hpp"
+
+AssetManager* AssetManager::instance = nullptr;
+
+std::string AssetManager::ResolvePath(const std::string& p_relativePath) const
+{
+	std::filesystem::path fullPath = assetRoot / p_relativePath;
+
+	return fullPath.string();  // Return as std::filesystem::path
+}
 
 bool AssetManager::LoadSprite(const std::string& p_path)
 {
-	std::ifstream jsonFile(p_path);
+	std::string path = ResolvePath(p_path);
+	std::ifstream jsonFile(path);
 	if(!jsonFile.is_open())
 	{
-		std::cerr << "Failed to open JSON file " << p_path << "\n";
+		std::cerr << "Failed to open JSON file " << path << "\n";
 		return false;
 	}
 	nlohmann::json jsonData;
@@ -25,7 +35,7 @@ bool AssetManager::LoadSprite(const std::string& p_path)
 
 	//Load texture
 	std::string texturePath = jsonData["texturePath"];
-	if(!spriteData.texture.loadFromFile(texturePath))
+	if(!spriteData.texture.loadFromFile(ResolvePath(	texturePath)))
 	{
 		std::cerr << "Failed to load texture: " << texturePath << "\n";
 		return false;
@@ -42,14 +52,9 @@ bool AssetManager::LoadSprite(const std::string& p_path)
 	}
 
 	m_sprites.insert({ spriteData.id, spriteData });
+	return true;
 }
 
-SpriteData AssetManager::LoadDefaultSprite() const
-{
-	SpriteData placeholder;
-	placeholder.id = "default";
-	return placeholder;
-}
 
 const SpriteData& AssetManager::GetSprite(const std::string& p_id) const
 {
@@ -58,5 +63,6 @@ const SpriteData& AssetManager::GetSprite(const std::string& p_id) const
 	{
 		return m_sprites.find(p_id)->second;
 	}
-	return LoadDefaultSprite();
+	return SpriteData();
+
 }
