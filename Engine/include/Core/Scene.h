@@ -21,6 +21,12 @@ public:
 		}
 		return nullptr;
 	}
+
+    const std::vector<std::shared_ptr<Entity>>& GetEntities() const
+    {
+        return m_entities;
+    }
+
     void AddEntity(std::shared_ptr<Entity> p_entity)
     {
         m_entities.push_back(p_entity);

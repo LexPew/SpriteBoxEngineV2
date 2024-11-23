@@ -160,19 +160,11 @@ public:
 			return { 0, 0 }; // No penetration if there is no intersection
 		}
 
-		// Calculate the penetration depths
-		float overlapX = std::min(Right, p_otherBox.Right) - std::max(Left, p_otherBox.Left);
-		float overlapY = std::min(Bottom, p_otherBox.Bottom) - std::max(Top, p_otherBox.Top);
+		// Calculate the overlap in the X dimension
+		float overlapX = std::max(0.0f, std::min(Right, p_otherBox.Right) - std::max(Left, p_otherBox.Left));
 
-		// Determine the direction of the penetration vector
-		if (Left < p_otherBox.Left)
-		{
-			overlapX = -overlapX;
-		}
-		if (Top < p_otherBox.Top)
-		{
-			overlapY = -overlapY;
-		}
+		// Calculate the overlap in the Y dimension
+		float overlapY = std::max(0.0f, std::min(Bottom, p_otherBox.Bottom) - std::max(Top, p_otherBox.Top));
 
 		// Return the penetration vector
 		return { overlapX, overlapY };

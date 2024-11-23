@@ -3,10 +3,11 @@
         {
             "active": true,
             "components": [
+                null,
                 {
                     "position": {
-                        "x": 291.21929931640625,
-                        "y": 100.0
+                        "x": 100.0,
+                        "y": 20.272703170776367
                     },
                     "scale": {
                         "x": 4.0,
@@ -15,13 +16,13 @@
                     "type": "TransformComponent"
                 },
                 {
-                    "currentAnimation": "Walk",
+                    "currentAnimation": "Idle",
                     "flipped": false,
                     "sprite_id": "Adventurer",
                     "type": "SpriteComponent"
                 },
                 {
-                    "currentRotation": 0.378482460975647,
+                    "currentRotation": 0.0,
                     "currentZoom": 1.0,
                     "isShaking": false,
                     "maxAngle": 90.0,
@@ -55,10 +56,11 @@
         {
             "active": true,
             "components": [
+                null,
                 {
                     "position": {
-                        "x": 150.0,
-                        "y": 100.0
+                        "x": 100.0,
+                        "y": 84.272705078125
                     },
                     "scale": {
                         "x": 4.0,
@@ -73,7 +75,7 @@
                     "type": "SpriteComponent"
                 }
             ],
-            "name": "Player2"
+            "name": "Player"
         }
     ]
 }

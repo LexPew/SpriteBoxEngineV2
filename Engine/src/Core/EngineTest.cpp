@@ -21,19 +21,19 @@ void RunTests()
 
     auto player = std::make_shared<Entity>("Player", Vector2(100, 100), Vector2(4, 4));
     player->AddComponent(std::make_shared<SpriteComponent>("Adventurer", assetManager));
-	player->AddComponent(std::make_shared<RigidBodyComponent>(100.0f, 0.2f, Rect(0, 0, 64, 64)));
-	auto floor = std::make_shared<Entity>("Floor", Vector2(0, 500),Vector2::One());
+	player->AddComponent(std::make_shared<RigidBodyComponent>(1.0f, 0.2f, Rect(0, 0, 64, 64)));
 
     Vector2 cameraSize = { 800, 600 };
     player->AddComponent(std::make_shared<FancyCameraComponent>(cameraSize));
 
-    auto player2 = std::make_shared<Entity>("Player2", Vector2(150, 100), Vector2(4, 4));
+    auto player2 = std::make_shared<Entity>("Player", Vector2(100, 250), Vector2(4, 4));
     player2->AddComponent(std::make_shared<SpriteComponent>("Adventurer", assetManager));
+    player2->AddComponent(std::make_shared<RigidBodyComponent>(1.0f, 0.2f, Rect(0, 0, 64, 64)));
 
     auto scene = std::make_shared<Scene>();
     scene->AddEntity(player);
     scene->AddEntity(player2);
-    scene->AddEntity(floor);
+    
 
     Physics physicsEngine;
 
@@ -84,6 +84,10 @@ void RunTests()
         float deltaTime = clock.restart().asSeconds();
 		physicsEngine.Update(deltaTime);
         window.clear();
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+        {
+            player2->GetComponent<RigidBodyComponent>()->GetBody().ApplyForce({ 0,-100 });
+        }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q)) {
 			player->GetComponent<FancyCameraComponent>()
                 ->RotateTo(player->GetComponent<FancyCameraComponent>()->GetCurrentRotation() - 10);
@@ -101,13 +105,13 @@ void RunTests()
         {
             player->GetComponent<SpriteComponent>()->PlayAnimation("Walk");
             player->GetComponent<SpriteComponent>()->Flip(true);
-            player->GetTransform()->SetPosition(player->GetTransform()->GetPosition() + Vector2(-100, 0) * deltaTime);
+            //player->GetTransform()->SetPosition(player->GetTransform()->GetPosition() + Vector2(-100, 0) * deltaTime);
         }
         else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
         {
             player->GetComponent<SpriteComponent>()->PlayAnimation("Walk");
             player->GetComponent<SpriteComponent>()->Flip(false);
-            player->GetTransform()->SetPosition(player->GetTransform()->GetPosition() + Vector2(100, 0) * deltaTime);
+           // player->GetTransform()->SetPosition(player->GetTransform()->GetPosition() + Vector2(100, 0) * deltaTime);
         }
         else
         {
@@ -124,6 +128,15 @@ void RunTests()
 
         sceneManager.Update(deltaTime);
         sceneManager.Render(renderer);
+
+        // Debug render for rigid bodies
+        for (const auto& entity : scene->GetEntities())
+        {
+            if (auto rigidBody = entity->GetComponent<RigidBodyComponent>())
+            {
+                rigidBody->DebugRender(window);
+            }
+        }
 
         window.display();
     }

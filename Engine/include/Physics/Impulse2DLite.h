@@ -27,15 +27,18 @@ public:
 	virtual void Integrate(float p_deltaTime)
 	{
 		//Object is static
-		if (inverseMass <= 0)
-		{
+		if (IsStatic()) {
 			return;
 		}
-		acceleration = force * inverseMass;
-		velocity += acceleration * p_deltaTime;
-		position += velocity * p_deltaTime;
+
+		Vector2 resultantAcceleration = acceleration;
+		resultantAcceleration.AddScaledVector(force, inverseMass);
+		velocity.AddScaledVector(resultantAcceleration, p_deltaTime);
+		position.AddScaledVector(velocity, p_deltaTime);
+
+
+		
 		force.Clear();
-		velocity *= damping;
 
 	}
 
@@ -110,7 +113,7 @@ private:
 	Vector2 gravity;
 
 public:
-	Physics() : gravity(Vector2(0,-2000.0f))
+	Physics() : gravity(Vector2(0,20))
 	{
 		instance = this;
 	}
@@ -141,14 +144,23 @@ public:
 		Vector2 penetrationOverlap = p_penetration;
 		Vector2 collisionNormal;
 
-		if (std::abs(p_penetration.x) < std::abs(p_penetration.y)) // X-axis resolution
+
+		//Solve along smallest axis
+
+
+		if(penetrationOverlap.x < penetrationOverlap.y)
 		{
-			collisionNormal = { p_penetration.x < 0 ? -1.0f : 1.0f, 0 };
+			//X axis is smaller
+			collisionNormal = { p_bodyA->GetRect().Left < p_bodyB->GetRect().Left ? -1.0f : 1.0f, 0 };
+			penetrationOverlap = collisionNormal * penetrationOverlap.x;
 		}
-		else // Y-axis resolution
+		else
 		{
-			collisionNormal = { 0, p_penetration.y < 0 ? -1.0f : 1.0f };
+			collisionNormal = { 0, p_bodyA->GetRect().Top < p_bodyB->GetRect().Top ? -1.0f : 1.0f };
+			penetrationOverlap = collisionNormal * penetrationOverlap.y;
+			//Y axis is smaller
 		}
+		
 
 		// Resolve overlap symmetrically
 		if (!p_bodyA->IsStatic() && !p_bodyB->IsStatic())
@@ -201,7 +213,7 @@ public:
 			const Vector2 penetration = p_bodyA->GetRect().CalculatePenetration(p_bodyB->GetRect());
 
 			//If there is a penetration lol
-			if (penetration.x != 0 || penetration.y != 0)
+			if (penetration.x > 0 && penetration.y > 0)
 			{
 				ResolveCollision(p_bodyA, p_bodyB, penetration);
 			}
@@ -212,7 +224,7 @@ public:
 	{
 		for (RectangleBody* body : m_bodies)
 		{
-			body->ApplyForce(gravity);
+			body->ApplyForce(gravity * body->GetMass());
 			body->Integrate(p_deltaTime);
 
 		}
@@ -220,6 +232,10 @@ public:
 		{
 			for (size_t j = i + 1; j < m_bodies.size(); j++)
 			{
+				if(m_bodies[i]->IsStatic())
+				{
+					continue;
+				}
 				CheckCollision(m_bodies[i], m_bodies[j]);
 			}
 		}
