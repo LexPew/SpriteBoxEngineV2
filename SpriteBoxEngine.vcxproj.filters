@@ -48,6 +48,9 @@
     <ClCompile Include="Engine\src\Core\ECS\Component.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\src\Core\ECS\RigidBodyComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\include\Core\AssetManager.h">
@@ -99,6 +102,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Engine\src\Core\ECS\ScriptComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\include\Core\ECS\RigidBodyComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\include\Physics\Impulse2DLite.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

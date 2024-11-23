@@ -22,6 +22,7 @@
     <ClCompile Include="Engine\src\Core\ECS\CamSys\RawCameraComponent.cpp" />
     <ClCompile Include="Engine\src\Core\AssetManager.cpp" />
     <ClCompile Include="Engine\src\Core\ECS\Component.cpp" />
+    <ClCompile Include="Engine\src\Core\ECS\RigidBodyComponent.cpp" />
     <ClCompile Include="Engine\src\Core\EngineTest.cpp" />
     <ClCompile Include="Engine\src\Core\Source.cpp" />
     <ClCompile Include="Engine\src\Core\ECS\SpriteComponent.cpp" />
@@ -35,6 +36,7 @@
     <ClInclude Include="Engine\include\Core\ECS\CamSys\RawCameraComponent.h" />
     <ClInclude Include="Engine\include\Core\ECS\Component.h" />
     <ClInclude Include="Engine\include\Core\AssetManager.h" />
+    <ClInclude Include="Engine\include\Core\ECS\RigidBodyComponent.h" />
     <ClInclude Include="Engine\include\Core\EngineTest.h" />
     <ClInclude Include="Engine\include\Core\Scene.h" />
     <ClInclude Include="Engine\include\Core\SceneManager.h" />
@@ -48,6 +50,7 @@
     <ClInclude Include="Engine\include\Core\ECS\Entity.h" />
     <ClInclude Include="Engine\include\Core\SceneSerializer.h" />
     <ClInclude Include="Engine\include\Core\ECS\CamSys\FancyCameraComponent.h" />
+    <ClInclude Include="Engine\include\Physics\Impulse2DLite.h" />
     <ClInclude Include="Engine\src\Core\ECS\ScriptComponent.h" />
   </ItemGroup>
   <ItemGroup>
@@ -149,7 +152,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>SFML\include;Engine\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\James\source\repos\Impulse2D;SFML\include;Engine\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -167,7 +170,7 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>SFML\include;Engine\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\James\source\repos\Impulse2D;SFML\include;Engine\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

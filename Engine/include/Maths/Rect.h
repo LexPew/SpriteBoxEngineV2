@@ -53,6 +53,28 @@ public:
 		Create(p_top, p_left, p_bottom, p_right);
 	}
 
+	//SERIALIZER
+	friend void to_json(nlohmann::json& p_json, const Rect& p_rect)
+	{
+		p_json = nlohmann::json{
+			{"Top", p_rect.Top},
+			{"Left", p_rect.Left},
+			{"Bottom", p_rect.Bottom},
+			{"Right", p_rect.Right},
+			{"Width", p_rect.Width},
+			{"Height", p_rect.Height}
+		};
+	}
+	friend void from_json(const nlohmann::json& p_json, Rect& p_rect)
+	{
+		p_json.at("Top").get_to(p_rect.Top);
+		p_json.at("Left").get_to(p_rect.Left);
+		p_json.at("Bottom").get_to(p_rect.Bottom);
+		p_json.at("Right").get_to(p_rect.Right);
+		p_json.at("Width").get_to(p_rect.Width);
+		p_json.at("Height").get_to(p_rect.Height);
+	}
+
 	/**
 	 * Setups the rectangle with input values
 	 */
@@ -141,6 +163,16 @@ public:
 		// Calculate the penetration depths
 		float overlapX = std::min(Right, p_otherBox.Right) - std::max(Left, p_otherBox.Left);
 		float overlapY = std::min(Bottom, p_otherBox.Bottom) - std::max(Top, p_otherBox.Top);
+
+		// Determine the direction of the penetration vector
+		if (Left < p_otherBox.Left)
+		{
+			overlapX = -overlapX;
+		}
+		if (Top < p_otherBox.Top)
+		{
+			overlapY = -overlapY;
+		}
 
 		// Return the penetration vector
 		return { overlapX, overlapY };

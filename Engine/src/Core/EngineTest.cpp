@@ -8,7 +8,8 @@
 #include "Core/SceneSerializer.h"
 #include <Utils/json.hpp>
 #include "Core/ECS/CamSys/FancyCameraComponent.h"
-
+#include "Core/ECS/RigidBodyComponent.h"
+#include "Physics/Impulse2DLite.h"
 void RunTests()
 {
     sf::RenderWindow window(sf::VideoMode(800, 600), "Engine Test");
@@ -20,6 +21,9 @@ void RunTests()
 
     auto player = std::make_shared<Entity>("Player", Vector2(100, 100), Vector2(4, 4));
     player->AddComponent(std::make_shared<SpriteComponent>("Adventurer", assetManager));
+	player->AddComponent(std::make_shared<RigidBodyComponent>(100.0f, 0.2f, Rect(0, 0, 64, 64)));
+	auto floor = std::make_shared<Entity>("Floor", Vector2(0, 500),Vector2::One());
+
     Vector2 cameraSize = { 800, 600 };
     player->AddComponent(std::make_shared<FancyCameraComponent>(cameraSize));
 
@@ -29,12 +33,13 @@ void RunTests()
     auto scene = std::make_shared<Scene>();
     scene->AddEntity(player);
     scene->AddEntity(player2);
+    scene->AddEntity(floor);
 
+    Physics physicsEngine;
 
     SceneManager sceneManager;
     sceneManager.AddScene("MainScene", scene);
     sceneManager.SetCurrentScene("MainScene");
-
 
     sf::Clock clock;
     while (window.isOpen())
@@ -77,7 +82,7 @@ void RunTests()
         }
 
         float deltaTime = clock.restart().asSeconds();
-
+		physicsEngine.Update(deltaTime);
         window.clear();
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q)) {
 			player->GetComponent<FancyCameraComponent>()

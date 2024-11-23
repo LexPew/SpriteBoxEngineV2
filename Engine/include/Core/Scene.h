@@ -25,7 +25,13 @@ public:
     {
         m_entities.push_back(p_entity);
     }
-
+	void Start()
+	{
+		for (auto& entity : m_entities)
+		{
+			entity->Start();
+		}
+	}
     void Update(float p_deltaTime)
     {
         for (auto& entity : m_entities)

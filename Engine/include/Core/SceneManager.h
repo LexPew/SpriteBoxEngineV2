@@ -19,8 +19,15 @@ public:
     void SetCurrentScene(const std::string& name)
     {
         m_currentScene = m_scenes[name];
+        m_currentScene->Start();
     }
-
+    void Start()
+    {
+		if (m_currentScene)
+		{
+			m_currentScene->Start();
+		}
+    }
     void Update(float deltaTime)
     {
         if (m_currentScene)

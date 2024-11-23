@@ -58,6 +58,15 @@ public:
 		y += p_vectorB.y;
 	}
 
+	// Overload the += operator
+	void operator+=(const float p_scalar)
+	{
+		
+		x += p_scalar;
+		y += p_scalar;
+	}
+
+
 
 	float operator%(const Vector2& p_vectorB) const
 	{
