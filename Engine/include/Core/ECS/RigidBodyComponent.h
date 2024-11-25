@@ -12,6 +12,7 @@ class RigidBodyComponent : public Component
 private:
 
     RectangleBody* body;
+    Vector2 originOffset;
 
 public:
     RigidBodyComponent(float p_mass, float p_restitution, const Rect& p_rect)
@@ -24,7 +25,14 @@ public:
 
     void Start() override
     {
-        body->SetPosition(owner->GetTransform()->GetPosition());
+		const Vector2& scale = owner->GetTransform()->GetScale();
+		originOffset.x = body->GetRect().Width / 2 * scale.x;
+        originOffset.y = body->GetRect().Height / 2 * scale.y;
+
+        Rect p_scaledRect = body->GetRect();
+        p_scaledRect *= scale;
+		body->SetRect(p_scaledRect);
+        body->SetPosition(owner->GetTransform()->GetPosition() - originOffset);
 		Physics::GetInstance()->Add(body);
 
 
@@ -34,7 +42,7 @@ public:
 
     void Update(float p_deltaTime) override
     {
-		owner->GetTransform()->SetPosition(body->GetPosition());
+		owner->GetTransform()->SetPosition(body->GetPosition() + originOffset);
 
 
     }

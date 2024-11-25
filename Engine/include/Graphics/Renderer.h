@@ -15,4 +15,5 @@ public:
     void SetView(const sf::View& p_view);
     void DrawSprite(const SpriteData& p_spriteData,  const int p_frameIndex,
         const Vector2& p_position, const Vector2& p_scale, bool p_flipped);
+    Vector2 GetSpriteBounds(const SpriteData& p_spriteData);
 };

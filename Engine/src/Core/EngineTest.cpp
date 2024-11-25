@@ -10,25 +10,32 @@
 #include "Core/ECS/CamSys/FancyCameraComponent.h"
 #include "Core/ECS/RigidBodyComponent.h"
 #include "Physics/Impulse2DLite.h"
+
+
 void RunTests()
 {
     sf::RenderWindow window(sf::VideoMode(800, 600), "Engine Test");
-    Renderer renderer(&window);
 
+    Renderer renderer(&window);
     AssetManager assetManager;
+    Physics physicsEngine;
+    SceneManager sceneManager;
+
+
     assetManager.SetAssetRoot("Engine/assets");
     assetManager.LoadSprite("Sprites/TemplateAssets/Adventurer.json");
 
-    auto player = std::make_shared<Entity>("Player", Vector2(100, 100), Vector2(4, 4));
+    auto player = std::make_shared<Entity>("Player", Vector2(100, 100), Vector2(2, 2));
     player->AddComponent(std::make_shared<SpriteComponent>("Adventurer", assetManager));
-	player->AddComponent(std::make_shared<RigidBodyComponent>(1.0f, 0.2f, Rect(0, 0, 64, 64)));
+    const Vector2 spriteBounds = renderer.GetSpriteBounds(assetManager.GetSprite("Adventurer"));
+	player->AddComponent(std::make_shared<RigidBodyComponent>(1.0f, 0.2f, Rect(0,0,spriteBounds.y, spriteBounds.y)));
 
     Vector2 cameraSize = { 800, 600 };
     player->AddComponent(std::make_shared<FancyCameraComponent>(cameraSize));
 
-    auto player2 = std::make_shared<Entity>("Player", Vector2(100, 250), Vector2(4, 4));
+    auto player2 = std::make_shared<Entity>("Player", Vector2(100, 250), Vector2(2, 2));
     player2->AddComponent(std::make_shared<SpriteComponent>("Adventurer", assetManager));
-    player2->AddComponent(std::make_shared<RigidBodyComponent>(1.0f, 0.2f, Rect(0, 0, 64, 64)));
+    player2->AddComponent(std::make_shared<RigidBodyComponent>(1.0f, 0.2f, Rect(0, 0, spriteBounds.y, spriteBounds.y)));
 
 
 	auto floor = std::make_shared<Entity>("Floor", Vector2(0, 400), Vector2(1, 1));
@@ -37,13 +44,10 @@ void RunTests()
     scene->AddEntity(player);
     scene->AddEntity(player2);
 	scene->AddEntity(floor);
-    
 
-    Physics physicsEngine;
-
-    SceneManager sceneManager;
     sceneManager.AddScene("MainScene", scene);
     sceneManager.SetCurrentScene("MainScene");
+
 
     sf::Clock clock;
     while (window.isOpen())
@@ -90,7 +94,7 @@ void RunTests()
         window.clear();
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
         {
-            player2->GetComponent<RigidBodyComponent>()->GetBody().ApplyForce({ 0,-100 });
+			player->GetComponent<RigidBodyComponent>()->GetBody().ApplyForce(Vector2(0, -100));
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q)) {
 			player->GetComponent<FancyCameraComponent>()
@@ -140,8 +144,12 @@ void RunTests()
         // Debug render for rigid bodies
         for (const auto& entity : scene->GetEntities())
         {
+            if (entity->GetName() != "Floor") {
+                continue;
+            }
             if (auto rigidBody = entity->GetComponent<RigidBodyComponent>())
             {
+
                 rigidBody->DebugRender(window);
             }
         }

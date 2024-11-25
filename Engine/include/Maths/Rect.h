@@ -170,6 +170,22 @@ public:
 		return { overlapX, overlapY };
 	}
 
+	void operator*= (float p_scalar)
+	{
+		Width *= p_scalar;
+		Height *= p_scalar;
+	}
+
+	void operator*= (const Vector2& p_vector)
+	{
+		Width *= p_vector.x;
+		Height *= p_vector.y;
+	}
+
+	Rect operator* (const Vector2& p_vector) 
+	{
+		return { Top, Left, Top + Height * p_vector.y, Left + Width * p_vector.x };
+	}
 
 };
 

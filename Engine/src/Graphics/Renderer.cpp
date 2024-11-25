@@ -38,3 +38,10 @@ void Renderer::DrawSprite(const SpriteData& p_spriteData, const int p_frameIndex
     sprite.setPosition(p_position.x, p_position.y);
     window->draw(sprite);
 }
+
+Vector2 Renderer::GetSpriteBounds(const SpriteData& p_spriteData)
+{
+    float frameWidth = p_spriteData.texture.getSize().x / p_spriteData.spriteSheetColumns;
+    float frameHeight = p_spriteData.texture.getSize().y / p_spriteData.spriteSheetRows;
+    return Vector2{ frameWidth, frameHeight };
+}
