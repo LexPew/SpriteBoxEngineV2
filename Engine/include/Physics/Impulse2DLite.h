@@ -16,9 +16,19 @@ protected:
 
 
 public:
-	Body() : position(Vector2::Zero()), velocity(Vector2::Zero()), acceleration(Vector2::Zero()), force(Vector2::Zero()), inverseMass(0), restitution(0), damping(1) {}
+	Body() : position(Vector2::Zero()), velocity(Vector2::Zero()), acceleration(Vector2::Zero()), force(Vector2::Zero()), inverseMass(100), restitution(0), damping(1) {}
 	Body(const Vector2& p_position, const Vector2& p_velocity, const Vector2& p_acceleration, const Vector2& p_force, const float p_mass, const float p_restitution, const float p_damping)
-	: position(p_position), velocity(p_velocity), acceleration(p_acceleration), force(p_force), inverseMass(1.0f / p_mass), restitution(p_restitution), damping(p_damping) {}
+	: position(p_position), velocity(p_velocity), acceleration(p_acceleration), force(p_force),  restitution(p_restitution), damping(p_damping)
+	{
+		if (p_mass > 0)
+		{
+			inverseMass = 1.0f / p_mass;
+		}
+		else
+		{
+			inverseMass = 0;
+		}
+	}
 
 	void ApplyForce(Vector2 p_force)
 	{
@@ -144,13 +154,10 @@ public:
 		Vector2 penetrationOverlap = p_penetration;
 		Vector2 collisionNormal;
 
-
-		//Solve along smallest axis
-
-
-		if(penetrationOverlap.x < penetrationOverlap.y)
+		// Solve along the smallest axis
+		if (penetrationOverlap.x < penetrationOverlap.y)
 		{
-			//X axis is smaller
+			// X axis is smaller
 			collisionNormal = { p_bodyA->GetRect().Left < p_bodyB->GetRect().Left ? -1.0f : 1.0f, 0 };
 			penetrationOverlap = collisionNormal * penetrationOverlap.x;
 		}
@@ -158,9 +165,8 @@ public:
 		{
 			collisionNormal = { 0, p_bodyA->GetRect().Top < p_bodyB->GetRect().Top ? -1.0f : 1.0f };
 			penetrationOverlap = collisionNormal * penetrationOverlap.y;
-			//Y axis is smaller
+			// Y axis is smaller
 		}
-		
 
 		// Resolve overlap symmetrically
 		if (!p_bodyA->IsStatic() && !p_bodyB->IsStatic())
@@ -183,6 +189,24 @@ public:
 		// Calculate relative velocity in terms of the normal direction
 		float velocityAlongNormal = relativeVelocity * collisionNormal;
 
+		// Prevent velocity build-up when colliding with the floor
+		if (collisionNormal.y == 1.0f || collisionNormal.y == -1.0f)
+		{
+			if (!p_bodyA->IsStatic())
+			{
+				Vector2 velocity = p_bodyA->GetVelocity();
+				velocity.y = 0; // Set vertical velocity to zero
+				p_bodyA->SetVelocity(velocity);
+			}
+			if (!p_bodyB->IsStatic())
+			{
+				Vector2 velocity = p_bodyB->GetVelocity();
+				velocity.y = 0; // Set vertical velocity to zero
+				p_bodyB->SetVelocity(velocity);
+			}
+		}
+
+
 		// Do not resolve if velocities are separating
 		if (velocityAlongNormal > 0)
 			return;
@@ -204,7 +228,9 @@ public:
 		{
 			p_bodyB->SetVelocity(p_bodyB->GetVelocity() + impulse * p_bodyB->GetInverseMass());
 		}
+
 	}
+
 	void CheckCollision(RectangleBody* p_bodyA, RectangleBody* p_bodyB)
 	{
 		//Check if the two rectangles are intersecting

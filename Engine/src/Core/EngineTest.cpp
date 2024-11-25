@@ -30,9 +30,13 @@ void RunTests()
     player2->AddComponent(std::make_shared<SpriteComponent>("Adventurer", assetManager));
     player2->AddComponent(std::make_shared<RigidBodyComponent>(1.0f, 0.2f, Rect(0, 0, 64, 64)));
 
+
+	auto floor = std::make_shared<Entity>("Floor", Vector2(0, 400), Vector2(1, 1));
+	floor->AddComponent(std::make_shared<RigidBodyComponent>(0.0f, 0.2f, Rect(0, 0, 64, 500)));
     auto scene = std::make_shared<Scene>();
     scene->AddEntity(player);
     scene->AddEntity(player2);
+	scene->AddEntity(floor);
     
 
     Physics physicsEngine;
@@ -100,21 +104,24 @@ void RunTests()
             player->GetComponent<FancyCameraComponent>()->RotateTo(0);
         }
 
-
+        Body& rigidbody = player->GetComponent<RigidBodyComponent>()->GetBody();
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
         {
             player->GetComponent<SpriteComponent>()->PlayAnimation("Walk");
             player->GetComponent<SpriteComponent>()->Flip(true);
+            rigidbody.SetVelocity({ -100, rigidbody.GetVelocity().y });
             //player->GetTransform()->SetPosition(player->GetTransform()->GetPosition() + Vector2(-100, 0) * deltaTime);
         }
         else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
         {
             player->GetComponent<SpriteComponent>()->PlayAnimation("Walk");
             player->GetComponent<SpriteComponent>()->Flip(false);
+            rigidbody.SetVelocity({ 100, rigidbody.GetVelocity().y });
            // player->GetTransform()->SetPosition(player->GetTransform()->GetPosition() + Vector2(100, 0) * deltaTime);
         }
         else
         {
+            rigidbody.SetVelocity({ 0, rigidbody.GetVelocity().y });
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::C))
             {
                 player->GetComponent<SpriteComponent>()->PlayAnimation("Attack");
@@ -125,6 +132,7 @@ void RunTests()
                 player->GetComponent<SpriteComponent>()->PlayAnimation("Idle");
             }
         }
+		
 
         sceneManager.Update(deltaTime);
         sceneManager.Render(renderer);
