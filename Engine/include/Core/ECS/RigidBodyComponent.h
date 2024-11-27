@@ -1,7 +1,5 @@
 #pragma once
 
-#include <iostream>
-#include <SFML/Graphics.hpp>
 
 #include "Entity.h"
 #include "Core/ECS/Component.h"
@@ -72,5 +70,7 @@ public:
     }
 
     RectangleBody& GetBody() { return *body; }
+
+    RectangleBody* GetBodyPtr() { return body; }
     const RectangleBody& GetBody() const { return *body; }
 };

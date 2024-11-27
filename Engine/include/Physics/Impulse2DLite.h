@@ -2,6 +2,9 @@
 #include "Maths/Vector2.h"
 #include "Maths/Rect.h"
 
+
+
+
 class Body
 {
 protected:
@@ -113,7 +116,20 @@ public:
 		Body::Integrate(p_deltaTime);
 		rect.SetPosition(position);
 	}
+
+
 };
+
+struct RaycastHit
+{
+	RectangleBody* body;
+	Vector2 point;
+	Vector2 normal;
+	float distance;
+};
+
+
+
 
 class Physics
 {
@@ -121,9 +137,9 @@ private:
 	inline static Physics* instance;
 	std::vector<RectangleBody*> m_bodies;
 	Vector2 gravity;
-
+	Vector2 groundedGravity;
 public:
-	Physics() : gravity(Vector2(0,20))
+	Physics() : gravity(Vector2(0,50)), groundedGravity(Vector2(0,20))
 	{
 		instance = this;
 	}
@@ -149,87 +165,112 @@ public:
 	{
 		gravity = p_gravity;
 	}
-	void ResolveCollision(RectangleBody* p_bodyA, RectangleBody* p_bodyB, const Vector2& p_penetration)
+
+	const Vector2& GetGravity() const
 	{
-		Vector2 penetrationOverlap = p_penetration;
-		Vector2 collisionNormal;
-
-		// Solve along the smallest axis
-		if (penetrationOverlap.x < penetrationOverlap.y)
-		{
-			// X axis is smaller
-			collisionNormal = { p_bodyA->GetRect().Left < p_bodyB->GetRect().Left ? -1.0f : 1.0f, 0 };
-			penetrationOverlap = collisionNormal * penetrationOverlap.x;
-		}
-		else
-		{
-			collisionNormal = { 0, p_bodyA->GetRect().Top < p_bodyB->GetRect().Top ? -1.0f : 1.0f };
-			penetrationOverlap = collisionNormal * penetrationOverlap.y;
-			// Y axis is smaller
-		}
-
-		// Resolve overlap symmetrically
-		if (!p_bodyA->IsStatic() && !p_bodyB->IsStatic())
-		{
-			p_bodyA->SetPosition(p_bodyA->GetPosition() + penetrationOverlap * 0.5f);
-			p_bodyB->SetPosition(p_bodyB->GetPosition() - penetrationOverlap * 0.5f);
-		}
-		else if (!p_bodyA->IsStatic())
-		{
-			p_bodyA->SetPosition(p_bodyA->GetPosition() + penetrationOverlap);
-		}
-		else if (!p_bodyB->IsStatic())
-		{
-			p_bodyB->SetPosition(p_bodyB->GetPosition() - penetrationOverlap);
-		}
-
-		// Calculate relative velocity
-		Vector2 relativeVelocity = p_bodyB->GetVelocity() - p_bodyA->GetVelocity();
-
-		// Calculate relative velocity in terms of the normal direction
-		float velocityAlongNormal = relativeVelocity * collisionNormal;
-
-		// Prevent velocity build-up when colliding with the floor
-		if (collisionNormal.y == 1.0f || collisionNormal.y == -1.0f)
-		{
-			if (!p_bodyA->IsStatic())
-			{
-				Vector2 velocity = p_bodyA->GetVelocity();
-				velocity.y = 0; // Set vertical velocity to zero
-				p_bodyA->SetVelocity(velocity);
-			}
-			if (!p_bodyB->IsStatic())
-			{
-				Vector2 velocity = p_bodyB->GetVelocity();
-				velocity.y = 0; // Set vertical velocity to zero
-				p_bodyB->SetVelocity(velocity);
-			}
-		}
-
-
-		// Do not resolve if velocities are separating
-		if (velocityAlongNormal > 0)
-			return;
-
-		// Calculate restitution
-		float e = std::min(p_bodyA->GetRestitution(), p_bodyB->GetRestitution());
-
-		// Calculate impulse scalar
-		float j = -(1 + e) * velocityAlongNormal;
-		j /= p_bodyA->GetInverseMass() + p_bodyB->GetInverseMass();
-
-		// Apply impulse
-		const Vector2 impulse = collisionNormal * j;
-		if (!p_bodyA->IsStatic())
-		{
-			p_bodyA->SetVelocity(p_bodyA->GetVelocity() - impulse * p_bodyA->GetInverseMass());
-		}
-		if (!p_bodyB->IsStatic())
-		{
-			p_bodyB->SetVelocity(p_bodyB->GetVelocity() + impulse * p_bodyB->GetInverseMass());
-		}
-
+		return gravity;
 	}
+
+	//Sets the grounded gravity
+	void SetGroundedGravity(const Vector2& p_gravity)
+	{
+		groundedGravity = p_gravity;
+	}
+
+	//Returns the grounded gravity
+	const Vector2& GetGroundedGravity() const
+	{
+		return groundedGravity;
+	}
+
+	//Returns the bodies in the physics engine
+	const std::vector<RectangleBody*>& GetBodies() const
+	{
+		return m_bodies;
+	}
+    void ResolveCollision(RectangleBody* p_bodyA, RectangleBody* p_bodyB, const Vector2& p_penetration)
+    {
+        Vector2 penetrationOverlap = p_penetration;
+        Vector2 collisionNormal;
+
+        // Solve along the smallest axis
+        if (penetrationOverlap.x < penetrationOverlap.y)
+        {
+            // X axis is smaller
+            collisionNormal = { p_bodyA->GetRect().Left < p_bodyB->GetRect().Left ? -1.0f : 1.0f, 0 };
+            penetrationOverlap = collisionNormal * penetrationOverlap.x;
+        }
+        else
+        {
+            collisionNormal = { 0, p_bodyA->GetRect().Top < p_bodyB->GetRect().Top ? -1.0f : 1.0f };
+            penetrationOverlap = collisionNormal * penetrationOverlap.y;
+            // Y axis is smaller
+        }
+
+        // Resolve overlap symmetrically
+        if (!p_bodyA->IsStatic() && !p_bodyB->IsStatic())
+        {
+            p_bodyA->SetPosition(p_bodyA->GetPosition() + penetrationOverlap * 0.5f);
+            p_bodyB->SetPosition(p_bodyB->GetPosition() - penetrationOverlap * 0.5f);
+        }
+        else if (!p_bodyA->IsStatic())
+        {
+            p_bodyA->SetPosition(p_bodyA->GetPosition() + penetrationOverlap);
+        }
+        else if (!p_bodyB->IsStatic())
+        {
+            p_bodyB->SetPosition(p_bodyB->GetPosition() - penetrationOverlap);
+        }
+
+        // Calculate relative velocity
+        Vector2 relativeVelocity = p_bodyB->GetVelocity() - p_bodyA->GetVelocity();
+
+        // Calculate relative velocity in terms of the normal direction
+        float velocityAlongNormal = relativeVelocity * collisionNormal;
+
+        // Prevent velocity build-up when colliding with the floor 
+        if (collisionNormal.y == 1.0f || collisionNormal.y == -1.0f)
+        {
+
+            if (!p_bodyA->IsStatic())
+            {
+                Vector2 velocity = p_bodyA->GetVelocity();
+				velocity.y = std::min(gravity.y * 0.1f, velocity.y); // Set vertical velocity to a small downward value
+                p_bodyA->SetVelocity(velocity);
+            }
+            if (!p_bodyB->IsStatic())
+            {
+                Vector2 velocity = p_bodyB->GetVelocity();
+				velocity.y = std::min(gravity.y * 0.1f, velocity.y); // Set vertical velocity to a small downward value
+                p_bodyB->SetVelocity(velocity);
+
+            }
+
+        }
+
+
+        // Do not resolve if velocities are separating
+        if (velocityAlongNormal > 0)
+            return;
+
+        // Calculate restitution
+        float e = std::min(p_bodyA->GetRestitution(), p_bodyB->GetRestitution());
+
+        // Calculate impulse scalar
+        float j = -(1 + e) * velocityAlongNormal;
+        j /= p_bodyA->GetInverseMass() + p_bodyB->GetInverseMass();
+
+        // Apply impulse
+        const Vector2 impulse = collisionNormal * j;
+        if (!p_bodyA->IsStatic())
+        {
+            p_bodyA->SetVelocity(p_bodyA->GetVelocity() - impulse * p_bodyA->GetInverseMass());
+        }
+        if (!p_bodyB->IsStatic())
+        {
+            p_bodyB->SetVelocity(p_bodyB->GetVelocity() + impulse * p_bodyB->GetInverseMass());
+        }
+    }
 
 	void CheckCollision(RectangleBody* p_bodyA, RectangleBody* p_bodyB)
 	{

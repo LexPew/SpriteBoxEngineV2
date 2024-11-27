@@ -23,6 +23,7 @@ public:
 	}
 
 
+
 	//SERIALIZER
 	friend void to_json(nlohmann::json& p_json, const Vector2& p_vector)
 	{
@@ -66,7 +67,10 @@ public:
 		y += p_scalar;
 	}
 
-
+	bool operator!=(const Vector2& p_vectorB) const
+	{
+		return (x != p_vectorB.x || y != p_vectorB.y);
+	}
 
 	float operator%(const Vector2& p_vectorB) const
 	{
@@ -253,7 +257,17 @@ public:
 		return angleInDegrees;
 	}
 
-	
+	void Rotate(const float p_angle)
+	{
+		//Radian = degrees * pie / 180
+		//degrees = radian * (pie / 180)
+		const float radianAngle = p_angle * 3.14159f / 180.0f;
+		const float xComponent = x * cos(radianAngle) - y * sin(radianAngle);
+		const float yComponent = x * sin(radianAngle) + y * cos(radianAngle);
+		x = xComponent;
+		y = yComponent;
+	}
+
 
 };
 

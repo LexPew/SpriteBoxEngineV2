@@ -2,3 +2,4 @@
 
 
 void RunTests();
+void LineIntersectionTest();

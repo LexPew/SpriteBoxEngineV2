@@ -31,7 +31,7 @@
     <ClCompile Include="Engine\src\Core\ECS\Entity.cpp" />
     <ClCompile Include="Engine\src\Core\ECS\CamSys\FancyCameraComponent.cpp" />
     <ClCompile Include="Engine\include\Core\ECS\ScriptComponent.cpp" />
-    <ClCompile Include="imgui-docking\imgui-SFML.cpp" />
+    <ClCompile Include="Engine\src\Core\LineIntersectionTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\include\Core\ECS\CamSys\RawCameraComponent.h" />
@@ -46,6 +46,7 @@
     <ClInclude Include="Engine\include\Core\SpriteData.h" />
     <ClInclude Include="Engine\include\Core\ECS\TransformComponent.h" />
     <ClInclude Include="Engine\include\Graphics\Renderer.h" />
+    <ClInclude Include="Engine\include\Maths\Line2.h" />
     <ClInclude Include="Engine\include\Maths\Rect.h" />
     <ClInclude Include="Engine\include\Maths\Vector2.h" />
     <ClInclude Include="Engine\include\Core\ECS\Entity.h" />

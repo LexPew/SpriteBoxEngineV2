@@ -48,6 +48,12 @@ void RunTests()
     sceneManager.AddScene("MainScene", scene);
     sceneManager.SetCurrentScene("MainScene");
 
+    physicsEngine.SetGravity({ 0,80 });
+    physicsEngine.SetGroundedGravity({ 0,1 });
+
+
+
+
 
     sf::Clock clock;
     while (window.isOpen())
@@ -81,6 +87,11 @@ void RunTests()
                 {
                     // Add functionality for 'P' key if needed
                 }
+				else if (event.key.code == sf::Keyboard::G)
+				{
+					physicsEngine.SetGravity(Vector2(physicsEngine.GetGravity().x, physicsEngine.GetGravity().y + 1));
+					std::cout << "Gravity: " << physicsEngine.GetGravity().y << std::endl;
+				}
                 break;
             case sf::Event::MouseWheelMoved:
                 player->GetComponent<FancyCameraComponent>()->ZoomToFactor(
@@ -92,9 +103,11 @@ void RunTests()
         float deltaTime = clock.restart().asSeconds();
 		physicsEngine.Update(deltaTime);
         window.clear();
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+        RectangleBody* rigidbody = player->GetComponent<RigidBodyComponent>()->GetBodyPtr();
+
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
         {
-			player->GetComponent<RigidBodyComponent>()->GetBody().ApplyForce(Vector2(0, -100));
+            player->GetComponent<RigidBodyComponent>()->GetBody().ApplyForce(Vector2(0, -500));
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q)) {
 			player->GetComponent<FancyCameraComponent>()
@@ -108,24 +121,24 @@ void RunTests()
             player->GetComponent<FancyCameraComponent>()->RotateTo(0);
         }
 
-        Body& rigidbody = player->GetComponent<RigidBodyComponent>()->GetBody();
+
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
         {
             player->GetComponent<SpriteComponent>()->PlayAnimation("Walk");
             player->GetComponent<SpriteComponent>()->Flip(true);
-            rigidbody.SetVelocity({ -100, rigidbody.GetVelocity().y });
+            rigidbody->SetVelocity({ -100, rigidbody->GetVelocity().y });
             //player->GetTransform()->SetPosition(player->GetTransform()->GetPosition() + Vector2(-100, 0) * deltaTime);
         }
         else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
         {
             player->GetComponent<SpriteComponent>()->PlayAnimation("Walk");
             player->GetComponent<SpriteComponent>()->Flip(false);
-            rigidbody.SetVelocity({ 100, rigidbody.GetVelocity().y });
+            rigidbody->SetVelocity({ 100, rigidbody->GetVelocity().y });
            // player->GetTransform()->SetPosition(player->GetTransform()->GetPosition() + Vector2(100, 0) * deltaTime);
         }
         else
         {
-            rigidbody.SetVelocity({ 0, rigidbody.GetVelocity().y });
+            rigidbody->SetVelocity({ 0, rigidbody->GetVelocity().y });
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::C))
             {
                 player->GetComponent<SpriteComponent>()->PlayAnimation("Attack");
@@ -144,9 +157,7 @@ void RunTests()
         // Debug render for rigid bodies
         for (const auto& entity : scene->GetEntities())
         {
-            if (entity->GetName() != "Floor") {
-                continue;
-            }
+
             if (auto rigidBody = entity->GetComponent<RigidBodyComponent>())
             {
 

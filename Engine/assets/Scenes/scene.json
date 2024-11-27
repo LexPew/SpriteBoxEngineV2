@@ -6,8 +6,8 @@
                 null,
                 {
                     "position": {
-                        "x": -61.25732421875,
-                        "y": 25.834762573242188
+                        "x": -7.364479064941406,
+                        "y": -104.43675231933594
                     },
                     "scale": {
                         "x": 2.0,
@@ -22,7 +22,7 @@
                     "type": "SpriteComponent"
                 },
                 {
-                    "currentRotation": 0.5286001563072205,
+                    "currentRotation": 0.0,
                     "currentZoom": 1.0,
                     "isShaking": false,
                     "maxAngle": 90.0,
@@ -32,15 +32,15 @@
                     "positionSmoothingFactor": 2.0,
                     "rotationSmoothing": true,
                     "rotationSmoothingFactor": 2.0,
-                    "shakeDuration": 0.10000000149011612,
-                    "shakeElapsedTime": 0.10118499398231506,
-                    "shakeFrequency": 4.0,
-                    "shakeMagnitude": 4.0,
+                    "shakeDuration": 0.0,
+                    "shakeElapsedTime": 0.0,
+                    "shakeFrequency": 0.0,
+                    "shakeMagnitude": 0.0,
                     "shakeOffset": {
                         "x": 0.0,
                         "y": 0.0
                     },
-                    "targetRotation": 4.8062591552734375,
+                    "targetRotation": 0.0,
                     "targetZoom": 1.0,
                     "type": "FancyCameraComponent",
                     "view_size": {
@@ -59,7 +59,7 @@
                 null,
                 {
                     "position": {
-                        "x": 105.55510711669922,
+                        "x": 100.0,
                         "y": 331.0
                     },
                     "scale": {

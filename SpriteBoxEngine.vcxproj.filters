@@ -51,7 +51,7 @@
     <ClCompile Include="Engine\src\Core\ECS\RigidBodyComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="imgui-docking\imgui-SFML.cpp">
+    <ClCompile Include="Engine\src\Core\LineIntersectionTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -111,6 +111,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Engine\include\Physics\Impulse2DLite.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\include\Maths\Line2.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

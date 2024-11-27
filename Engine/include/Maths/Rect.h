@@ -1,6 +1,7 @@
 #pragma once
 #include <algorithm>
 
+#include "Line2.h"
 #include "Vector2.h"
 
 class Rect
@@ -185,6 +186,56 @@ public:
 	Rect operator* (const Vector2& p_vector) 
 	{
 		return { Top, Left, Top + Height * p_vector.y, Left + Width * p_vector.x };
+	}
+
+	Vector2 RayCastIntersection(const Line2& p_ray)
+	{
+		// Define the sides of the rectangle
+		Line2 topSide{ {Left, Top}, {Right, Top} };
+		Line2 leftSide{ {Left, Top}, {Left, Bottom} };
+		Line2 rightSide{ {Right, Top}, {Right, Bottom} };
+		Line2 bottomSide{ {Left, Bottom}, {Right, Bottom} };
+
+		// Initialize the closest intersection point to a large value
+		Vector2 closestIntersectPoint = { std::numeric_limits<float>::max(), std::numeric_limits<float>::max() };
+		bool intersectionFound = false;
+
+		// Check intersections with each side of the rectangle
+		Vector2 intersectPoint = Line2::LineIntersection(p_ray, topSide);
+		if (intersectPoint != Vector2::Zero())
+		{
+			closestIntersectPoint = intersectPoint;
+			intersectionFound = true;
+		}
+
+		intersectPoint = Line2::LineIntersection(p_ray, leftSide);
+		if (intersectPoint != Vector2::Zero() && Vector2::Distance(p_ray.start, intersectPoint) < Vector2::Distance(p_ray.start, closestIntersectPoint))
+		{
+			closestIntersectPoint = intersectPoint;
+			intersectionFound = true;
+		}
+
+		intersectPoint = Line2::LineIntersection(p_ray, rightSide);
+		if (intersectPoint != Vector2::Zero() && Vector2::Distance(p_ray.start, intersectPoint) < Vector2::Distance(p_ray.start, closestIntersectPoint))
+		{
+			closestIntersectPoint = intersectPoint;
+			intersectionFound = true;
+		}
+
+		intersectPoint = Line2::LineIntersection(p_ray, bottomSide);
+		if (intersectPoint != Vector2::Zero() && Vector2::Distance(p_ray.start, intersectPoint) < Vector2::Distance(p_ray.start, closestIntersectPoint))
+		{
+			closestIntersectPoint = intersectPoint;
+			intersectionFound = true;
+		}
+
+		// If no intersection was found, return {0, 0}
+		if (!intersectionFound)
+		{
+			return { 0, 0 };
+		}
+
+		return closestIntersectPoint;
 	}
 
 };

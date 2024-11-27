@@ -2,6 +2,6 @@
 
 int main()
 {
-    RunTests();
+    LineIntersectionTest();
     return 0;
 }
