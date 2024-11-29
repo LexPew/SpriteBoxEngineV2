@@ -2,6 +2,7 @@
 
 int main()
 {
-    LineIntersectionTest();
+	RunTests();
+    //LineIntersectionTest();
     return 0;
 }

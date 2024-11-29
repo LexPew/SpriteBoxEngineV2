@@ -105,9 +105,16 @@ void RunTests()
         window.clear();
         RectangleBody* rigidbody = player->GetComponent<RigidBodyComponent>()->GetBodyPtr();
 
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
         {
-            player->GetComponent<RigidBodyComponent>()->GetBody().ApplyForce(Vector2(0, -500));
+            std::cout << "Angle: " << Vector2(0, -1).GetAngle() << std::endl;
+            if (Physics::RayCast(player->GetTransform()->GetPosition(), { 0,-1 }, 70, rigidbody))
+            {
+                player->GetComponent<RigidBodyComponent>()->GetBody().ApplyForce(Vector2(0, -1000));
+            }
+
+
+
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q)) {
 			player->GetComponent<FancyCameraComponent>()
@@ -149,21 +156,10 @@ void RunTests()
                 player->GetComponent<SpriteComponent>()->PlayAnimation("Idle");
             }
         }
-		
+
 
         sceneManager.Update(deltaTime);
         sceneManager.Render(renderer);
-
-        // Debug render for rigid bodies
-        for (const auto& entity : scene->GetEntities())
-        {
-
-            if (auto rigidBody = entity->GetComponent<RigidBodyComponent>())
-            {
-
-                rigidBody->DebugRender(window);
-            }
-        }
 
         window.display();
     }

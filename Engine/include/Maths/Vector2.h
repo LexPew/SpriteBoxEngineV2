@@ -268,7 +268,10 @@ public:
 		y = yComponent;
 	}
 
-
+	float GetAngle() const
+	{
+		return (atan2(x, y) * 57.29);
+	}
 };
 
 

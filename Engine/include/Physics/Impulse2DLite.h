@@ -101,7 +101,7 @@ public:
 	RectangleBody(const Vector2& p_position, const Vector2& p_velocity, const Vector2& p_acceleration, const Vector2& p_force, const float p_mass, const float p_restitution, const float p_damping, const Rect& p_rect)
 		: Body(p_position, p_velocity, p_acceleration, p_force, p_mass, p_restitution, p_damping), rect(p_rect) {
 	}
-	const Rect& GetRect() const { return rect; }
+	Rect& GetRect(){ return rect; }
 	void SetRect(const Rect& p_rect) { rect = p_rect; }
 
 
@@ -120,13 +120,7 @@ public:
 
 };
 
-struct RaycastHit
-{
-	RectangleBody* body;
-	Vector2 point;
-	Vector2 normal;
-	float distance;
-};
+
 
 
 
@@ -307,4 +301,24 @@ public:
 			}
 		}
 	}
+
+	static bool RayCast(const Vector2& p_start, const Vector2& p_direction, const float p_length, const RectangleBody* p_ignoreBody = nullptr)
+	{
+		for (auto& body : GetInstance()->m_bodies)
+		{
+			if (body == p_ignoreBody)
+			{
+				continue;
+			}
+
+			if (body->GetRect().RayCastIntersection(Line2(p_start, p_length, p_start.GetAngle())) != Vector2::Zero())
+			{
+				return true;
+			}
+		}
+		return false;
+	}
 };
+
+
+

@@ -49,16 +49,6 @@ public:
     {
         // Render the rigid body component if necessary
     }
-    void DebugRender(sf::RenderWindow& window)
-    {
-        sf::RectangleShape rectShape;
-        rectShape.setPosition(body->GetPosition().x, body->GetPosition().y);
-        rectShape.setSize(sf::Vector2f(body->GetRect().Width, body->GetRect().Height));
-        rectShape.setFillColor(sf::Color::Transparent);
-        rectShape.setOutlineColor(sf::Color::Red);
-        rectShape.setOutlineThickness(1.0f);
-        window.draw(rectShape);
-    }
     void Serialize(nlohmann::json& p_json) override
     {
 

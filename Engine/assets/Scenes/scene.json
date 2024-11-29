@@ -6,8 +6,8 @@
                 null,
                 {
                     "position": {
-                        "x": -7.364479064941406,
-                        "y": -104.43675231933594
+                        "x": 28.006643295288086,
+                        "y": 331.0
                     },
                     "scale": {
                         "x": 2.0,
@@ -17,7 +17,7 @@
                 },
                 {
                     "currentAnimation": "Idle",
-                    "flipped": true,
+                    "flipped": false,
                     "sprite_id": "Adventurer",
                     "type": "SpriteComponent"
                 },
@@ -59,7 +59,7 @@
                 null,
                 {
                     "position": {
-                        "x": 100.0,
+                        "x": 125.61369323730469,
                         "y": 331.0
                     },
                     "scale": {
