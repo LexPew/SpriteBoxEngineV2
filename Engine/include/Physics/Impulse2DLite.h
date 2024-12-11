@@ -1,7 +1,7 @@
 #pragma once
 #include "Maths/Vector2.h"
 #include "Maths/Rect.h"
-
+#include "Utils/json.hpp"
 
 
 
@@ -90,6 +90,29 @@ public:
 	void SetRestitution(const float p_restitution) { restitution = p_restitution; }
 	void SetDamping(const float p_damping) { damping = p_damping; }
 
+	virtual void Serialize(nlohmann::json& p_json, const Body& p_body)
+	{
+		p_json = nlohmann::json{
+			{"position", p_body.position},
+			{"velocity", p_body.velocity},
+			{"acceleration", p_body.acceleration},
+			{"force", p_body.force},
+			{"inverseMass", p_body.inverseMass},
+			{"restitution", p_body.restitution},
+			{"damping", p_body.damping}
+		};
+	}
+	virtual void Deserialize(const nlohmann::json& p_json, Body& p_body)
+	{
+		p_json.at("position").get_to(p_body.position);
+		p_json.at("velocity").get_to(p_body.velocity);
+		p_json.at("acceleration").get_to(p_body.acceleration);
+		p_json.at("force").get_to(p_body.force);
+		p_json.at("inverseMass").get_to(p_body.inverseMass);
+		p_json.at("restitution").get_to(p_body.restitution);
+		p_json.at("damping").get_to(p_body.damping);
+	}
+
 };
 
 class RectangleBody : public Body
@@ -117,7 +140,17 @@ public:
 		rect.SetPosition(position);
 	}
 
+	void Serialize(nlohmann::json& p_json, const Body& p_body) override
+	{
+		Body::Serialize(p_json, p_body);
+		//p_json["rect"] = p_body.rect;
+	}
 
+	void Deserialize(const nlohmann::json& p_json, Body& p_body) override
+	{
+		Body::Deserialize(p_json, p_body);
+		//p_json.at("rect").get_to(p_body.rect);
+	}
 };
 
 

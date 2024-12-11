@@ -1,5 +1,6 @@
 #include "Core/ECS/Entity.h"
 #include "Core/AssetManager.h"
+#include "Core/ECS/RigidBodyComponent.h"
 #include "Core/ECS/CamSys/FancyCameraComponent.h"
 #include "Core/ECS/CamSys/RawCameraComponent.h"
 #include "Core/ECS/SpriteComponent.h"
@@ -75,6 +76,12 @@ void Entity::Deserialize(const nlohmann::json& p_json)
             auto fancyCamera = std::make_shared<FancyCameraComponent>();
             fancyCamera->Deserialize(component_json);
             AddComponent(fancyCamera);
+        }
+        else if(type == "RigidBodyComponent")
+        {
+            auto rigidbodyComponent = std::make_shared<RigidBodyComponent>();
+            rigidbodyComponent->Deserialize(component_json);
+            AddComponent(rigidbodyComponent);
         }
         // Add other component types here future me
     }

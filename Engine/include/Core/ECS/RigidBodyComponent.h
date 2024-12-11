@@ -12,13 +12,18 @@ private:
     RectangleBody* body;
     Vector2 originOffset;
 
+
+
 public:
+    RigidBodyComponent() {}; // Default constructor
+
     RigidBodyComponent(float p_mass, float p_restitution, const Rect& p_rect)
         : body(new RectangleBody( Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 0), p_mass, p_restitution, 0.99f, p_rect) ){
     }
     RigidBodyComponent(const Vector2& p_position, const Vector2& p_velocity, const Vector2& p_acceleration, const Vector2& p_force, float p_mass, float p_restitution, float p_damping, const Rect& p_rect)
         : body(new RectangleBody( p_position, p_velocity, p_acceleration, p_force, p_mass, p_restitution, p_damping, p_rect) ){
     }
+
 
 
     void Start() override
@@ -51,12 +56,18 @@ public:
     }
     void Serialize(nlohmann::json& p_json) override
     {
-
+        p_json["type"] = "RigidBodyComponent";
+        nlohmann::json bodyJson;
+        body->Serialize(bodyJson, *body);
+        p_json["body"] = bodyJson;
+		p_json["originOffset"] = originOffset;
     }
 
     void Deserialize(const nlohmann::json& p_json) override
     {
-
+		nlohmann::json bodyJson = p_json.at("body");
+		body->Deserialize(bodyJson, *body);
+		p_json.at("originOffset").get_to(originOffset);
     }
 
     RectangleBody& GetBody() { return *body; }

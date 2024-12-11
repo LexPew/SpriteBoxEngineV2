@@ -3,11 +3,38 @@
         {
             "active": true,
             "components": [
-                null,
+                {
+                    "body": {
+                        "acceleration": {
+                            "x": 0.0,
+                            "y": 0.0
+                        },
+                        "damping": 0.9900000095367432,
+                        "force": {
+                            "x": 0.0,
+                            "y": 0.0
+                        },
+                        "inverseMass": 1.0,
+                        "position": {
+                            "x": 63.0,
+                            "y": 146.47254943847656
+                        },
+                        "restitution": 0.20000000298023224,
+                        "velocity": {
+                            "x": 0.0,
+                            "y": 115.53321075439453
+                        }
+                    },
+                    "originOffset": {
+                        "x": 37.0,
+                        "y": 37.0
+                    },
+                    "type": "RigidBodyComponent"
+                },
                 {
                     "position": {
-                        "x": 28.006643295288086,
-                        "y": 331.0
+                        "x": 100.0,
+                        "y": 183.47254943847656
                     },
                     "scale": {
                         "x": 2.0,
@@ -56,10 +83,37 @@
         {
             "active": true,
             "components": [
-                null,
+                {
+                    "body": {
+                        "acceleration": {
+                            "x": 0.0,
+                            "y": 0.0
+                        },
+                        "damping": 0.9900000095367432,
+                        "force": {
+                            "x": 0.0,
+                            "y": 0.0
+                        },
+                        "inverseMass": 1.0,
+                        "position": {
+                            "x": 63.0,
+                            "y": 294.0
+                        },
+                        "restitution": 0.20000000298023224,
+                        "velocity": {
+                            "x": 0.0,
+                            "y": 8.0
+                        }
+                    },
+                    "originOffset": {
+                        "x": 37.0,
+                        "y": 37.0
+                    },
+                    "type": "RigidBodyComponent"
+                },
                 {
                     "position": {
-                        "x": 125.61369323730469,
+                        "x": 100.0,
                         "y": 331.0
                     },
                     "scale": {
@@ -80,7 +134,34 @@
         {
             "active": true,
             "components": [
-                null,
+                {
+                    "body": {
+                        "acceleration": {
+                            "x": 0.0,
+                            "y": 0.0
+                        },
+                        "damping": 0.9900000095367432,
+                        "force": {
+                            "x": 0.0,
+                            "y": 0.0
+                        },
+                        "inverseMass": 0.0,
+                        "position": {
+                            "x": -250.0,
+                            "y": 368.0
+                        },
+                        "restitution": 0.20000000298023224,
+                        "velocity": {
+                            "x": 0.0,
+                            "y": 0.0
+                        }
+                    },
+                    "originOffset": {
+                        "x": 250.0,
+                        "y": 32.0
+                    },
+                    "type": "RigidBodyComponent"
+                },
                 {
                     "position": {
                         "x": 0.0,
