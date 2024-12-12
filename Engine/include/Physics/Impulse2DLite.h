@@ -186,121 +186,110 @@ public:
     {
         return m_bodies;
     }
- void ResolveCollision(std::shared_ptr<RectangleBody> p_bodyA, std::shared_ptr<RectangleBody> p_bodyB, const Vector2& p_penetration)
-{
-
-
-
-    Vector2 penetrationOverlap = p_penetration;
-    Vector2 collisionNormal;
-
-    // Solve along the smallest axis
-    if (penetrationOverlap.x < penetrationOverlap.y)
+    void ResolveCollision(std::shared_ptr<RectangleBody> p_bodyA, std::shared_ptr<RectangleBody> p_bodyB, const Vector2& p_penetration)
     {
-        // X axis is smaller
-        collisionNormal = { p_bodyA->GetRect().Left < p_bodyB->GetRect().Left ? -1.0f : 1.0f, 0 };
-        penetrationOverlap = collisionNormal * penetrationOverlap.x;
-    }
-    else
-    {
-        collisionNormal = { 0, p_bodyA->GetRect().Top < p_bodyB->GetRect().Top ? -1.0f : 1.0f };
-        penetrationOverlap = collisionNormal * penetrationOverlap.y;
-        // Y axis is smaller
-    }
+        Vector2 penetrationOverlap = p_penetration;
+        Vector2 collisionNormal;
 
-    // Resolve overlap symmetrically
-    if (!p_bodyA->IsStatic() && !p_bodyB->IsStatic())
-    {
-        p_bodyA->SetPosition(p_bodyA->GetPosition() + penetrationOverlap * 0.5f);
-        p_bodyB->SetPosition(p_bodyB->GetPosition() - penetrationOverlap * 0.5f);
-    }
-    else if (!p_bodyA->IsStatic())
-    {
-        p_bodyA->SetPosition(p_bodyA->GetPosition() + penetrationOverlap);
-    }
-    else if (!p_bodyB->IsStatic())
-    {
-        p_bodyB->SetPosition(p_bodyB->GetPosition() - penetrationOverlap);
-    }
+        // Solve along the smallest axis
+        if (std::abs(penetrationOverlap.x) < std::abs(penetrationOverlap.y))
+        {
+            collisionNormal = { p_bodyA->GetRect().Left < p_bodyB->GetRect().Left ? -1.0f : 1.0f, 0 };
+            penetrationOverlap = collisionNormal * std::abs(penetrationOverlap.x);
+        }
+        else
+        {
+            collisionNormal = { 0, p_bodyA->GetRect().Top < p_bodyB->GetRect().Top ? -1.0f : 1.0f };
+            penetrationOverlap = collisionNormal * std::abs(penetrationOverlap.y);
+        }
 
-    // Calculate relative velocity
-    Vector2 relativeVelocity = p_bodyB->GetVelocity() - p_bodyA->GetVelocity();
+        // Resolve overlap symmetrically
+        if (!p_bodyA->IsStatic() && !p_bodyB->IsStatic())
+        {
+            p_bodyA->SetPosition(p_bodyA->GetPosition() + penetrationOverlap * 0.5f);
+            p_bodyB->SetPosition(p_bodyB->GetPosition() - penetrationOverlap * 0.5f);
+        }
+        else if (!p_bodyA->IsStatic())
+        {
+            p_bodyA->SetPosition(p_bodyA->GetPosition() + penetrationOverlap);
+        }
+        else if (!p_bodyB->IsStatic())
+        {
+            p_bodyB->SetPosition(p_bodyB->GetPosition() - penetrationOverlap);
+        }
 
-    // Calculate relative velocity in terms of the normal direction
-    float velocityAlongNormal = relativeVelocity * collisionNormal;
+        // Calculate relative velocity
+        Vector2 relativeVelocity = p_bodyB->GetVelocity() - p_bodyA->GetVelocity();
 
-    // Prevent velocity build-up when colliding with the floor 
-    if (collisionNormal.y == 1.0f || collisionNormal.y == -1.0f)
-    {
+        // Calculate relative velocity along the collision normal
+        float velocityAlongNormal = relativeVelocity * collisionNormal;
+
+        // Do not resolve if velocities are separating
+        if (velocityAlongNormal > 0)
+            return;
+
+        // Calculate restitution
+        float e = std::min(p_bodyA->GetRestitution(), p_bodyB->GetRestitution());
+
+        // Calculate impulse scalar
+        float j = -(1 + e) * velocityAlongNormal;
+        j /= p_bodyA->GetInverseMass() + p_bodyB->GetInverseMass();
+
+        // Apply normal impulse
+        const Vector2 impulse = collisionNormal * j;
         if (!p_bodyA->IsStatic())
         {
-            Vector2 velocity = p_bodyA->GetVelocity();
-            velocity.y = std::min(gravity.y * 0.1f, velocity.y); // Set vertical velocity to a small downward value
-            p_bodyA->SetVelocity(velocity);
+            p_bodyA->SetVelocity(p_bodyA->GetVelocity() - impulse * p_bodyA->GetInverseMass());
         }
         if (!p_bodyB->IsStatic())
         {
-            Vector2 velocity = p_bodyB->GetVelocity();
-            velocity.y = std::min(gravity.y * 0.1f, velocity.y); // Set vertical velocity to a small downward value
-            p_bodyB->SetVelocity(velocity);
+            p_bodyB->SetVelocity(p_bodyB->GetVelocity() + impulse * p_bodyB->GetInverseMass());
         }
-    }
 
-    // Do not resolve if velocities are separating
-    if (velocityAlongNormal > 0)
-        return;
+        // Calculate tangent vector
+        Vector2 tangent = relativeVelocity - (collisionNormal * velocityAlongNormal);
+        tangent = tangent.Normalize();
 
-    // Calculate restitution
-    float e = std::min(p_bodyA->GetRestitution(), p_bodyB->GetRestitution());
+        // Calculate friction impulse
+        float jt = -relativeVelocity * tangent;
+        jt /= p_bodyA->GetInverseMass() + p_bodyB->GetInverseMass();
 
-    // Calculate impulse scalar
-    float j = -(1 + e) * velocityAlongNormal;
-    j /= p_bodyA->GetInverseMass() + p_bodyB->GetInverseMass();
+        // Coulomb's law: friction coefficient
+		float arbitraryFrictionValue = 0.5f; //TODO: Change this to a value that can be set by the user in the future for more control (Ice, Sand, etc)
+        jt = std::clamp(jt, -arbitraryFrictionValue * j, arbitraryFrictionValue * j);
 
-    // Apply impulse
-    const Vector2 impulse = collisionNormal * j;
-    if (!p_bodyA->IsStatic())
-    {
-        p_bodyA->SetVelocity(p_bodyA->GetVelocity() - impulse * p_bodyA->GetInverseMass());
-    }
-    if (!p_bodyB->IsStatic())
-    {
-        p_bodyB->SetVelocity(p_bodyB->GetVelocity() + impulse * p_bodyB->GetInverseMass());
-    }
 
-    // Apply friction to reduce gliding effect
-    if (collisionNormal.y != 0)
-    {
-        float friction = 0.8f; // Adjust friction value as needed
+        const Vector2 frictionImpulse = tangent * jt;
         if (!p_bodyA->IsStatic())
         {
-            Vector2 velocity = p_bodyA->GetVelocity();
-            velocity.x *= friction;
-            p_bodyA->SetVelocity(velocity);
+            p_bodyA->SetVelocity(p_bodyA->GetVelocity() - frictionImpulse * p_bodyA->GetInverseMass());
         }
         if (!p_bodyB->IsStatic())
         {
-            Vector2 velocity = p_bodyB->GetVelocity();
-            velocity.x *= friction;
-            p_bodyB->SetVelocity(velocity);
+            p_bodyB->SetVelocity(p_bodyB->GetVelocity() + frictionImpulse * p_bodyB->GetInverseMass());
         }
     }
-}
 
-    void CheckCollision(std::shared_ptr<RectangleBody> p_bodyA, std::shared_ptr<RectangleBody> p_bodyB)
-    {
-        // Check if the two rectangles are intersecting
-        if (p_bodyA->GetRect().Intersects(p_bodyB->GetRect()))
-        {
-            const Vector2 penetration = p_bodyA->GetRect().CalculatePenetration(p_bodyB->GetRect());
 
-            // If there is a penetration
-            if (penetration.x > 0 && penetration.y > 0)
-            {
-                ResolveCollision(p_bodyA, p_bodyB, penetration);
-            }
-        }
-    }
+ void CheckCollision(std::shared_ptr<RectangleBody> p_bodyA, std::shared_ptr<RectangleBody> p_bodyB)
+ {
+     // Check if the two rectangles are intersecting
+     if (p_bodyA->GetRect().Intersects(p_bodyB->GetRect()))
+     {
+		 std::cout << "Collision detected" << std::endl;
+         // Calculate the penetration vector
+         const Vector2 penetration = p_bodyA->GetRect().CalculatePenetration(p_bodyB->GetRect());
+
+         // If there is a penetration (non-zero vector)
+         if (penetration != Vector2::Zero())
+         {
+			 std::cout << "Collision resolved" << std::endl;
+			 std::cout << "Penetration: " << penetration.x << ", " << penetration.y << std::endl;
+             ResolveCollision(p_bodyA, p_bodyB, penetration);
+         }
+     }
+ }
+
 
     void Update(float p_deltaTime)
     {

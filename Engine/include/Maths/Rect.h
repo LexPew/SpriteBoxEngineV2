@@ -137,23 +137,37 @@ public:
 			Top > p_otherBox.Bottom ||
 			Bottom < p_otherBox.Top);
 	}
-
 	Vector2 CalculatePenetration(const Rect& p_otherBox) const
 	{
-		// Ensure the rectangles intersect
-		if (!Intersects(p_otherBox))
+		// Calculate overlap on each axis
+		float overlapX = std::min(Right, p_otherBox.Right) - std::max(Left, p_otherBox.Left);
+		float overlapY = std::min(Bottom, p_otherBox.Bottom) - std::max(Top, p_otherBox.Top);
+
+		// Determine the smallest penetration axis
+		if (overlapX < overlapY)
 		{
-			return { 0, 0 }; // No penetration if there is no intersection
+			// Penetration along the X-axis
+			if (Left < p_otherBox.Left)
+			{
+				return { -overlapX, 0.0f };
+			}
+			else
+			{
+				return { overlapX, 0.0f };
+			}
 		}
-
-		// Calculate the overlap in the X dimension
-		float overlapX = std::max(0.0f, std::min(Right, p_otherBox.Right) - std::max(Left, p_otherBox.Left));
-
-		// Calculate the overlap in the Y dimension
-		float overlapY = std::max(0.0f, std::min(Bottom, p_otherBox.Bottom) - std::max(Top, p_otherBox.Top));
-
-		// Return the penetration vector
-		return { overlapX, overlapY };
+		else
+		{
+			// Penetration along the Y-axis
+			if (Top < p_otherBox.Top)
+			{
+				return { 0.0f, -overlapY };
+			}
+			else
+			{
+				return { 0.0f, overlapY };
+			}
+		}
 	}
 
 	void operator*= (float p_scalar)

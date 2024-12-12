@@ -32,6 +32,7 @@ void inline SmallGameTest()
 	InputManager inputManager;
 	inputManager.RegisterKey(sf::Keyboard::Key::A);
 	inputManager.RegisterKey(sf::Keyboard::Key::D);
+	inputManager.RegisterKey(sf::Keyboard::Key::R);
 
 	//Create the renderer and window
 	sf::RenderWindow window(sf::VideoMode(800, 600), "Small Game Test");
@@ -49,7 +50,7 @@ void inline SmallGameTest()
 	player->AddComponent(std::make_shared<FancyCameraComponent>(Vector2(800, 600)));
 
 	//Create the floor entity
-	auto floor = std::make_shared<Entity>("Floor", Vector2(0, 800), Vector2(1, 1));
+	auto floor = std::make_shared<Entity>("Floor", Vector2(0, 200), Vector2(1, 1));
 	floor->GetTransform()->SetPosition({ 0,600 });
 	floor->AddComponent(std::make_shared<RigidBodyComponent>(0.0f, 0.2f, Rect(0, 0, 64, 500)));
 
@@ -93,14 +94,14 @@ void inline SmallGameTest()
 
 		inputManager.Update();
 		std::shared_ptr<RectangleBody> r = player->GetComponent<RigidBodyComponent>()->GetBodyPtr();
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+		if (inputManager.IsPressed(sf::Keyboard::A))
 		{
 			player->GetComponent<SpriteComponent>()->PlayAnimation("Walk");
 			player->GetComponent<SpriteComponent>()->Flip(true);
 			r->SetVelocity({ -100, r->GetVelocity().y });
 			//player->GetTransform()->SetPosition(player->GetTransform()->GetPosition() + Vector2(-100, 0) * deltaTime);
 		}
-		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+		else if (inputManager.IsPressed(sf::Keyboard::D))
 		{
 			player->GetComponent<SpriteComponent>()->PlayAnimation("Walk");
 			player->GetComponent<SpriteComponent>()->Flip(false);
@@ -112,6 +113,12 @@ void inline SmallGameTest()
 			player->GetComponent<SpriteComponent>()->PlayAnimation("Idle");
 
 			r->SetVelocity({ 0, r->GetVelocity().y });
+		}
+
+		if(inputManager.IsPressed(sf::Keyboard::R))
+		{
+			player->GetTransform()->SetPosition({0,0});
+			player->GetComponent<RigidBodyComponent>()->GetBody().SetPosition({ 0,0 });
 		}
 
 
