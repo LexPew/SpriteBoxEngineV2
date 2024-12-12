@@ -122,10 +122,14 @@
     <ClInclude Include="Engine\include\Maths\Line2.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+<<<<<<< Updated upstream
     <ClInclude Include="Engine\include\Core\Input\Controller.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ComponentFactory.h">
+=======
+    <ClInclude Include="Engine\include\Core\CerealTest.h">
+>>>>>>> Stashed changes
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

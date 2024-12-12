@@ -42,7 +42,6 @@
     <ClInclude Include="Engine\include\Core\AssetManager.h" />
     <ClInclude Include="Engine\include\Core\ECS\RigidBodyComponent.h" />
     <ClInclude Include="Engine\include\Core\EngineTest.h" />
-    <ClInclude Include="Engine\include\Core\Input\Controller.h" />
     <ClInclude Include="Engine\include\Core\Scene.h" />
     <ClInclude Include="Engine\include\Core\SceneManager.h" />
     <ClInclude Include="Engine\include\Core\Sprite.h" />

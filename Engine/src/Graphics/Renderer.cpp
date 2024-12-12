@@ -8,7 +8,7 @@ void Renderer::SetView(const sf::View& p_view)
 void Renderer::DrawSprite(const SpriteData& p_spriteData, const int p_frameIndex,
     const Vector2& p_position, const Vector2& p_scale, bool p_flipped)
 {
-    sf::Sprite sprite;
+
     sprite.setTexture(p_spriteData.texture);
 
 

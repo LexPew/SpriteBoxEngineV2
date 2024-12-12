@@ -7,7 +7,7 @@ class Renderer
 {
 private:
     sf::RenderWindow* window;
-
+	sf::Sprite sprite;
 public:
     
     Renderer(sf::RenderWindow* p_window) : window(p_window) {};
