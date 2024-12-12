@@ -1,11 +1,12 @@
 #pragma once
 #include <memory>
-#include <typeindex>
 #include <unordered_map>
-
-
+#include <string>
 #include "Component.h"
 #include "TransformComponent.h"
+#include "cereal/types/unordered_map.hpp"
+#include "cereal/types/memory.hpp"
+#include "cereal/types/string.hpp"
 
 class Renderer;
 
@@ -14,25 +15,31 @@ class Entity
 private:
     std::string name{ "Entity" };
     bool active{ true };
-    std::unordered_map<std::type_index, std::shared_ptr<Component>> m_components;
+    std::unordered_map<std::string, std::shared_ptr<Component>> m_components;
 public:
-	Entity()
-	{
-        AddTransform(Vector2::Zero(), Vector2::Zero());
-	}
-	Entity(const std::string& p_name) : name(p_name)
-	{
-        AddTransform(Vector2::Zero(), Vector2::Zero());
-	}
-
-	Entity(const std::string& p_name, const Vector2& p_position, const Vector2& p_scale) : name(p_name)
+    Entity()
     {
-        AddTransform(p_position,   p_scale);
+        AddTransform(Vector2::Zero(), Vector2::Zero());
+    }
+    Entity(const std::string& p_name) : name(p_name)
+    {
+        AddTransform(Vector2::Zero(), Vector2::Zero());
     }
 
-    ~Entity() = default;
+    Entity(const std::string& p_name, const Vector2& p_position, const Vector2& p_scale) : name(p_name)
+    {
+        AddTransform(p_position, p_scale);
+    }
 
-	std::string GetName() const { return name; }
+    ~Entity()
+    {
+        for (auto m : m_components)
+        {
+            m.second.reset();
+        }
+    }
+
+    std::string GetName() const { return name; }
     void AddTransform(const Vector2& p_position, const Vector2& p_scale);
     /**
      * Adds a component to this entity if we don't have one already
@@ -61,24 +68,36 @@ public:
     void Render(Renderer& p_renderer);
 
     /**
-	 * Returns the transform component of this entity
-	 */
-	std::shared_ptr<TransformComponent> GetTransform() { return GetComponent<TransformComponent>(); }
+     * Returns the transform component of this entity
+     */
+    std::shared_ptr<TransformComponent> GetTransform() { return GetComponent<TransformComponent>(); }
 
-    void Serialize(nlohmann::json& p_json);
-	
-    void Deserialize(const nlohmann::json& p_json);
-                    
+
+    template <class Archive>
+    void save(Archive& ar) const
+    {
+        ar(name, active, m_components);
+    }
+
+    template <class Archive>
+    void load(Archive& ar)
+    {
+		ar(name, active, m_components);
+		for (auto& pair : m_components)
+		{
+			pair.second->owner = this;
+		}
+    }
 
 };
 
 template <typename T>
 bool Entity::AddComponent(std::shared_ptr<T> p_component)
 {
-    auto typeIndex = std::type_index(typeid(T));
-    if (m_components.find(typeIndex) == m_components.end())
+    std::string typeName = typeid(T).name();
+    if (m_components.find(typeName) == m_components.end())
     {
-        m_components[typeIndex] = p_component;
+        m_components[typeName] = p_component;
         p_component->owner = this;
         return true;
     }
@@ -88,8 +107,8 @@ bool Entity::AddComponent(std::shared_ptr<T> p_component)
 template<typename T>
 std::shared_ptr<T> Entity::GetComponent()
 {
-    auto typeIndex = std::type_index(typeid(T));
-    auto it = m_components.find(typeIndex);
+    std::string typeName = typeid(T).name();
+    auto it = m_components.find(typeName);
     if (it != m_components.end())
     {
         return std::dynamic_pointer_cast<T>(it->second);

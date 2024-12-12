@@ -27,8 +27,21 @@ public:
 	void Start() override;
 	void Update(float p_deltaTime) override;
 	void Render(Renderer& p_renderer) override;
-	void Serialize(nlohmann::json& p_json) override;
-	void Deserialize(const nlohmann::json& p_json) override;
 
+	const Vector2& GetViewSize() const { return viewSize; }
+	template<class Archive>
+	void save(Archive& p_archive) const
+	{
+		p_archive(viewSize.x, viewSize.y);
+	}
+
+	template<class Archive>
+	void load(Archive& p_archive)
+	{
+		p_archive(viewSize.x, viewSize.y);
+		cameraView.setSize(viewSize.x, viewSize.y);
+	}
 };
+CEREAL_REGISTER_TYPE(RawCameraComponent)
+CEREAL_REGISTER_POLYMORPHIC_RELATION(Component, RawCameraComponent)
 

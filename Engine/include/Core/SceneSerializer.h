@@ -8,7 +8,7 @@ public:
 	static void SaveScene(Scene& p_scene, const std::string& p_sceneFileName)
 	{
 		nlohmann::json sceneJson;
-		p_scene.Serialize(sceneJson);
+		//p_scene.Serialize(sceneJson);
 		std::ofstream file(AssetManager::GetInstance().ResolvePath("Scenes/") + p_sceneFileName);
 
 		file << sceneJson.dump(4);
@@ -20,7 +20,7 @@ public:
 		nlohmann::json sceneJson;
 		file >> sceneJson;
 		Scene loadedScene;
-		loadedScene.Deserialize(sceneJson);
+		//loadedScene.Deserialize(sceneJson);
 		return loadedScene;
 	}
 };

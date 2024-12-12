@@ -54,25 +54,4 @@ public:
         }
     }
 
-    void Serialize(nlohmann::json& p_json)
-    {
-		p_json["entities"] = nlohmann::json::array();
-		for (auto& entity : m_entities)
-		{
-			nlohmann::json entityJson;
-            entity->Serialize(entityJson);
-            p_json["entities"].push_back(entityJson);
-		}
-    }
-
-    void Deserialize(const nlohmann::json& p_json)
-    {
-		for (const auto& entity_json : p_json.at("entities"))
-		{
-			auto entity = std::make_shared<Entity>();
-			entity->Deserialize(entity_json);
-            AddEntity(entity);
-		}
-    }
-
 };

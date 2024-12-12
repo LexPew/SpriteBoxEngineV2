@@ -59,60 +59,6 @@ void FancyCameraComponent::Render(Renderer& p_renderer)
 	RawCameraComponent::Render(p_renderer);
 }
 
-void FancyCameraComponent::Serialize(nlohmann::json& p_json)
-{
-	p_json = nlohmann::json{
-		{"type", "FancyCameraComponent"},
-		{"view_size", viewSize}, 
-		{"positionSmoothingFactor", positionSmoothingFactor},
-		{"positionSmoothing", positionSmoothing},
-		{"zoomSmoothing", zoomSmoothing},
-		{"zoomSmoothingFactor", zoomSmoothingFactor},
-		{"targetZoom", targetZoom},
-		{"currentZoom", currentZoom}, 
-		{"maxZoomOut", maxZoomOut},
-		{"maxZoomIn", maxZoomIn},
-		{"rotationSmoothing", rotationSmoothing},
-		{"rotationSmoothingFactor", rotationSmoothingFactor},
-		{"targetRotation", targetRotation},
-		{"currentRotation", currentRotation},
-		{"maxAngle", maxAngle },
-		{"shakeOffset", shakeOffset},
-		{"shakeMagnitude", shakeMagnitude},
-		{"shakeFrequency", shakeFrequency},
-		{"shakeDuration", shakeDuration},
-		{"shakeElapsedTime", shakeElapsedTime},
-		{"isShaking", isShaking}
-		 };
-}
-
-void FancyCameraComponent::Deserialize(const nlohmann::json& p_json)
-{
-	p_json.at("view_size").get_to(viewSize);
-	p_json.at("positionSmoothingFactor").get_to(positionSmoothingFactor);
-	p_json.at("positionSmoothing").get_to(positionSmoothing);
-	p_json.at("zoomSmoothing").get_to(zoomSmoothing);
-	p_json.at("zoomSmoothingFactor").get_to(zoomSmoothingFactor);
-	p_json.at("targetZoom").get_to(targetZoom);
-	p_json.at("currentZoom").get_to(currentZoom);
-	p_json.at("maxZoomOut").get_to(maxZoomOut);
-	p_json.at("maxZoomIn").get_to(maxZoomIn);
-	p_json.at("rotationSmoothing").get_to(rotationSmoothing);
-	p_json.at("rotationSmoothingFactor").get_to(rotationSmoothingFactor);
-	p_json.at("targetRotation").get_to(targetRotation);
-	p_json.at("currentRotation").get_to(currentRotation);
-	p_json.at("maxAngle").get_to(maxAngle);
-	p_json.at("shakeOffset").get_to(shakeOffset);
-	p_json.at("shakeMagnitude").get_to(shakeMagnitude);
-	p_json.at("shakeFrequency").get_to(shakeFrequency);
-	p_json.at("shakeDuration").get_to(shakeDuration);
-	p_json.at("shakeElapsedTime").get_to(shakeElapsedTime);
-	p_json.at("isShaking").get_to(isShaking);
-
-
-
-	cameraView.setSize(viewSize.x, viewSize.y);
-}
 
 float FancyCameraComponent::GetCurrentZoom() const
 {

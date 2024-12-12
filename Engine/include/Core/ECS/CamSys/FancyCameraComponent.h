@@ -1,5 +1,6 @@
 #pragma once
 #include "RawCameraComponent.h"
+class TransformComponent;
 /**
  * Camera component based upon the RawCameraComponent,
  * adds additional functionality such as camera smoothing,
@@ -61,10 +62,6 @@ public:
 
 	void Render(Renderer& p_renderer) override;
 
-	void Serialize(nlohmann::json& p_json) override;
-
-	void Deserialize(const nlohmann::json& p_json) override;
-
 	float GetCurrentZoom() const;
 	float GetCurrentRotation() const;
 
@@ -75,5 +72,63 @@ public:
 	void ApplyCameraShake(float p_deltaTime);
 
 	void AddCameraShake(float p_amplitude, float p_frequency, float p_time);
+
+
+	template<class Archive>
+	void save(Archive& p_archive) const
+	{
+		p_archive(cereal::base_class<RawCameraComponent>(this),
+
+			targetPosition,
+			position,
+			positionSmoothingFactor,
+			positionSmoothing,
+			zoomSmoothing,
+			zoomSmoothingFactor,
+			targetZoom,
+			currentZoom,
+			maxZoomOut,
+			maxZoomIn,
+			rotationSmoothing,
+			rotationSmoothingFactor,
+			targetRotation,
+			currentRotation,
+			maxAngle,
+			shakeOffset,
+			shakeMagnitude,
+			shakeFrequency,
+			shakeDuration,
+			shakeElapsedTime,
+			isShaking);
+	}
+
+	template<class Archive>
+	void load(Archive& p_archive)
+	{
+		p_archive(cereal::base_class<RawCameraComponent>(this),
+			targetPosition,
+			position,
+			positionSmoothingFactor,
+			positionSmoothing,
+			zoomSmoothing,
+			zoomSmoothingFactor,
+			targetZoom,
+			currentZoom,
+			maxZoomOut,
+			maxZoomIn,
+			rotationSmoothing,
+			rotationSmoothingFactor,
+			targetRotation,
+			currentRotation,
+			maxAngle,
+			shakeOffset,
+			shakeMagnitude,
+			shakeFrequency,
+			shakeDuration,
+			shakeElapsedTime,
+			isShaking);
+	}
 };
+CEREAL_REGISTER_TYPE(FancyCameraComponent)
+CEREAL_REGISTER_POLYMORPHIC_RELATION(RawCameraComponent, FancyCameraComponent)
 
