@@ -1,38 +1,38 @@
+// InputManager.cpp
 #include "Core/InputManager.h"
 
-InputManager::InputManager()
-{
+void InputManager::RegisterKey(sf::Keyboard::Key key) {
+    currentKeyState[key] = false;
+    previousKeyState[key] = false;
 }
 
-InputManager::~InputManager()
-{
-}
-void InputManager::Update()
-{
-	for (auto& [key, keyState] : keyStateMap)
-	{
-		keyStateMap[key] = sf::Keyboard::isKeyPressed(key);
-	}
+void InputManager::Update() {
+    for (auto& keyState : currentKeyState) {
+        previousKeyState[keyState.first] = keyState.second;
+        keyState.second = sf::Keyboard::isKeyPressed(keyState.first);
+    }
 }
 
-
-bool InputManager::IsPressed(sf::Keyboard::Key p_key)
-{
-	return sf::Keyboard::isKeyPressed(p_key) && !keyStateMap[p_key];
+bool InputManager::IsPressed(sf::Keyboard::Key key) const {
+    auto it = currentKeyState.find(key);
+    if (it != currentKeyState.end()) {
+        return it->second && !previousKeyState.at(key);
+    }
+    return false;
 }
 
-bool InputManager::IsHeld(sf::Keyboard::Key p_key)
-{
-	return sf::Keyboard::isKeyPressed(p_key);
+bool InputManager::IsHeld(sf::Keyboard::Key key) const {
+    auto it = currentKeyState.find(key);
+    if (it != currentKeyState.end()) {
+        return it->second;
+    }
+    return false;
 }
 
-bool InputManager::IsReleased(sf::Keyboard::Key p_key)
-{
-	return sf::Keyboard::isKeyPressed(p_key) && keyStateMap[p_key];
+bool InputManager::IsReleased(sf::Keyboard::Key key) const {
+    auto it = currentKeyState.find(key);
+    if (it != currentKeyState.end()) {
+        return !it->second && previousKeyState.at(key);
+    }
+    return false;
 }
-
-void InputManager::RegisterKey(sf::Keyboard::Key p_key)
-{
-	keyStateMap[p_key] = false;
-}
-

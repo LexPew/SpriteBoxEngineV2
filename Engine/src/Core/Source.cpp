@@ -1,9 +1,11 @@
 
-#include "Core/CerealTest.h"
-
+#include "Tests/InputSystemTest.h"
+#include "Tests/SmallDemoTest.h"
 int main()
 {
-    RunCerealTest();
+	//InputSystemTest();
+    //RunCerealTest();
     //LineIntersectionTest();
+	SmallGameTest();
     return 0;
 }

@@ -24,6 +24,7 @@
     <ClCompile Include="Engine\src\Core\ECS\Component.cpp" />
     <ClCompile Include="Engine\src\Core\ECS\RigidBodyComponent.cpp" />
     <ClCompile Include="Engine\src\Core\EngineTest.cpp" />
+    <ClCompile Include="Engine\src\Core\InputManager.cpp" />
     <ClCompile Include="Engine\src\Core\Input\Controller.cpp" />
     <ClCompile Include="Engine\src\Core\Source.cpp" />
     <ClCompile Include="Engine\src\Core\ECS\SpriteComponent.cpp" />
@@ -41,6 +42,7 @@
     <ClInclude Include="Engine\include\Core\AssetManager.h" />
     <ClInclude Include="Engine\include\Core\ECS\RigidBodyComponent.h" />
     <ClInclude Include="Engine\include\Core\EngineTest.h" />
+    <ClInclude Include="Engine\include\Core\InputManager.h" />
     <ClInclude Include="Engine\include\Core\Scene.h" />
     <ClInclude Include="Engine\include\Core\SceneManager.h" />
     <ClInclude Include="Engine\include\Core\Sprite.h" />
@@ -56,6 +58,8 @@
     <ClInclude Include="Engine\include\Core\ECS\CamSys\FancyCameraComponent.h" />
     <ClInclude Include="Engine\include\Physics\Impulse2DLite.h" />
     <ClInclude Include="Engine\include\Core\ECS\ScriptComponent.h" />
+    <ClInclude Include="Engine\include\Tests\InputSystemTest.h" />
+    <ClInclude Include="Engine\include\Tests\SmallDemoTest.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine\build\x64\sfml-graphics-d-2.dll" />

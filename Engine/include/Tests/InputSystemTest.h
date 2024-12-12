@@ -34,5 +34,5 @@ void inline InputSystemTest()
 			std::cout << "C key is released" << std::endl;
 		}
 	}
-	
+	std::cout << "Escape key is pressed, exiting" << std::endl;
 }
