@@ -25,6 +25,12 @@ public:
 
 
 	//SERIALIZER
+	template <class Archive>
+	void serialize(Archive& p_archive)
+	{
+		p_archive(x, y);
+	}
+
 	friend void to_json(nlohmann::json& p_json, const Vector2& p_vector)
 	{
 		p_json = nlohmann::json{ {"x", p_vector.x}, {"y", p_vector.y} };

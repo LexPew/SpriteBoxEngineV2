@@ -19,18 +19,4 @@ void RawCameraComponent::Render(Renderer& p_renderer)
 	p_renderer.SetView(cameraView);
 }
 
-void RawCameraComponent::Serialize(nlohmann::json& p_json)
-{
-	p_json = nlohmann::json{ {"type", "RawCameraComponent"},
-		{"view_size", viewSize} };
-}
-
-void RawCameraComponent::Deserialize(const nlohmann::json& p_json)
-{
-	p_json.at("view_size").get_to(viewSize);
-
-
-	cameraView.setSize(viewSize.x, viewSize.y);
-
-}
 

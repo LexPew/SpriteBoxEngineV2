@@ -19,7 +19,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ComponentFactory.cpp" />
     <ClCompile Include="Engine\src\Core\ECS\CamSys\RawCameraComponent.cpp" />
     <ClCompile Include="Engine\src\Core\AssetManager.cpp" />
     <ClCompile Include="Engine\src\Core\ECS\Component.cpp" />
@@ -36,7 +35,7 @@
     <ClCompile Include="Engine\src\Core\LineIntersectionTest.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ComponentFactory.h" />
+    <ClInclude Include="Engine\include\Core\CerealTest.h" />
     <ClInclude Include="Engine\include\Core\ECS\CamSys\RawCameraComponent.h" />
     <ClInclude Include="Engine\include\Core\ECS\Component.h" />
     <ClInclude Include="Engine\include\Core\AssetManager.h" />
@@ -157,7 +156,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>SFML\include;Engine\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\James\source\repos\SpriteBoxEngine\Engine\include\Utils;SFML\include;Engine\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

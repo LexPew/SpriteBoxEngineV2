@@ -14,6 +14,7 @@ private:
     const AnimationData* m_currentAnimation = nullptr;
 
 public:
+    Sprite() = default;
     Sprite(const std::string& p_id, const AssetManager& p_assetManager)
     {
         m_data = p_assetManager.GetSprite(p_id);
@@ -37,6 +38,12 @@ public:
 		m_animationTimer = p_copy.m_animationTimer;
 
         return *this;
+    }
+
+
+	void Init(const std::string& p_id, const AssetManager& p_assetManager)
+	{
+		m_data = p_assetManager.GetSprite(p_id);
     }
 
     void PlayAnimation(const std::string& p_animation, const float p_deltaTime)

@@ -1,8 +1,9 @@
-#include "Core/EngineTest.h"
+
+#include "Core/CerealTest.h"
 
 int main()
 {
-	RunTests();
+    RunCerealTest();
     //LineIntersectionTest();
     return 0;
 }

@@ -55,25 +55,10 @@ public:
 	}
 
 	//SERIALIZER
-	friend void to_json(nlohmann::json& p_json, const Rect& p_rect)
+	template<class Archive>
+	void serialize(Archive& archive)
 	{
-		p_json = nlohmann::json{
-			{"Top", p_rect.Top},
-			{"Left", p_rect.Left},
-			{"Bottom", p_rect.Bottom},
-			{"Right", p_rect.Right},
-			{"Width", p_rect.Width},
-			{"Height", p_rect.Height}
-		};
-	}
-	friend void from_json(const nlohmann::json& p_json, Rect& p_rect)
-	{
-		p_json.at("Top").get_to(p_rect.Top);
-		p_json.at("Left").get_to(p_rect.Left);
-		p_json.at("Bottom").get_to(p_rect.Bottom);
-		p_json.at("Right").get_to(p_rect.Right);
-		p_json.at("Width").get_to(p_rect.Width);
-		p_json.at("Height").get_to(p_rect.Height);
+		archive(Top, Left, Bottom, Right, Width, Height);
 	}
 
 	/**

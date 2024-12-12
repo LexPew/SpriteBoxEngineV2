@@ -63,7 +63,18 @@ public:
         return scale;
     }
 
-    void Serialize(nlohmann::json& p_json) override;
 
-    void Deserialize(const nlohmann::json& p_json) override;
+    template <class Archive>
+    void save(Archive& ar) const
+    {
+		ar(cereal::base_class<Component>(this),position, scale);
+    }
+
+    template <class Archive>
+    void load(Archive& ar)
+    {
+		ar(cereal::base_class<Component>(this),position, scale);
+    }
 };
+CEREAL_REGISTER_TYPE(TransformComponent)
+CEREAL_REGISTER_POLYMORPHIC_RELATION(Component, TransformComponent)

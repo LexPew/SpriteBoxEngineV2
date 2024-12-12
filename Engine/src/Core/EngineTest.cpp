@@ -10,7 +10,7 @@
 #include "Core/ECS/CamSys/FancyCameraComponent.h"
 #include "Core/ECS/RigidBodyComponent.h"
 #include "Physics/Impulse2DLite.h"
-
+#include <cereal/archives/json.hpp>
 
 void RunTests()
 {
@@ -40,16 +40,24 @@ void RunTests()
 
 	auto floor = std::make_shared<Entity>("Floor", Vector2(0, 400), Vector2(1, 1));
 	floor->AddComponent(std::make_shared<RigidBodyComponent>(0.0f, 0.2f, Rect(0, 0, 64, 500)));
+
+	auto testEntity = std::make_shared<Entity>("TestEntity");
+	testEntity->GetTransform()->SetPosition(Vector2(200, 200));
+
+
+
     auto scene = std::make_shared<Scene>();
     scene->AddEntity(player);
     scene->AddEntity(player2);
 	scene->AddEntity(floor);
+	scene->AddEntity(testEntity);
 
     sceneManager.AddScene("MainScene", scene);
     sceneManager.SetCurrentScene("MainScene");
 
     physicsEngine.SetGravity({ 0,80 });
     physicsEngine.SetGroundedGravity({ 0,1 });
+
 
 
 
@@ -103,7 +111,7 @@ void RunTests()
         float deltaTime = clock.restart().asSeconds();
 		physicsEngine.Update(deltaTime);
         window.clear();
-        RectangleBody* rigidbody = player->GetComponent<RigidBodyComponent>()->GetBodyPtr();
+        std::shared_ptr<RectangleBody> rigidbody = player->GetComponent<RigidBodyComponent>()->GetBodyPtr();
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
         {
