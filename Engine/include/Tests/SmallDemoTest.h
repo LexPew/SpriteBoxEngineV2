@@ -25,7 +25,7 @@ void inline SmallGameTest()
 
 	//Create the physics engine
 	Physics physicsEngine;
-	physicsEngine.SetGravity({ 0, 80 });
+	physicsEngine.SetGravity({ 0, 50 });
 	physicsEngine.SetGroundedGravity({ 0, 1 });
 
 	//Create the input manager
@@ -41,14 +41,16 @@ void inline SmallGameTest()
 	Scene smallGameTestScene;
 
 	//Create the player entity
-	auto player = std::make_shared<Entity>("Player", Vector2(100, 100), Vector2(2, 2));
+	auto player = std::make_shared<Entity>("Player", Vector2(100, 0), Vector2(2, 2));
 	player->AddComponent(std::make_shared<SpriteComponent>("Adventurer", assetManager));
 	const Vector2 spriteBounds = renderer.GetSpriteBounds(assetManager.GetSprite("Adventurer"));
-	player->AddComponent(std::make_shared<RigidBodyComponent>(1.0f, 0.2f, Rect(0, 0, 100, 100)));
+
+	player->AddComponent(std::make_shared<RigidBodyComponent>(1.0f, 0.2f, Rect(0, 0, spriteBounds.y, spriteBounds.x)));
 	player->AddComponent(std::make_shared<FancyCameraComponent>(Vector2(800, 600)));
 
 	//Create the floor entity
-	auto floor = std::make_shared<Entity>("Floor", Vector2(0, 400), Vector2(1, 1));
+	auto floor = std::make_shared<Entity>("Floor", Vector2(0, 800), Vector2(1, 1));
+	floor->GetTransform()->SetPosition({ 0,600 });
 	floor->AddComponent(std::make_shared<RigidBodyComponent>(0.0f, 0.2f, Rect(0, 0, 64, 500)));
 
 	//Add the entities to the scene
@@ -57,6 +59,14 @@ void inline SmallGameTest()
 
 	//Delta time clock
 	sf::Clock deltaClock;
+
+	//DEBUG STUFF
+	//Collision debug
+	sf::RectangleShape collisionRect;
+	collisionRect.setFillColor(sf::Color::Transparent);
+	collisionRect.setOutlineColor(sf::Color::Red);
+	collisionRect.setOutlineThickness(1.0f);
+
 
 	//---> Game Loop <---//
 	
@@ -75,24 +85,33 @@ void inline SmallGameTest()
 		window.clear();
 		float deltaTime = deltaClock.restart().asSeconds();
 
+		//---> Physics <---//
+		physicsEngine.Update(deltaTime);
+
 
 		//---> Input <---//
 
 		inputManager.Update();
-		std::shared_ptr<RigidBodyComponent> r = player->GetComponent<RigidBodyComponent>();
-		if (inputManager.IsHeld(sf::Keyboard::Key::A))
+		std::shared_ptr<RectangleBody> r = player->GetComponent<RigidBodyComponent>()->GetBodyPtr();
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 		{
-			std::cout << "A key is pressed" << std::endl;
-			r->GetBody().SetVelocity({ -200, r->GetBody().GetVelocity().y });
+			player->GetComponent<SpriteComponent>()->PlayAnimation("Walk");
+			player->GetComponent<SpriteComponent>()->Flip(true);
+			r->SetVelocity({ -100, r->GetVelocity().y });
+			//player->GetTransform()->SetPosition(player->GetTransform()->GetPosition() + Vector2(-100, 0) * deltaTime);
 		}
-		else if (inputManager.IsHeld(sf::Keyboard::Key::D))
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
 		{
-			std::cout << "D key is pressed" << std::endl;
-			r->GetBody().SetVelocity({ 200, r->GetBody().GetVelocity().y });
+			player->GetComponent<SpriteComponent>()->PlayAnimation("Walk");
+			player->GetComponent<SpriteComponent>()->Flip(false);
+			r->SetVelocity({ 100, r->GetVelocity().y });
+			// player->GetTransform()->SetPosition(player->GetTransform()->GetPosition() + Vector2(100, 0) * deltaTime);
 		}
 		else
 		{
-			r->GetBody().SetVelocity({ 0, r->GetBody().GetVelocity().y });
+			player->GetComponent<SpriteComponent>()->PlayAnimation("Idle");
+
+			r->SetVelocity({ 0, r->GetVelocity().y });
 		}
 
 
@@ -101,12 +120,21 @@ void inline SmallGameTest()
 
 
 		smallGameTestScene.Update(deltaTime);
-		physicsEngine.Update(deltaTime);
 
 
 		//---> Render <---//
 
 		smallGameTestScene.Render(renderer);
+		for (auto entity : smallGameTestScene.GetEntities())
+		{
+			std::shared_ptr<RigidBodyComponent> rigidBody = entity->GetComponent<RigidBodyComponent>();
+			if(rigidBody)
+			{
+				collisionRect.setSize(sf::Vector2f(rigidBody->GetBody().GetRect().Width, rigidBody->GetBody().GetRect().Height));
+				collisionRect.setPosition(rigidBody->GetBody().GetPosition().x, rigidBody->GetBody().GetPosition().y);
+				window.draw(collisionRect);
+			}
+		}
 		window.display();
 	}
 

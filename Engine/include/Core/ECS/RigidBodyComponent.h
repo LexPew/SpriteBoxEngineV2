@@ -30,9 +30,9 @@ public:
 
     void Start() override
     {
-		if (body == nullptr) return;
 
-		const Vector2& scale = owner->GetTransform()->GetScale();
+		// Set the position of the rigid body component
+        const Vector2& scale = owner->GetTransform()->GetScale();
 		originOffset.x = body->GetRect().Width / 2 * scale.x;
         originOffset.y = body->GetRect().Height / 2 * scale.y;
 
@@ -50,6 +50,7 @@ public:
     void Update(float p_deltaTime) override
     {
 
+		// Update the rigid body component if necessary
 		owner->GetTransform()->SetPosition(body->GetPosition() + originOffset);
 
 
