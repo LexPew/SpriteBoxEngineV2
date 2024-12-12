@@ -49,7 +49,7 @@ void inline SmallGameTest()
 	player->AddComponent(std::make_shared<FancyCameraComponent>(Vector2(800, 600)));
 
 	//Create the floor entity
-	auto floor = std::make_shared<Entity>("Floor", Vector2(0, 800), Vector2(1, 1));
+	auto floor = std::make_shared<Entity>("Floor", Vector2(0, 50), Vector2(1, 1));
 	floor->GetTransform()->SetPosition({ 0,600 });
 	floor->AddComponent(std::make_shared<RigidBodyComponent>(0.0f, 0.2f, Rect(0, 0, 64, 500)));
 
@@ -71,7 +71,7 @@ void inline SmallGameTest()
 	//---> Game Loop <---//
 	
 	smallGameTestScene.Start();
-
+	window.setFramerateLimit(30);
 	while(window.isOpen())
 	{
 		sf::Event event;
