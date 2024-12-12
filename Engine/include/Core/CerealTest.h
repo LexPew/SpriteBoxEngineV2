@@ -4,6 +4,8 @@
 #include <thread>
 #include <cereal/archives/json.hpp>
 
+#include "Scene.h"
+#include "SceneSerializer.h"
 #include "Sprite.h"
 
 #include "cereal/archives/binary.hpp"
@@ -15,6 +17,7 @@
 #include "ECS/CamSys/FancyCameraComponent.h"
 #include "Graphics/Renderer.h"
 #include "Maths/Rect.h"
+
 
 
 inline void RunCerealTest()
@@ -97,20 +100,30 @@ inline void RunCerealTest()
     entity->AddComponent(camera);
     entity->AddComponent(spriteComponent);
 
-    // Serialize
-    {
-        std::ofstream os("testEntity.cereal", std::ios::binary);
-        cereal::BinaryOutputArchive oarchive(os);
-        oarchive(entity);
-    }
+    //// Serialize
+    //{
+    //    std::ofstream os("testEntity.cereal", std::ios::binary);
+    //    cereal::BinaryOutputArchive oarchive(os);
+    //    oarchive(entity);
+    //}
 
-    // Deserialize
-    std::shared_ptr<Entity> newEntity;
-    {
-        std::ifstream is("testEntity.cereal", std::ios::binary);
-        cereal::BinaryInputArchive iarchive(is);
-        iarchive(newEntity);
-    }
+    //// Deserialize
+    //std::shared_ptr<Entity> newEntity;
+    //{
+    //    std::ifstream is("testEntity.cereal", std::ios::binary);
+    //    cereal::BinaryInputArchive iarchive(is);
+    //    iarchive(newEntity);
+    //}
+
+	//Test Scene Serialization
+	Scene scene;
+	scene.AddEntity(entity);
+	SceneSerializer::SaveScene(scene, "testScene.cereal");
+
+	Scene scene2 = SceneSerializer::LoadScene("testScene.cereal");
+	
+
+
 
     std::cout << "CerealTest Complete, Hopefully enjoy" << std::endl;
 
@@ -118,7 +131,7 @@ inline void RunCerealTest()
     sf::RenderWindow window(sf::VideoMode(960, 540), "CerealTest");
 
     Renderer renderer(&window);
-    newEntity->Start();
+    scene2.Start();
     while (window.isOpen())
     {
         sf::Event event;
@@ -128,15 +141,10 @@ inline void RunCerealTest()
                 window.close();
         }
         window.clear();
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A))
-        {
-            newEntity->GetComponent<FancyCameraComponent>()->AddCameraShake(100, 100, 1);
-        }
-
-        newEntity->Update(.033f);
+        scene2.Update(0.033f);
         physics.Update(.033f);
 
-        newEntity->Render(renderer);
+        scene2.Render(renderer);
         window.display();
     }
 }

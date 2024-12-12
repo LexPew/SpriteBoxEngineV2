@@ -3,6 +3,8 @@
 #include <memory>
 #include "Core/ECS/Entity.h"
 #include "Graphics/Renderer.h"
+#include "cereal/types/memory.hpp"
+#include "cereal/types/vector.hpp"
 
 class Scene
 {
@@ -53,5 +55,16 @@ public:
             entity->Render(p_renderer);
         }
     }
+	template<class Archive>
+	void save(Archive& archive) const
+	{
+		archive(m_entities);
+	}
+	template<class Archive>
+	void load(Archive& archive)
+	{
+		archive(m_entities);
+	}
 
 };
+
