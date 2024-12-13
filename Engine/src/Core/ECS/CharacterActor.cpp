@@ -1,8 +1,5 @@
 #include "Core/ECS/CharacterActor.h"
-
-#include <vcruntime.h>
-
-#include "Core/SceneSerializer.h"
+#include "Core/SceneManager.h"
 
 void CharacterActor::Start()
 {
@@ -34,7 +31,7 @@ void CharacterActor::Update(float p_deltaTime)
 	MoveY(moveY, onVerticalCollision);
 
 	// Check if the character is grounded
-	isGrounded = CollideAt(SceneSerializer::instance.currentScene->GetSolids(), GetTransform()->GetPosition() + Vector2(0, 1));
+	isGrounded = CollideAt(SceneManager::instance.currentScene->GetSolids(), GetTransform()->GetPosition() + Vector2(0, 1));
     if(isGrounded)
     {
 		jumpCount = 0;

@@ -1,6 +1,5 @@
 #include <iostream>
 
-#include "Core/EngineTest.h"
 #include <SFML/Graphics.hpp>
 #include "Maths/Rect.h"
 

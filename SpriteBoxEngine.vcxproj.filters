@@ -33,9 +33,6 @@
     <ClCompile Include="Engine\src\Core\ECS\TransformComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\src\Core\EngineTest.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\src\Core\ECS\CamSys\RawCameraComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -54,9 +51,6 @@
     <ClCompile Include="Engine\src\Core\LineIntersectionTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\src\Core\Input\Controller.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\src\Core\InputManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -66,7 +60,7 @@
     <ClCompile Include="Engine\src\Core\ECS\Solid.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\src\Core\SceneSerializer.cpp">
+    <ClCompile Include="Engine\src\Core\SceneManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Engine\src\Core\ECS\CharacterActor.cpp">
@@ -108,12 +102,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Engine\include\Core\SceneManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\include\Core\SceneSerializer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\include\Core\EngineTest.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Engine\include\Core\ECS\CamSys\RawCameraComponent.h">
@@ -158,10 +146,14 @@
     <ClInclude Include="Engine\include\Core\ECS\CharacterActor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\include\Debug\DebugMacros.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine\build\x64\sfml-graphics-d-2.dll" />
     <None Include="Engine\build\x64\sfml-system-d-2.dll" />
     <None Include="Engine\build\x64\sfml-window-d-2.dll" />
+    <None Include="Engine\docs\CommentStyleGuide.md" />
   </ItemGroup>
 </Project>

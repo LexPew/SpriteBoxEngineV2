@@ -6,7 +6,7 @@
 #include "Core/AssetManager.h"
 #include "Core/InputManager.h"
 #include "Core/Scene.h"
-#include "Core/SceneSerializer.h"
+#include "Core/SceneManager.h"
 #include "Core/ECS/CharacterActor.h"
 #include "Core/ECS/RigidBodyComponent.h"
 #include "Core/ECS/SpriteComponent.h"
@@ -55,10 +55,7 @@ void inline SmallGameTest()
 	
 
 	//Create the floor entity
-	auto floor = std::make_shared<Solid>("Floor", Vector2(0, 30), Vector2(1, 1));
-	floor->GetTransform()->SetPosition(Vector2(0, 50));
-	floor->solidRect = { 0,0,64,800 };
-
+	auto floor = std::make_shared<Solid>("Floor", Vector2(0, 30), Vector2(1, 1), Rect(0,0,64,600));
 
 	//Add the entities to the scene
 	smallGameTestScene->AddEntity(player);
@@ -74,7 +71,7 @@ void inline SmallGameTest()
 	collisionRect.setOutlineColor(sf::Color::Red);
 	collisionRect.setOutlineThickness(1.0f);
 
-	SceneSerializer::instance.SetCurrentScene(smallGameTestScene);
+	SceneManager::instance.SetCurrentScene(smallGameTestScene);
 
 	//---> Game Loop <---//
 
@@ -153,23 +150,23 @@ void inline SmallGameTest()
 		//---> Render <---//
 
 		smallGameTestScene->Render(renderer);
-		for (auto actor : smallGameTestScene->GetActors())
-		{
-			
-			collisionRect.setSize({ actor->GetRect().Width, actor->GetRect().Height });
-			collisionRect.setPosition(actor->GetRect().Left, actor->GetRect().Top);
-			window.draw(collisionRect);
-		}
-		for (auto solid : smallGameTestScene->GetSolids())
-		{
-			collisionRect.setSize({ solid->solidRect.Width, solid->solidRect.Height });
-			collisionRect.setPosition(solid->solidRect.Left, solid->solidRect.Top);
-			window.draw(collisionRect);
-		}
+		//for (auto actor : smallGameTestScene->GetActors())
+		//{
+		//	
+		//	collisionRect.setSize({ actor->GetRect().Width, actor->GetRect().Height });
+		//	collisionRect.setPosition(actor->GetRect().Left, actor->GetRect().Top);
+		//	window.draw(collisionRect);
+		//}
+		//for (auto solid : smallGameTestScene->GetSolids())
+		//{
+		//	collisionRect.setSize({ solid->solidRect.Width, solid->solidRect.Height });
+		//	collisionRect.setPosition(solid->solidRect.Left, solid->solidRect.Top);
+		//	window.draw(collisionRect);
+		//}
 		window.display();
 	}
 
-	SceneSerializer::SaveScene(smallGameTestScene, "SmallGameTestScene.scene");
+	SceneManager::SaveScene(smallGameTestScene, "SmallGameTestScene.scene");
 
 
 }

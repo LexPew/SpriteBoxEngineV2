@@ -1,46 +1,35 @@
 #pragma once
-#include <unordered_map>
-#include <string>
-#include <memory>
-#include "Scene.h"
+#include <cereal/archives/binary.hpp>
+#include "cereal/types/memory.hpp"
+#include "Core/Scene.h"
 
+//Class: SceneManager
+//Purpose: Manages the current scene and provides functionality
+//			to save and load scenes using cereal
 class SceneManager
 {
-private:
-    std::unordered_map<std::string, std::shared_ptr<Scene>> m_scenes;
-    std::shared_ptr<Scene> m_currentScene;
-
 public:
-    void AddScene(const std::string& name, std::shared_ptr<Scene> scene)
-    {
-        m_scenes[name] = scene;
-    }
+	static SceneManager instance;
 
-    void SetCurrentScene(const std::string& name)
-    {
-        m_currentScene = m_scenes[name];
-        m_currentScene->Start();
-    }
-    void Start()
-    {
-		if (m_currentScene)
-		{
-			m_currentScene->Start();
-		}
-    }
-    void Update(float deltaTime)
-    {
-        if (m_currentScene)
-        {
-            m_currentScene->Update(deltaTime);
-        }
-    }
+	std::shared_ptr<Scene> currentScene;
+	/**
+	 * @brief Save the scene to a file
+	 * @param p_scene Scene to save
+	 * @param p_sceneFileName Name of the file to save the scene to
+	 */
+	static void SaveScene(std::shared_ptr<Scene> p_scene, const std::string& p_sceneFileName);
 
-    void Render(Renderer& renderer)
-    {
-        if (m_currentScene)
-        {
-            m_currentScene->Render(renderer);
-        }
-    }
+	/**
+	 * @brief Load a scene from a file
+	 * @param p_sceneFileName Name of the file to load the scene from
+	 * @return std::shared_ptr<Scene> The loaded scene
+	 */
+	static std::shared_ptr<Scene> LoadScene(const std::string& p_sceneFileName);
+
+	/**
+	 * @brief Set the current scene
+	 * @param p_scene Scene to set as the current scene
+	 */
+	void SetCurrentScene(const std::shared_ptr<Scene>& p_scene) { currentScene = p_scene; }
 };
+

@@ -5,7 +5,7 @@
 #include <cereal/archives/json.hpp>
 
 #include "Scene.h"
-#include "SceneSerializer.h"
+#include "SceneManager.h"
 #include "Sprite.h"
 
 #include "cereal/archives/binary.hpp"
@@ -118,9 +118,9 @@ inline void RunCerealTest()
 	//Test Scene Serialization
 	Scene scene;
 	scene.AddEntity(entity);
-	SceneSerializer::SaveScene(scene, "testScene.cereal");
+	SceneManager::SaveScene(scene, "testScene.cereal");
 
-	Scene scene2 = SceneSerializer::LoadScene("testScene.cereal");
+	Scene scene2 = SceneManager::LoadScene("testScene.cereal");
 	
 
 

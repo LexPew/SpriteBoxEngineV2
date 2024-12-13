@@ -38,7 +38,7 @@ public:
 	{
 		return m_actors;
 	}
-	const std::vector<std::shared_ptr<Solid>>& GetSolids() const
+	std::vector<std::shared_ptr<Solid>>& GetSolids()
 	{
 		return m_solids;
 	}

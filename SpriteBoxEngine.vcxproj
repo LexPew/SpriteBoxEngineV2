@@ -26,10 +26,8 @@
     <ClCompile Include="Engine\src\Core\ECS\Component.cpp" />
     <ClCompile Include="Engine\src\Core\ECS\RigidBodyComponent.cpp" />
     <ClCompile Include="Engine\src\Core\ECS\Solid.cpp" />
-    <ClCompile Include="Engine\src\Core\EngineTest.cpp" />
     <ClCompile Include="Engine\src\Core\InputManager.cpp" />
-    <ClCompile Include="Engine\src\Core\Input\Controller.cpp" />
-    <ClCompile Include="Engine\src\Core\SceneSerializer.cpp" />
+    <ClCompile Include="Engine\src\Core\SceneManager.cpp" />
     <ClCompile Include="Engine\src\Core\Source.cpp" />
     <ClCompile Include="Engine\src\Core\ECS\SpriteComponent.cpp" />
     <ClCompile Include="Engine\src\Core\ECS\TransformComponent.cpp" />
@@ -49,20 +47,19 @@
     <ClInclude Include="Engine\include\Core\AssetManager.h" />
     <ClInclude Include="Engine\include\Core\ECS\RigidBodyComponent.h" />
     <ClInclude Include="Engine\include\Core\ECS\Solid.h" />
-    <ClInclude Include="Engine\include\Core\EngineTest.h" />
     <ClInclude Include="Engine\include\Core\InputManager.h" />
     <ClInclude Include="Engine\include\Core\Scene.h" />
-    <ClInclude Include="Engine\include\Core\SceneManager.h" />
     <ClInclude Include="Engine\include\Core\Sprite.h" />
     <ClInclude Include="Engine\include\Core\ECS\SpriteComponent.h" />
     <ClInclude Include="Engine\include\Core\SpriteData.h" />
     <ClInclude Include="Engine\include\Core\ECS\TransformComponent.h" />
+    <ClInclude Include="Engine\include\Debug\DebugMacros.h" />
     <ClInclude Include="Engine\include\Graphics\Renderer.h" />
     <ClInclude Include="Engine\include\Maths\Line2.h" />
     <ClInclude Include="Engine\include\Maths\Rect.h" />
     <ClInclude Include="Engine\include\Maths\Vector2.h" />
     <ClInclude Include="Engine\include\Core\ECS\Entity.h" />
-    <ClInclude Include="Engine\include\Core\SceneSerializer.h" />
+    <ClInclude Include="Engine\include\Core\SceneManager.h" />
     <ClInclude Include="Engine\include\Core\ECS\CamSys\FancyCameraComponent.h" />
     <ClInclude Include="Engine\include\Physics\Impulse2DLite.h" />
     <ClInclude Include="Engine\include\Core\ECS\ScriptComponent.h" />
@@ -73,6 +70,7 @@
     <None Include="Engine\build\x64\sfml-graphics-d-2.dll" />
     <None Include="Engine\build\x64\sfml-system-d-2.dll" />
     <None Include="Engine\build\x64\sfml-window-d-2.dll" />
+    <None Include="Engine\docs\CommentStyleGuide.md" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
@@ -186,7 +184,7 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>SFML\include;Engine\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\James\source\repos\SpriteBoxEngine\Engine\include\Utils;SFML\include;Engine\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

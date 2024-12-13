@@ -1,18 +1,9 @@
 #include "Core/ECS/Entity.h"
-#include "Core/AssetManager.h"
-#include "Core/ECS/RigidBodyComponent.h"
-#include "Core/ECS/CamSys/FancyCameraComponent.h"
-#include "Core/ECS/CamSys/RawCameraComponent.h"
-#include "Core/ECS/SpriteComponent.h"
-
-
-
 
 void Entity::AddTransform(const Vector2& p_position, const Vector2& p_scale)
 {
 	// Add a TransformComponent by default
-
-    AddComponent(std::make_shared<TransformComponent>());;
+    AddComponent(std::make_shared<TransformComponent>());
 }
 
 void Entity::Start()

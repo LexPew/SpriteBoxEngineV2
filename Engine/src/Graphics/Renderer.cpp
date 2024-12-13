@@ -39,6 +39,14 @@ void Renderer::DrawSprite(const SpriteData& p_spriteData, const int p_frameIndex
     window->draw(sprite);
 }
 
+void Renderer::DrawRect(const Rect& p_rect, const sf::Color& p_color)
+{
+	rect.setSize({ p_rect.Width, p_rect.Height });
+	rect.setPosition(p_rect.Left, p_rect.Top);
+	rect.setFillColor(p_color);
+	window->draw(rect);
+}
+
 Vector2 Renderer::GetSpriteBounds(const SpriteData& p_spriteData)
 {
     float frameWidth = p_spriteData.texture.getSize().x / p_spriteData.spriteSheetColumns;
