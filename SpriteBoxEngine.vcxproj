@@ -19,13 +19,17 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Engine\src\Core\ECS\CharacterActor.cpp" />
+    <ClCompile Include="Engine\src\Core\ECS\Actor.cpp" />
     <ClCompile Include="Engine\src\Core\ECS\CamSys\RawCameraComponent.cpp" />
     <ClCompile Include="Engine\src\Core\AssetManager.cpp" />
     <ClCompile Include="Engine\src\Core\ECS\Component.cpp" />
     <ClCompile Include="Engine\src\Core\ECS\RigidBodyComponent.cpp" />
+    <ClCompile Include="Engine\src\Core\ECS\Solid.cpp" />
     <ClCompile Include="Engine\src\Core\EngineTest.cpp" />
     <ClCompile Include="Engine\src\Core\InputManager.cpp" />
     <ClCompile Include="Engine\src\Core\Input\Controller.cpp" />
+    <ClCompile Include="Engine\src\Core\SceneSerializer.cpp" />
     <ClCompile Include="Engine\src\Core\Source.cpp" />
     <ClCompile Include="Engine\src\Core\ECS\SpriteComponent.cpp" />
     <ClCompile Include="Engine\src\Core\ECS\TransformComponent.cpp" />
@@ -36,11 +40,15 @@
     <ClCompile Include="Engine\src\Core\LineIntersectionTest.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Engine\include\Core\ECS\CharacterActor.h" />
+    <ClInclude Include="Engine\include\Core\Action.h" />
+    <ClInclude Include="Engine\include\Core\ECS\Actor.h" />
     <ClInclude Include="Engine\include\Core\CerealTest.h" />
     <ClInclude Include="Engine\include\Core\ECS\CamSys\RawCameraComponent.h" />
     <ClInclude Include="Engine\include\Core\ECS\Component.h" />
     <ClInclude Include="Engine\include\Core\AssetManager.h" />
     <ClInclude Include="Engine\include\Core\ECS\RigidBodyComponent.h" />
+    <ClInclude Include="Engine\include\Core\ECS\Solid.h" />
     <ClInclude Include="Engine\include\Core\EngineTest.h" />
     <ClInclude Include="Engine\include\Core\InputManager.h" />
     <ClInclude Include="Engine\include\Core\Scene.h" />

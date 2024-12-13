@@ -5,6 +5,9 @@
 #include "Core/ECS/CamSys/RawCameraComponent.h"
 #include "Core/ECS/SpriteComponent.h"
 
+
+
+
 void Entity::AddTransform(const Vector2& p_position, const Vector2& p_scale)
 {
 	// Add a TransformComponent by default
@@ -35,6 +38,7 @@ void Entity::Render(Renderer& p_renderer)
 		pair.second->Render(p_renderer);
 	}
 }
+
 
 
 

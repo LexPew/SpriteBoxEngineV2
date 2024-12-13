@@ -7,6 +7,7 @@
 #include "Core/InputManager.h"
 #include "Core/Scene.h"
 #include "Core/SceneSerializer.h"
+#include "Core/ECS/CharacterActor.h"
 #include "Core/ECS/RigidBodyComponent.h"
 #include "Core/ECS/SpriteComponent.h"
 #include "Core/ECS/CamSys/FancyCameraComponent.h"
@@ -32,30 +33,36 @@ void inline SmallGameTest()
 	InputManager inputManager;
 	inputManager.RegisterKey(sf::Keyboard::Key::A);
 	inputManager.RegisterKey(sf::Keyboard::Key::D);
+	inputManager.RegisterKey(sf::Keyboard::Key::W);
 
 	//Create the renderer and window
 	sf::RenderWindow window(sf::VideoMode(800, 600), "Small Game Test");
 	Renderer renderer(&window);
 
 	//Create the scene
-	Scene smallGameTestScene;
+	std::shared_ptr<Scene> smallGameTestScene = std::make_shared<Scene>();
 
-	//Create the player entity
-	auto player = std::make_shared<Entity>("Player", Vector2(100, 0), Vector2(2, 2));
+
+
+	auto player = std::make_shared<CharacterActor>("Player2", Vector2(100, 0), Vector2(2, 2));
 	player->AddComponent(std::make_shared<SpriteComponent>("Adventurer", assetManager));
 	const Vector2 spriteBounds = renderer.GetSpriteBounds(assetManager.GetSprite("Adventurer"));
-
-	player->AddComponent(std::make_shared<RigidBodyComponent>(1.0f, 0.2f, Rect(0, 0, spriteBounds.y, spriteBounds.x)));
+	player->SetRect({ 0,0,spriteBounds.y, spriteBounds.y });
 	player->AddComponent(std::make_shared<FancyCameraComponent>(Vector2(800, 600)));
+	//Set the origin offset
+	player->SetOriginOffset({- spriteBounds.y / 2, -spriteBounds.y / 2 });
+
+	
 
 	//Create the floor entity
-	auto floor = std::make_shared<Entity>("Floor", Vector2(0, 50), Vector2(1, 1));
-	floor->GetTransform()->SetPosition({ 0,600 });
-	floor->AddComponent(std::make_shared<RigidBodyComponent>(0.0f, 0.2f, Rect(0, 0, 64, 500)));
+	auto floor = std::make_shared<Solid>("Floor", Vector2(0, 30), Vector2(1, 1));
+	floor->GetTransform()->SetPosition(Vector2(0, 50));
+	floor->solidRect = { 0,0,64,800 };
+
 
 	//Add the entities to the scene
-	smallGameTestScene.AddEntity(player);
-	smallGameTestScene.AddEntity(floor);
+	smallGameTestScene->AddEntity(player);
+	smallGameTestScene->AddEntity(floor);
 
 	//Delta time clock
 	sf::Clock deltaClock;
@@ -67,12 +74,13 @@ void inline SmallGameTest()
 	collisionRect.setOutlineColor(sf::Color::Red);
 	collisionRect.setOutlineThickness(1.0f);
 
+	SceneSerializer::instance.SetCurrentScene(smallGameTestScene);
 
 	//---> Game Loop <---//
-	
-	smallGameTestScene.Start();
+
+	smallGameTestScene->Start();
 	window.setFramerateLimit(30);
-	while(window.isOpen())
+	while (window.isOpen())
 	{
 		sf::Event event;
 		while (window.pollEvent(event))
@@ -92,48 +100,71 @@ void inline SmallGameTest()
 		//---> Input <---//
 
 		inputManager.Update();
-		std::shared_ptr<RectangleBody> r = player->GetComponent<RigidBodyComponent>()->GetBodyPtr();
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+
+		if (inputManager.IsHeld(sf::Keyboard::A))
 		{
-			player->GetComponent<SpriteComponent>()->PlayAnimation("Walk");
+
+			player->SetVelocityX(-150);
 			player->GetComponent<SpriteComponent>()->Flip(true);
-			r->SetVelocity({ -100, r->GetVelocity().y });
 			//player->GetTransform()->SetPosition(player->GetTransform()->GetPosition() + Vector2(-100, 0) * deltaTime);
 		}
-		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+		else if (inputManager.IsHeld(sf::Keyboard::D))
 		{
-			player->GetComponent<SpriteComponent>()->PlayAnimation("Walk");
+
+
+			player->SetVelocityX(150);
 			player->GetComponent<SpriteComponent>()->Flip(false);
-			r->SetVelocity({ 100, r->GetVelocity().y });
+
 			// player->GetTransform()->SetPosition(player->GetTransform()->GetPosition() + Vector2(100, 0) * deltaTime);
 		}
-		else
+		else if(player->IsGrounded())
 		{
-			player->GetComponent<SpriteComponent>()->PlayAnimation("Idle");
-
-			r->SetVelocity({ 0, r->GetVelocity().y });
+			player->SetVelocityX(0);
+		}
+		if (inputManager.IsPressed(sf::Keyboard::W))
+		{
+			player->Jump();
 		}
 
 
 		//---> Update <---//
 
+		//Handle player anim states
 
+		if (!player->IsGrounded())
+		{
+			player->GetComponent<SpriteComponent>()->PlayAnimation("Jump");
+		}
+		else if (player->GetVelocityX() != 0)
+		{
 
-		smallGameTestScene.Update(deltaTime);
+			player->GetComponent<SpriteComponent>()->PlayAnimation("Walk");
+		}
+		else
+		{
+			player->GetComponent<SpriteComponent>()->PlayAnimation("Idle");
+		}
+
+			
+		//player->MoveY(10 * deltaTime, nullAction);
+		smallGameTestScene->Update(deltaTime);
 
 
 		//---> Render <---//
 
-		smallGameTestScene.Render(renderer);
-		for (auto entity : smallGameTestScene.GetEntities())
+		smallGameTestScene->Render(renderer);
+		for (auto actor : smallGameTestScene->GetActors())
 		{
-			std::shared_ptr<RigidBodyComponent> rigidBody = entity->GetComponent<RigidBodyComponent>();
-			if(rigidBody)
-			{
-				collisionRect.setSize(sf::Vector2f(rigidBody->GetBody().GetRect().Width, rigidBody->GetBody().GetRect().Height));
-				collisionRect.setPosition(rigidBody->GetBody().GetPosition().x, rigidBody->GetBody().GetPosition().y);
-				window.draw(collisionRect);
-			}
+			
+			collisionRect.setSize({ actor->GetRect().Width, actor->GetRect().Height });
+			collisionRect.setPosition(actor->GetRect().Left, actor->GetRect().Top);
+			window.draw(collisionRect);
+		}
+		for (auto solid : smallGameTestScene->GetSolids())
+		{
+			collisionRect.setSize({ solid->solidRect.Width, solid->solidRect.Height });
+			collisionRect.setPosition(solid->solidRect.Left, solid->solidRect.Top);
+			window.draw(collisionRect);
 		}
 		window.display();
 	}

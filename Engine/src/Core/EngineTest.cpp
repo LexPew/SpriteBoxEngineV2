@@ -82,14 +82,14 @@ void RunTests()
                     player->GetTransform()->SetScale(player->GetTransform()->GetScale() + Vector2::One());
                 else if (event.key.code == sf::Keyboard::L)
                 {
-                    scene = std::make_shared<Scene>(SceneSerializer::LoadScene("scene.json"));
+                    // = std::make_shared<Scene>(SceneSerializer::LoadScene("scene.json"));
                     sceneManager.AddScene("MainScene", scene);
                     sceneManager.SetCurrentScene("MainScene");
                     player = scene->FindEntityByName("Player");
                 }
                 else if (event.key.code == sf::Keyboard::S)
                 {
-                    SceneSerializer::SaveScene(*scene, "scene.json");
+                    //SceneSerializer::SaveScene(*scene, "scene.json");
                 }
                 else if (event.key.code == sf::Keyboard::P)
                 {

@@ -7,12 +7,13 @@
 #include "cereal/types/unordered_map.hpp"
 #include "cereal/types/memory.hpp"
 #include "cereal/types/string.hpp"
+#include "cereal/types/polymorphic.hpp"
 
 class Renderer;
 
 class Entity
 {
-private:
+protected:
     std::string name{ "Entity" };
     bool active{ true };
     std::unordered_map<std::string, std::shared_ptr<Component>> m_components;
@@ -31,7 +32,7 @@ public:
         AddTransform(p_position, p_scale);
     }
 
-    ~Entity()
+    virtual ~Entity()
     {
         for (auto m : m_components)
         {
@@ -56,16 +57,16 @@ public:
     /**
      * Call start on all components attached to this entity
      */
-    void Start();
+    virtual void Start();
     /**
      * Updates all components attached to this entity
      */
-    void Update(float p_deltaTime);
+    virtual void Update(float p_deltaTime);
 
     /**
      * Renders all components attached to this entity
      */
-    void Render(Renderer& p_renderer);
+    virtual void Render(Renderer& p_renderer);
 
     /**
      * Returns the transform component of this entity

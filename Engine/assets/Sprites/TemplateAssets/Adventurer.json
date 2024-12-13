@@ -10,11 +10,16 @@
     "Walk": {
       "startFrame": 9,
       "endFrame": 14,
-      "frameDuration": 0.3
+      "frameDuration": 0.2
     },
     "Attack": {
       "startFrame": 49,
       "endFrame": 54,
+      "frameDuration": 0.1
+    },
+    "Jump": {
+      "startFrame": 23,
+      "endFrame": 24,
       "frameDuration": 0.1
     }
   },
