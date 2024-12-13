@@ -169,7 +169,7 @@ void inline SmallGameTest()
 		window.display();
 	}
 
-	SceneSerializer::SaveScene(smallGameTestScene, "SmallGameTestScene.json");
+	SceneSerializer::SaveScene(smallGameTestScene, "SmallGameTestScene.scene");
 
 
 }
