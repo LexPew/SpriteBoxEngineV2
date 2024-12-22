@@ -1,14 +1,17 @@
-#include "Core/ECS/CharacterActor.h"
+#include "Core/ECS/PhysicsActor.h"
+
+#include "Core/InputManager.h"
 #include "Core/SceneManager.h"
 
-void CharacterActor::Start()
+void PhysicsActor::Start()
 {
 	Actor::Start(); // Call base class start if necessary
-    onHorizontalCollision.SetCallback([this]() {velocityX = 0; });
-	onVerticalCollision.SetCallback([this]() {velocityY = 0; });
+    onHorizontalCollision.SetCallback([this]() {std::cout << "Hit a wall";  velocityX = 0; });
+    onVerticalCollision.SetCallback([this]() {std::cout << "Hit vertical"; velocityY = 0; });
 	onLand.SetCallback([this]() { });
 }
-void CharacterActor::Update(float p_deltaTime)
+
+void PhysicsActor::Update(float p_deltaTime)
 {
     Actor::Update(p_deltaTime); // Call base class update if necessary
 
@@ -39,7 +42,7 @@ void CharacterActor::Update(float p_deltaTime)
     }
 }
 
-void CharacterActor::Jump()
+void PhysicsActor::Jump()
 {
     if (!isGrounded && jumpCount == 0) return;
     if (jumpCount < maxJumps)

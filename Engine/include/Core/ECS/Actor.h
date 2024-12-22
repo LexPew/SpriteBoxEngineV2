@@ -88,7 +88,7 @@ protected:
 	 * @param p_position Position to check for collision
 	 * @return bool True if a collision is detected
 	 */
-	bool CollideAt(std::vector<std::shared_ptr<Solid>>& p_solids, Vector2 p_position);
+	bool CollideAt(const std::vector<std::shared_ptr<Solid>>& p_solids, Vector2 p_position);
 
 	/**
 	* @brief Check if the actor is riding on the given solid

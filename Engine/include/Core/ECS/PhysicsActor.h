@@ -1,12 +1,15 @@
 #pragma once
 #include "Actor.h"
-class CharacterActor : public Actor
+
+//Class: PhysicsActor
+//Purpose: A class that represents an actor using physics in the game world
+class PhysicsActor : public Actor
 {
-private:
-	float velocityX = 0.0f;  // Horizontal velocity
-	float velocityY = 0.0f;  // Vertical velocity
-	bool isGrounded = false; // Is the character on the ground?
-	int jumpCount = 0;       // Number of jumps made
+protected:
+	float velocityX = 0.0f;
+	float velocityY = 0.0f;
+	bool isGrounded = false;
+	int jumpCount = 0; 
 	int maxJumps = 2;   // Maximum number of jumps
 
 	float gravity = 500;   // Gravity strength
@@ -19,36 +22,63 @@ private:
 
 
 public:
-	CharacterActor() : Actor() {}
-	CharacterActor(const std::string& p_name, const Vector2& p_position, const Vector2& p_scale)
+	//Constructs a PhysicsActor with default values
+	PhysicsActor() : Actor() {}
+
+	/**
+	 * @brief Construct a new PhysicsActor Actor object
+	 * @param p_name The name of the actor
+	 * @param p_position The position of the actor
+	 * @param p_scale The scale of the actor
+	 */
+	PhysicsActor(const std::string& p_name, const Vector2& p_position, const Vector2& p_scale)
 		: Actor(p_name, p_position, p_scale) {
 	}
 
 	void Start() override;
 	void Update(float p_deltaTime) override;
 	void Jump();
-	//
 
-	// Setters for velocity (if needed for additional gameplay mechanics such as movement)
+	/**
+	 * @brief Moves the actor in the x direction
+	 * @param p_direction The direction to move the actor
+	 */
 	void SetVelocityX(float p_velocityX) { velocityX = p_velocityX; }
+
+	/**
+	 * @brief Moves the actor in the y direction
+	 * @param p_direction The direction to move the actor
+	 */
 	void SetVelocityY(float p_velocityY) { velocityY = p_velocityY; }
 
-	// Getters for velocity
+	/**
+	 * @brief Returns the velocity of the actor in the x direction
+	 * @return float The velocity of the actor in the x direction
+	 */
 	float GetVelocityX() const { return velocityX; }
+
+	/**
+	 * @brief Returns the velocity of the actor in the y direction
+	 * @return float The velocity of the actor in the y direction
+	 */
 	float GetVelocityY() const { return velocityY; }
 
-	//Setter and getters for other variables
+	//More getters and setters
 	void SetMaxJumps(const int p_max) { maxJumps = p_max; }
 	int GetMaxJumps() const { return maxJumps; }
-	float GetGravity() const { return gravity; }
-	float GetJumpStrength() const { return jumpStrength; }
-	float GetMaxFallSpeed() const { return maxFallSpeed; }
-	void SetGravity(const float p_gravity) { gravity = p_gravity; }
-	void SetJumpStrength(const float p_jumpStrength) { jumpStrength = p_jumpStrength; }
+
 	void SetMaxFallSpeed(const float p_maxFallSpeed) { maxFallSpeed = p_maxFallSpeed; }
+	float GetMaxFallSpeed() const { return maxFallSpeed; }
+
+	float GetGravity() const { return gravity; }
+	void SetGravity(const float p_gravity) { gravity = p_gravity; }
+
+	void SetJumpStrength(const float p_jumpStrength) { jumpStrength = p_jumpStrength; }
+	float GetJumpStrength() const { return jumpStrength; }
+
 
 	// Setters for grounded state and gettters
-	void SetIsGrounded(bool p_isGrounded) { isGrounded = p_isGrounded; }
+	void SetIsGrounded(const bool p_isGrounded) { isGrounded = p_isGrounded; }
 	bool IsGrounded() const { return isGrounded; }
 
 	//SERIALIZATION
@@ -65,6 +95,6 @@ public:
 	}
 
 };
-CEREAL_REGISTER_TYPE(CharacterActor)
-CEREAL_REGISTER_POLYMORPHIC_RELATION(Actor, CharacterActor)
+CEREAL_REGISTER_TYPE(PhysicsActor)
+CEREAL_REGISTER_POLYMORPHIC_RELATION(Actor, PhysicsActor)
 

@@ -1,5 +1,9 @@
 #include "Graphics/Renderer.h"
 
+#include "Debug/DebugMacros.h"
+
+Renderer* Renderer::instance{ nullptr };
+
 void Renderer::SetView(const sf::View& p_view)
 {
 	window->setView(p_view);
@@ -47,9 +51,18 @@ void Renderer::DrawRect(const Rect& p_rect, const sf::Color& p_color)
 	window->draw(rect);
 }
 
+void Renderer::DrawPoint(const Vector2& p_point, const sf::Color& p_color)
+{
+	circle.setRadius(1);
+	circle.setPosition(p_point.x, p_point.y);
+	circle.setFillColor(p_color);
+	window->draw(circle);
+}
+
 Vector2 Renderer::GetSpriteBounds(const SpriteData& p_spriteData)
 {
     float frameWidth = p_spriteData.texture.getSize().x / p_spriteData.spriteSheetColumns;
     float frameHeight = p_spriteData.texture.getSize().y / p_spriteData.spriteSheetRows;
+    DEBUG_LOG(p_spriteData.id << " sprite bounds: " << frameWidth << "," << frameHeight);
     return Vector2{ frameWidth, frameHeight };
 }

@@ -9,10 +9,8 @@
 void Solid::Start()
 {
 	Entity::Start();
-	DEBUG_LOG("Solid Start");
 	const Vector2& position = GetTransform()->GetPosition();
-	DEBUG_LOG("Position: " << position.x << "," << position.y);
-		rect.SetPosition(position);
+	rect.SetPosition(position);
 
 }
 void Solid::Update(float p_deltaTime)

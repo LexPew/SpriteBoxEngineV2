@@ -63,7 +63,10 @@
     <ClCompile Include="Engine\src\Core\SceneManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\src\Core\ECS\CharacterActor.cpp">
+    <ClCompile Include="Engine\src\Core\ECS\PhysicsActor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\src\Core\ECS\PlayerActor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -143,10 +146,13 @@
     <ClInclude Include="Engine\include\Core\Action.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\include\Core\ECS\CharacterActor.h">
+    <ClInclude Include="Engine\include\Core\ECS\PhysicsActor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Engine\include\Debug\DebugMacros.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\include\Core\ECS\PlayerActor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

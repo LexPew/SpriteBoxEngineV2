@@ -19,7 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Engine\src\Core\ECS\CharacterActor.cpp" />
+    <ClCompile Include="Engine\src\Core\ECS\PhysicsActor.cpp" />
     <ClCompile Include="Engine\src\Core\ECS\Actor.cpp" />
     <ClCompile Include="Engine\src\Core\ECS\CamSys\RawCameraComponent.cpp" />
     <ClCompile Include="Engine\src\Core\AssetManager.cpp" />
@@ -36,9 +36,10 @@
     <ClCompile Include="Engine\src\Core\ECS\CamSys\FancyCameraComponent.cpp" />
     <ClCompile Include="Engine\src\Core\ECS\ScriptComponent.cpp" />
     <ClCompile Include="Engine\src\Core\LineIntersectionTest.cpp" />
+    <ClCompile Include="Engine\src\Core\ECS\PlayerActor.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Engine\include\Core\ECS\CharacterActor.h" />
+    <ClInclude Include="Engine\include\Core\ECS\PhysicsActor.h" />
     <ClInclude Include="Engine\include\Core\Action.h" />
     <ClInclude Include="Engine\include\Core\ECS\Actor.h" />
     <ClInclude Include="Engine\include\Core\CerealTest.h" />
@@ -65,6 +66,7 @@
     <ClInclude Include="Engine\include\Core\ECS\ScriptComponent.h" />
     <ClInclude Include="Engine\include\Tests\InputSystemTest.h" />
     <ClInclude Include="Engine\include\Tests\SmallDemoTest.h" />
+    <ClInclude Include="Engine\include\Core\ECS\PlayerActor.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine\build\x64\sfml-graphics-d-2.dll" />

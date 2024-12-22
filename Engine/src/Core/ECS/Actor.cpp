@@ -79,7 +79,7 @@ void Actor::MoveY(float p_moveAmount, Action& p_onCollide)
     GetTransform()->SetPosition(currentPosition);
 }
 
-bool Actor::CollideAt(std::vector<std::shared_ptr<Solid>>& p_solids, Vector2 p_position)
+bool Actor::CollideAt(const std::vector<std::shared_ptr<Solid>>& p_solids, const Vector2 p_position)
 {
     rect.SetPosition(p_position + originOffset);
     for (const auto& solid : p_solids)
