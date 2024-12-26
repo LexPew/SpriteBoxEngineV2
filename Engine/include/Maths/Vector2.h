@@ -1,6 +1,6 @@
 #pragma once
 #include <cmath>
-#include "Utils/json.hpp"
+
 
 struct Vector2
 {
@@ -29,17 +29,6 @@ public:
 	void serialize(Archive& p_archive)
 	{
 		p_archive(x, y);
-	}
-
-	friend void to_json(nlohmann::json& p_json, const Vector2& p_vector)
-	{
-		p_json = nlohmann::json{ {"x", p_vector.x}, {"y", p_vector.y} };
-	}
-
-	friend void from_json(const nlohmann::json& p_json, Vector2& p_vector)
-	{
-		p_json.at("x").get_to(p_vector.x);
-		p_json.at("y").get_to(p_vector.y);
 	}
 
 	void Clear()

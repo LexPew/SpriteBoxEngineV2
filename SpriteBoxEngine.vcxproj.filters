@@ -161,5 +161,6 @@
     <None Include="Engine\build\x64\sfml-system-d-2.dll" />
     <None Include="Engine\build\x64\sfml-window-d-2.dll" />
     <None Include="Engine\docs\CommentStyleGuide.md" />
+    <None Include="vcpkg.json" />
   </ItemGroup>
 </Project>
