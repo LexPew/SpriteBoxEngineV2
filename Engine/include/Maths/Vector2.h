@@ -156,6 +156,13 @@ public:
 		return { x / p_denominator, y / p_denominator };
 	}
 
+	//Overload the << operator
+	friend std::ostream& operator<<(std::ostream& p_stream, const Vector2& p_vector)
+	{
+		p_stream << "X: " << p_vector.x << " Y: " << p_vector.y;
+		return p_stream;
+	}
+
 	/**
 	 * Calculates and returns a component product of this vector with a given vector
 	 * @return Copy of this vector component product

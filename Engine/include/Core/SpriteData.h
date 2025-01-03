@@ -19,11 +19,12 @@ struct AnimationData
  */
 struct SpriteData
 {
-	std::string id{"Null"};
+	std::string id{"NULL"};
 	sf::Texture texture;
 	int spriteSheetRows{0};
 	int spriteSheetColumns{0};
 	std::unordered_map<std::string, AnimationData> animations{};
+
 };
 
 //--EXAMPLE JSON FILE--

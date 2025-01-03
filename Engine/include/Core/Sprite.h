@@ -2,6 +2,7 @@
 #include "SpriteData.h"
 #include <string>
 #include "Core/AssetManager.h"
+#include "Debug/DebugMacros.h"
 /**
  * Sprite class, used to define the base structure of a sprite
  */
@@ -17,7 +18,12 @@ public:
     Sprite() = default;
     Sprite(const std::string& p_id, const AssetManager& p_assetManager)
     {
-        m_data = p_assetManager.GetSprite(p_id);
+        Init(p_id, p_assetManager);
+    }
+    ~Sprite()
+    {
+		delete m_currentAnimation;
+		m_currentAnimation = nullptr;
     }
 	Sprite(const Sprite& p_copy)
     {
@@ -43,7 +49,12 @@ public:
 
 	void Init(const std::string& p_id, const AssetManager& p_assetManager)
 	{
-		m_data = p_assetManager.GetSprite(p_id);
+        //Initialize the sprite and handle if we cannot get a sprite from the asset manager
+        m_data = p_assetManager.GetSprite(p_id);
+		if (m_data.id == "NULL")
+		{
+			DEBUG_LOG_ERROR("Failed to load sprite: " + p_id);
+		}
     }
 
     void PlayAnimation(const std::string& p_animation, const float p_deltaTime)

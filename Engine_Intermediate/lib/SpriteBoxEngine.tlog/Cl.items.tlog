@@ -1,3 +1,8 @@
+C:\Users\James\source\repos\SpriteBoxEngine\Engine\src\Core\ECS\UI\UILabel.cpp;C:\Users\James\source\repos\SpriteBoxEngine\Engine_Intermediate\lib\UILabel.obj
+C:\Users\James\source\repos\SpriteBoxEngine\Engine\src\Core\SoundPlayer.cpp;C:\Users\James\source\repos\SpriteBoxEngine\Engine_Intermediate\lib\SoundPlayer.obj
+C:\Users\James\source\repos\SpriteBoxEngine\SpriteBound\src\Game.cpp;C:\Users\James\source\repos\SpriteBoxEngine\Engine_Intermediate\lib\Game.obj
+C:\Users\James\source\repos\SpriteBoxEngine\SpriteBound\src\MainMenu.cpp;C:\Users\James\source\repos\SpriteBoxEngine\Engine_Intermediate\lib\MainMenu.obj
+C:\Users\James\source\repos\SpriteBoxEngine\SpriteBound\src\Source.cpp;C:\Users\James\source\repos\SpriteBoxEngine\Engine_Intermediate\lib\Source.obj
 C:\Users\James\source\repos\SpriteBoxEngine\Engine\src\Core\ECS\PhysicsActor.cpp;C:\Users\James\source\repos\SpriteBoxEngine\Engine_Intermediate\lib\PhysicsActor.obj
 C:\Users\James\source\repos\SpriteBoxEngine\Engine\src\Core\ECS\Actor.cpp;C:\Users\James\source\repos\SpriteBoxEngine\Engine_Intermediate\lib\Actor.obj
 C:\Users\James\source\repos\SpriteBoxEngine\Engine\src\Core\ECS\CamSys\RawCameraComponent.cpp;C:\Users\James\source\repos\SpriteBoxEngine\Engine_Intermediate\lib\RawCameraComponent.obj
@@ -7,7 +12,6 @@ C:\Users\James\source\repos\SpriteBoxEngine\Engine\src\Core\ECS\RigidBodyCompone
 C:\Users\James\source\repos\SpriteBoxEngine\Engine\src\Core\ECS\Solid.cpp;C:\Users\James\source\repos\SpriteBoxEngine\Engine_Intermediate\lib\Solid.obj
 C:\Users\James\source\repos\SpriteBoxEngine\Engine\src\Core\InputManager.cpp;C:\Users\James\source\repos\SpriteBoxEngine\Engine_Intermediate\lib\InputManager.obj
 C:\Users\James\source\repos\SpriteBoxEngine\Engine\src\Core\SceneManager.cpp;C:\Users\James\source\repos\SpriteBoxEngine\Engine_Intermediate\lib\SceneManager.obj
-C:\Users\James\source\repos\SpriteBoxEngine\Engine\src\Core\Source.cpp;C:\Users\James\source\repos\SpriteBoxEngine\Engine_Intermediate\lib\Source.obj
 C:\Users\James\source\repos\SpriteBoxEngine\Engine\src\Core\ECS\SpriteComponent.cpp;C:\Users\James\source\repos\SpriteBoxEngine\Engine_Intermediate\lib\SpriteComponent.obj
 C:\Users\James\source\repos\SpriteBoxEngine\Engine\src\Core\ECS\TransformComponent.cpp;C:\Users\James\source\repos\SpriteBoxEngine\Engine_Intermediate\lib\TransformComponent.obj
 C:\Users\James\source\repos\SpriteBoxEngine\Engine\src\Graphics\Renderer.cpp;C:\Users\James\source\repos\SpriteBoxEngine\Engine_Intermediate\lib\Renderer.obj

@@ -2,6 +2,7 @@
 #include "Core/ECS/Component.h"
 #include "Core/Sprite.h"
 #include "Core/AssetManager.h"
+#include "Maths/Vector2.h"
 
 
 class SpriteComponent : public Component
@@ -10,6 +11,7 @@ public:
     Sprite sprite;
     bool flipped{ false };
 	std::string currentAnimation{ "Idle" };
+
 public:
 	SpriteComponent() = default;
     SpriteComponent(const std::string& p_id, const AssetManager& p_assetManager)
@@ -23,7 +25,7 @@ public:
 
 	void PlayAnimation(const std::string& p_animation) { currentAnimation = p_animation; }
 	void Flip() { flipped = !flipped; }
-	void Flip(bool p_flip) { flipped = p_flip; }
+	void Flip(const bool p_flip) { flipped = p_flip; }
 
 
 	void SetSprite(const std::string& p_id, const AssetManager& p_assetManager)

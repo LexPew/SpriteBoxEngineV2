@@ -53,6 +53,17 @@ public:
 	{
 		Create(p_top, p_left, p_bottom, p_right);
 	}
+	/**
+	 * Creates a new rectangle with the input size
+	 */
+	Rect(const float p_height, const float p_width)
+	{
+		Create(0, 0, p_height, p_width);
+	}
+	Rect(const Vector2& p_position, const Vector2& p_size)
+	{
+		Create(p_position.y, p_position.x, p_position.y + p_size.y, p_position.x + p_size.x);
+	}
 
 	//SERIALIZER
 	template<class Archive>
@@ -114,7 +125,14 @@ public:
 	{
 		return Height;
 	}
-
+	const Vector2 GetSize() const
+	{
+		return { Width, Height };
+	}
+	const Vector2 GetCenter() const
+	{
+		return { (Left + Right) / 2, (Top + Bottom) / 2 };
+	}
 	Vector2 Size()
 	{
 		return { Width, Height };
@@ -136,6 +154,14 @@ public:
 			Right < p_otherBox.Left ||
 			Top > p_otherBox.Bottom ||
 			Bottom < p_otherBox.Top);
+	}
+
+	/**
+	 * Checks to see if this rectangle contains the input point
+	 */
+	bool Contains(const Vector2& p_point) const
+	{
+		return (p_point.x >= Left && p_point.x <= Right && p_point.y >= Top && p_point.y <= Bottom);
 	}
 
 	Vector2 CalculatePenetration(const Rect& p_otherBox) const

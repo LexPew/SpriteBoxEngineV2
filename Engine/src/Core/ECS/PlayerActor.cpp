@@ -6,12 +6,12 @@
 void PlayerActor::Start()
 {
 	PhysicsActor::Start();
-	InputManager::instance->RegisterKey(sf::Keyboard::Key::A);
-	InputManager::instance->RegisterKey(sf::Keyboard::Key::D);
-	InputManager::instance->RegisterKey(sf::Keyboard::Key::W);
+	InputManager::GetInstance().RegisterKey(sf::Keyboard::Key::A);
+	InputManager::GetInstance().RegisterKey(sf::Keyboard::Key::D);
+	InputManager::GetInstance().RegisterKey(sf::Keyboard::Key::W);
 
 	//Setup rect
-	const Vector2 spriteBounds = Renderer::instance->GetSpriteBounds(GetComponent<SpriteComponent>()->sprite.GetSpriteData());
+	const Vector2 spriteBounds = Renderer::GetInstance().GetSpriteBounds(GetComponent<SpriteComponent>()->sprite.GetSpriteData());
 	SetOriginOffset({ -spriteBounds.x / 2.0f, -spriteBounds.y / 2.0f });
 	SetRect({ 0,0,spriteBounds.y, spriteBounds.x });
 
@@ -21,12 +21,12 @@ void PlayerActor::Update(float p_deltaTime)
 {
 	PhysicsActor::Update(p_deltaTime);
 
-	if (InputManager::instance->IsHeld(sf::Keyboard::Key::A))
+	if (InputManager::GetInstance().IsHeld(sf::Keyboard::Key::A))
 	{
 		SetVelocityX(-150);
 		spriteComponent->Flip(true);
 	}
-	else if (InputManager::instance->IsHeld(sf::Keyboard::Key::D))
+	else if (InputManager::GetInstance().IsHeld(sf::Keyboard::Key::D))
 	{
 		SetVelocityX(150);
 		spriteComponent->Flip(false);
@@ -35,7 +35,7 @@ void PlayerActor::Update(float p_deltaTime)
 	{
 		SetVelocityX(0);
 	}
-	if (InputManager::instance->IsPressed(sf::Keyboard::Key::W))
+	if (InputManager::GetInstance().IsPressed(sf::Keyboard::Key::W))
 	{
 		Jump();
 	}

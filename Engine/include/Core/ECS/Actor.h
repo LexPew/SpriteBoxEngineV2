@@ -37,6 +37,7 @@ public:
 	 */
 	Actor(const std::string& p_name, const Vector2& p_position, const Vector2& p_scale) : Entity(p_name, p_position, p_scale)
 	{
+
 		AddTransform(p_position, p_scale);
 	}
 

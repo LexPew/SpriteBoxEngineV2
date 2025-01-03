@@ -8,10 +8,28 @@
 //			to save and load scenes using cereal
 class SceneManager
 {
-public:
-	static SceneManager instance;
+private:
+	static SceneManager* instance;
 
 	std::shared_ptr<Scene> currentScene;
+
+	SceneManager()
+	{
+		if (instance)
+		{
+			delete this;
+			return;
+		}
+		instance = this;
+	}
+	~SceneManager()
+	{
+		//Cleanup
+		instance = nullptr;
+		currentScene = nullptr;
+
+	}
+public:
 	/**
 	 * @brief Save the scene to a file
 	 * @param p_scene Scene to save
@@ -31,5 +49,19 @@ public:
 	 * @param p_scene Scene to set as the current scene
 	 */
 	void SetCurrentScene(const std::shared_ptr<Scene>& p_scene) { currentScene = p_scene; }
-};
 
+	/**
+	* @brief Get the current scene
+	* @return std::shared_ptr<Scene> The current scene
+	*/
+	std::shared_ptr<Scene> GetCurrentScene() const { return currentScene; }
+
+	static SceneManager& GetInstance()
+	{
+		if (instance == nullptr)
+		{
+			instance = new SceneManager();
+		}
+		return *instance;
+	}
+};

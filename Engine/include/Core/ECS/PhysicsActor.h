@@ -33,6 +33,7 @@ public:
 	 */
 	PhysicsActor(const std::string& p_name, const Vector2& p_position, const Vector2& p_scale)
 		: Actor(p_name, p_position, p_scale) {
+
 	}
 
 	void Start() override;

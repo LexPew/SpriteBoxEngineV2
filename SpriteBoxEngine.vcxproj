@@ -19,6 +19,11 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Engine\src\Core\ECS\UI\UILabel.cpp" />
+    <ClCompile Include="Engine\src\Core\SoundPlayer.cpp" />
+    <ClCompile Include="SpriteBound\src\Game.cpp" />
+    <ClCompile Include="SpriteBound\src\MainMenu.cpp" />
+    <ClCompile Include="SpriteBound\src\Source.cpp" />
     <ClCompile Include="Engine\src\Core\ECS\PhysicsActor.cpp" />
     <ClCompile Include="Engine\src\Core\ECS\Actor.cpp" />
     <ClCompile Include="Engine\src\Core\ECS\CamSys\RawCameraComponent.cpp" />
@@ -28,7 +33,6 @@
     <ClCompile Include="Engine\src\Core\ECS\Solid.cpp" />
     <ClCompile Include="Engine\src\Core\InputManager.cpp" />
     <ClCompile Include="Engine\src\Core\SceneManager.cpp" />
-    <ClCompile Include="Engine\src\Core\Source.cpp" />
     <ClCompile Include="Engine\src\Core\ECS\SpriteComponent.cpp" />
     <ClCompile Include="Engine\src\Core\ECS\TransformComponent.cpp" />
     <ClCompile Include="Engine\src\Graphics\Renderer.cpp" />
@@ -39,6 +43,7 @@
     <ClCompile Include="Engine\src\Core\ECS\PlayerActor.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Engine\include\Core\Color4.h" />
     <ClInclude Include="Engine\include\Core\ECS\PhysicsActor.h" />
     <ClInclude Include="Engine\include\Core\Action.h" />
     <ClInclude Include="Engine\include\Core\ECS\Actor.h" />
@@ -48,8 +53,13 @@
     <ClInclude Include="Engine\include\Core\AssetManager.h" />
     <ClInclude Include="Engine\include\Core\ECS\RigidBodyComponent.h" />
     <ClInclude Include="Engine\include\Core\ECS\Solid.h" />
+    <ClInclude Include="Engine\include\Core\ECS\UI\TextData.h" />
+    <ClInclude Include="Engine\include\Core\ECS\UI\UIButton.h" />
+    <ClInclude Include="Engine\include\Core\ECS\UI\UIComponent.h" />
+    <ClInclude Include="Engine\include\Core\ECS\UI\UILabel.h" />
     <ClInclude Include="Engine\include\Core\InputManager.h" />
     <ClInclude Include="Engine\include\Core\Scene.h" />
+    <ClInclude Include="Engine\include\Core\SoundPlayer.h" />
     <ClInclude Include="Engine\include\Core\Sprite.h" />
     <ClInclude Include="Engine\include\Core\ECS\SpriteComponent.h" />
     <ClInclude Include="Engine\include\Core\SpriteData.h" />
@@ -67,6 +77,8 @@
     <ClInclude Include="Engine\include\Tests\InputSystemTest.h" />
     <ClInclude Include="Engine\include\Tests\SmallDemoTest.h" />
     <ClInclude Include="Engine\include\Core\ECS\PlayerActor.h" />
+    <ClInclude Include="SpriteBound\include\Game.h" />
+    <ClInclude Include="SpriteBound\include\MainMenu.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Engine\build\x64\sfml-graphics-d-2.dll" />
@@ -97,13 +109,13 @@
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -128,13 +140,14 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>$(SolutionDir)Engine\lib\</OutDir>
+    <OutDir>$(SolutionDir)Engine\builds\$(Configuration)\</OutDir>
     <IntDir>Engine_Intermediate\lib\</IntDir>
     <TargetName>$(ProjectName)-d</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutDir>$(SolutionDir)Engine\lib\</OutDir>
+    <OutDir>$(SolutionDir)Engine\builds\$(Configuration)\</OutDir>
     <IntDir>Engine_Intermediate\lib\</IntDir>
+    <TargetName>$(ProjectName)</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -171,7 +184,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>C:\Users\James\source\repos\SpriteBoxEngine\Engine\include\Utils;SFML\include;Engine\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\James\source\repos\SpriteBoxEngine\SpriteBound\include;C:\Users\James\source\repos\SpriteBoxEngine\Engine\include\Utils;SFML\include;Engine\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -189,7 +202,7 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>C:\Users\James\source\repos\SpriteBoxEngine\Engine\include\Utils;SFML\include;Engine\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\James\source\repos\SpriteBoxEngine\SpriteBound\include;C:\Users\James\source\repos\SpriteBoxEngine\Engine\include\Utils;SFML\include;Engine\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

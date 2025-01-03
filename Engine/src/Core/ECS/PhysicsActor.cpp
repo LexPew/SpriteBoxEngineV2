@@ -34,7 +34,7 @@ void PhysicsActor::Update(float p_deltaTime)
 	MoveY(moveY, onVerticalCollision);
 
 	// Check if the character is grounded
-	isGrounded = CollideAt(SceneManager::instance.currentScene->GetSolids(), GetTransform()->GetPosition() + Vector2(0, 1));
+	isGrounded = CollideAt(SceneManager::GetInstance().GetCurrentScene()->GetSolids(), GetTransform()->GetPosition() + Vector2(0, 1));
     if(isGrounded)
     {
 		jumpCount = 0;

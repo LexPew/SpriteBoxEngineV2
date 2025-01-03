@@ -1,0 +1,8 @@
+{
+  "id": "Button",
+  "texturePath": "sprites/Button.png",
+  "animations": {
+  },
+  "spriteSheetRows": 1,
+  "spriteSheetColumns": 1
+}

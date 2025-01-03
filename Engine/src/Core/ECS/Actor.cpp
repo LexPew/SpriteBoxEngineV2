@@ -1,5 +1,6 @@
 #include "Core/ECS/Actor.h"
 #include "Core/SceneManager.h"
+#include "Debug/DebugMacros.h"
 
 
 void Actor::Start()
@@ -34,7 +35,7 @@ void Actor::MoveX(float p_moveAmount, Action& p_onCollide)
         Vector2 nextPosition = currentPosition;
         nextPosition.x += direction * step;
 
-        if (!CollideAt(SceneManager::instance.currentScene->GetSolids(), nextPosition))
+        if (!CollideAt(SceneManager::GetInstance().GetCurrentScene()->GetSolids(), nextPosition))
         {
             currentPosition.x = nextPosition.x;
             moveRemaining -= step;
@@ -63,7 +64,7 @@ void Actor::MoveY(float p_moveAmount, Action& p_onCollide)
         Vector2 nextPosition = currentPosition;
         nextPosition.y += direction * step;
 
-        if (!CollideAt(SceneManager::instance.currentScene->GetSolids(), nextPosition))
+        if (!CollideAt(SceneManager::GetInstance().GetCurrentScene()->GetSolids(), nextPosition))
         {
             currentPosition.y = nextPosition.y;
             moveRemaining -= step;

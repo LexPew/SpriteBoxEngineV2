@@ -9,7 +9,7 @@
 #include "cereal/types/string.hpp"
 #include "cereal/types/polymorphic.hpp"
 #include "cereal/types/unordered_map.hpp"
-#include "Debug/DebugMacros.h"
+
 
 class Renderer;
 
@@ -55,6 +55,8 @@ public:
      */
     template<typename T>
     std::shared_ptr<T> GetComponent();
+    template <class T>
+    std::shared_ptr<T> GetComponentByType();
 
     /**
      * Call start on all components attached to this entity
@@ -79,8 +81,7 @@ public:
     template <class Archive>
     void save(Archive& ar) const
     {
-        DEBUG_LOG("Saving Entity: " << name);
-        DEBUG_LOG("-Is Active: " << active);
+
         ar(name, active, m_components);
     }
 
@@ -88,8 +89,7 @@ public:
     void load(Archive& ar)
     {
 		ar(name, active, m_components);
-        DEBUG_LOG("Loading Entity: " << name);
-        DEBUG_LOG("-Is Active: " << active);
+   
 		for (auto& pair : m_components)
 		{
 			pair.second->owner = this;
@@ -122,3 +122,18 @@ std::shared_ptr<T> Entity::GetComponent()
     }
     return nullptr;
 }
+
+template<typename T>
+std::shared_ptr<T> Entity::GetComponentByType()
+{
+	for (auto& pair : m_components)
+	{
+		if (auto component = std::dynamic_pointer_cast<T>(pair.second))
+		{
+			return component;
+		}
+	}
+	return nullptr;
+}
+
+

@@ -14,7 +14,9 @@ private:
 public:
 	PlayerActor() : PhysicsActor()
 	{
-		Init("Adventurer");
+		//Create a player with a NULL sprite this
+		//can be set later but for now will display an error texture
+		Init("NULL");
 	}
 
 
@@ -22,6 +24,7 @@ public:
 	PlayerActor(const std::string& p_name, const Vector2& p_position, const Vector2& p_scale, const std::string& p_spriteId)
 		: PhysicsActor(p_name, p_position, p_scale)
 	{
+
 		Init(p_spriteId);
 	}
 

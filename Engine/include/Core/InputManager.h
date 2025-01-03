@@ -5,8 +5,13 @@
 //Purpose: A class that manages input from the keyboard
 class InputManager
 {
-public:
+private:
 	static InputManager* instance; //Holds the instance of the input manager
+
+	std::unordered_map<sf::Keyboard::Key, bool> currentKeyState; // The current state of the keys (this frame)
+	std::unordered_map<sf::Keyboard::Key, bool> previousKeyState; // The previous state of the keys (last frame)
+public:
+	
 
 	//Construct a new InputManager object
 	InputManager()
@@ -16,7 +21,23 @@ public:
 			instance = this;
 		}
 	}
-	~InputManager() = default;
+	~InputManager()
+	{
+
+		instance = nullptr;
+		currentKeyState.clear();
+		previousKeyState.clear();
+
+	}
+
+	static InputManager& GetInstance()
+	{
+		if (instance == nullptr)
+		{
+			instance = new InputManager();
+		}
+		return *instance;
+	}
 	/**
 	 * @brief Register a key to be tracked by the input manager
 	 * @param p_key The key to register
@@ -45,9 +66,7 @@ public:
 	*/
     bool IsReleased(sf::Keyboard::Key p_key) const;
 
-private:
-	std::unordered_map<sf::Keyboard::Key, bool> currentKeyState; // The current state of the keys (this frame)
-	std::unordered_map<sf::Keyboard::Key, bool> previousKeyState; // The previous state of the keys (last frame)
+
 };
 
 

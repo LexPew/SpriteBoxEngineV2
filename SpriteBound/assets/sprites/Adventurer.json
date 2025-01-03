@@ -1,0 +1,28 @@
+{
+  "id": "Adventurer",
+  "texturePath": "sprites/Adventurer.png",
+  "animations": {
+    "Idle": {
+      "startFrame": 0,
+      "endFrame": 4,
+      "frameDuration": 0.2
+    },
+    "Walk": {
+      "startFrame": 9,
+      "endFrame": 14,
+      "frameDuration": 0.2
+    },
+    "Attack": {
+      "startFrame": 49,
+      "endFrame": 54,
+      "frameDuration": 0.1
+    },
+    "Jump": {
+      "startFrame": 23,
+      "endFrame": 24,
+      "frameDuration": 0.1
+    }
+  },
+  "spriteSheetRows": 11,
+  "spriteSheetColumns": 7
+}

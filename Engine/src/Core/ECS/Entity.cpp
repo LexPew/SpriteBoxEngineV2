@@ -2,8 +2,9 @@
 
 void Entity::AddTransform(const Vector2& p_position, const Vector2& p_scale)
 {
+
 	// Add a TransformComponent by default
-    AddComponent(std::make_shared<TransformComponent>());
+    AddComponent(std::make_shared<TransformComponent>(p_position, p_scale));
 }
 
 void Entity::Start()
