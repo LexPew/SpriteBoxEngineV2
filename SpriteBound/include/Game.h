@@ -14,6 +14,7 @@ public:
 	Game() = default;
 	~Game() = default;
 
+	//Main Game Loop functions
 	
 	bool Initialize();
 	void Cleanup();
@@ -23,4 +24,11 @@ public:
 	void HandleEvents();
 	void Update();
 	void Render();
+
+	//Misc functions
+
+	/**
+	 * Updates the performance metrics, and creates an ImGui window to display them
+	 */
+	void UpdatePerformanceMetrics();
 };

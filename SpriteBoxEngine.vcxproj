@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="Engine\src\Core\ECS\UI\UILabel.cpp" />
     <ClCompile Include="Engine\src\Core\SoundPlayer.cpp" />
+    <ClCompile Include="Engine\src\Debug\PerfomanceMetrics.cpp" />
     <ClCompile Include="SpriteBound\src\Game.cpp" />
     <ClCompile Include="SpriteBound\src\MainMenu.cpp" />
     <ClCompile Include="SpriteBound\src\Source.cpp" />
@@ -65,6 +66,7 @@
     <ClInclude Include="Engine\include\Core\SpriteData.h" />
     <ClInclude Include="Engine\include\Core\ECS\TransformComponent.h" />
     <ClInclude Include="Engine\include\Debug\DebugMacros.h" />
+    <ClInclude Include="Engine\include\Debug\PerformanceMetrics.h" />
     <ClInclude Include="Engine\include\Graphics\Renderer.h" />
     <ClInclude Include="Engine\include\Maths\Line2.h" />
     <ClInclude Include="Engine\include\Maths\Rect.h" />

@@ -11,6 +11,7 @@
 #include "Debug/DebugMacros.h"
 
 #include "MainMenu.h" 
+#include "Debug/PerformanceMetrics.h"
 
 bool Game::Initialize()
 {
@@ -77,17 +78,25 @@ void Game::HandleEvents()
     }
 }
 
+void Game::UpdatePerformanceMetrics()
+{
+#ifdef _DEBUG
+	PerformanceMetrics::GetInstance()->Update(deltaTime);
+	ImGui::Begin("Performance Metrics");
+	ImGui::Text("FPS: %.2f", PerformanceMetrics::GetInstance()->GetFrameRate());
+	ImGui::Text("Averaged FPS: %.2f", PerformanceMetrics::GetInstance()->GetAveragedFrameRate());
+	ImGui::End();
+#endif
+
+}
+
 void Game::Update()
 {
     deltaTime = clock.restart().asSeconds();
     SceneManager::GetInstance().GetCurrentScene()->Update(deltaTime);
 	ImGui::SFML::Update(gameWindow, sf::seconds(deltaTime));
-    ImGui::ShowDemoWindow();
-
-    ImGui::Begin("Hello, world!");
-    ImGui::Button("Look at this pretty button");
-    ImGui::End();
-    // Update game logic
+    UpdatePerformanceMetrics();
+	// Update game logic
 }
 
 void Game::Render()
