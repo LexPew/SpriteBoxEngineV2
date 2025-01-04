@@ -1,10 +1,12 @@
 {
-  "name": "SpriteBoxEngine",
+  "name": "spriteboxengine",
   "version-string": "1.0.0",
+  "description": "A 2D game engine built with SFML",
   "dependencies": [
     "sfml",
+    "imgui-sfml",
     "cereal",
     "nlohmann-json"
-  ]
+  ],
+  "builtin-baseline": "2960d7d80e8d09c84ae8abf15c12196c2ca7d39a"
 }
-    

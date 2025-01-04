@@ -1,15 +1,16 @@
-// File: SpriteBound/src/Game.cpp
 #include "Game.h"
 
+#include "imgui.h"
+#include "imgui-SFML.h"
 #include <SFML/Window/Event.hpp>
 
 #include "Core/AssetManager.h"
 #include "Core/SceneManager.h"
 #include "Core/ECS/SpriteComponent.h"
-#include "Core/ECS/UI/UIButton.h"
-#include "Core/ECS/UI/UILabel.h"
+
 #include "Debug/DebugMacros.h"
-#include "MainMenu.h" // Include the MainMenu header
+
+#include "MainMenu.h" 
 
 bool Game::Initialize()
 {
@@ -24,7 +25,7 @@ bool Game::Initialize()
     Renderer::GetInstance().SetWindow(&gameWindow);
 
     AssetManager::GetInstance().SetAssetRoot("Spritebound/assets");
-
+	ImGui::SFML::Init(gameWindow);
     // Load the MainMenu scene by default
     auto mainMenuScene = std::make_shared<MainMenu>();
     SceneManager::GetInstance().SetCurrentScene(mainMenuScene);
@@ -55,6 +56,7 @@ void Game::HandleEvents()
     sf::Event event;
     while (gameWindow.pollEvent(event))
     {
+		ImGui::SFML::ProcessEvent(event);
         if (event.type == sf::Event::Closed)
         {
             gameWindow.close();
@@ -79,6 +81,12 @@ void Game::Update()
 {
     deltaTime = clock.restart().asSeconds();
     SceneManager::GetInstance().GetCurrentScene()->Update(deltaTime);
+	ImGui::SFML::Update(gameWindow, sf::seconds(deltaTime));
+    ImGui::ShowDemoWindow();
+
+    ImGui::Begin("Hello, world!");
+    ImGui::Button("Look at this pretty button");
+    ImGui::End();
     // Update game logic
 }
 
@@ -86,5 +94,6 @@ void Game::Render()
 {
     gameWindow.clear();
     SceneManager::GetInstance().GetCurrentScene()->Render(Renderer::GetInstance());
+	ImGui::SFML::Render(gameWindow);
     gameWindow.display();
 }

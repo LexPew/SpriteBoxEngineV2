@@ -22,7 +22,7 @@ void MainMenu::CreateMenu()
 
     // Calculate positions for centering and spacing
     float buttonWidth = 256.0f;
-    float buttonHeight = 128.0f;
+    float buttonHeight = 88.0f;
     float centerX = windowWidth / 2.0f;
 	float centerY = windowHeight / 2.0f;
 	float playButtonY = centerY - buttonHeight;
@@ -31,7 +31,7 @@ void MainMenu::CreateMenu()
     // Create the play button
     auto playEntity = std::make_shared<Entity>("PlayButton", Vector2(centerX, playButtonY), Vector2::One());
     auto playButton = std::make_shared<UIButton>([]() { DEBUG_LOG("Play button clicked"); },
-        TextData("Play", 30, { 255,255,255,255 },
+        TextData("PLAY", 30, { 255,255,255,255 },
             "default"),
         AssetManager::GetInstance().GetSprite("Button"), "OnClick");
     playEntity->AddComponent(playButton);
@@ -40,7 +40,7 @@ void MainMenu::CreateMenu()
     // Create the exit button
     auto exitEntity = std::make_shared<Entity>("ExitButton", Vector2(centerX, exitButtonY), Vector2::One());
     auto exitButton = std::make_shared<UIButton>([]() { DEBUG_LOG("Exit button clicked"); },
-        TextData("Exit", 30, { 255,255,255,255 },
+        TextData("EXIT", 30, { 255,255,255,255 },
             "default"),
         AssetManager::GetInstance().GetSprite("Button"), "OnClick");
     exitEntity->AddComponent(exitButton);
