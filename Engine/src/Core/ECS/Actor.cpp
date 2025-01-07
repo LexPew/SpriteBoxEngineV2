@@ -85,12 +85,22 @@ bool Actor::CollideAt(const std::vector<std::shared_ptr<Solid>>& p_solids, const
     rect.SetPosition(p_position + originOffset);
     for (const auto& solid : p_solids)
     {
+
         if (solid->GetRect().Intersects(rect))
         {
+			if (solid->IsTrigger())
+			{
+                solid->TriggerEntry(this);
+				return false;
+			}
 			//Commented out for now as it is not needed and gets annoying
 			//DEBUG_LOG("Collision detected between Actor: " << name << " and Solid: " << solid->GetName());
             return true;
-        }
+		}
+		if (solid->IsTrigger())
+		{
+			solid->TriggerExit(this);
+		}
     }
     return false;
 }

@@ -1,5 +1,6 @@
 #pragma once
 #include "Actor.h"
+#include "Debug/DebugMacros.h"
 
 //Class: PhysicsActor
 //Purpose: A class that represents an actor using physics in the game world
@@ -88,11 +89,13 @@ public:
 	void save(Archive& p_archive) const
 	{
 		p_archive(cereal::base_class<Actor>(this), velocityX, velocityY, isGrounded, jumpCount, maxJumps, gravity, jumpStrength, maxFallSpeed);
+		DEBUG_LOG("PhysicsActor saved");
 	}
 	template<class Archive>
 	void load(Archive& p_archive)
 	{
 		p_archive(cereal::base_class<Actor>(this), velocityX, velocityY, isGrounded, jumpCount, maxJumps, gravity, jumpStrength, maxFallSpeed);
+		DEBUG_LOG("PhysicsActor loaded");
 	}
 
 };

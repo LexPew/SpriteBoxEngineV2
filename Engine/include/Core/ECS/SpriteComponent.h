@@ -27,7 +27,7 @@ public:
 	void Flip() { flipped = !flipped; }
 	void Flip(const bool p_flip) { flipped = p_flip; }
 
-
+	
 	void SetSprite(const std::string& p_id, const AssetManager& p_assetManager)
 	{
 		sprite.Init(p_id, p_assetManager);

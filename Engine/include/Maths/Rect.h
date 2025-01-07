@@ -125,6 +125,17 @@ public:
 	{
 		return Height;
 	}
+
+	/**
+	 * Sets the width and height of the rectangle
+	 */
+	void SetSize(const Vector2& p_size)
+	{
+		
+		Width = p_size.x;
+		Height = p_size.y;
+	}
+
 	const Vector2 GetSize() const
 	{
 		return { Width, Height };

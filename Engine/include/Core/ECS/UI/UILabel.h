@@ -2,6 +2,8 @@
 
 #include "UIComponent.h"
 #include "TextData.h"
+#include "Core/ECS/Entity.h"
+#include "ThirdParty/Event.h"
 
 // Class: UILabel
 // Purpose: A UI component that renders text.
@@ -9,18 +11,17 @@ class UILabel : public UIComponent
 {
 private:
     TextData textData; // Holds text-related data such as content, font, size, and color.
-
+	Vector2 textPosition; // The position of the text on the screen.
+    void OnPositionUpdated(Vector2& p_newPosition);
 public:
 	UILabel() = default;
     /**
      * @brief Constructor for UILabel.
      * @param p_textData The text data to render.
      */
-    UILabel(const TextData& p_textData) : textData(p_textData) {}
+    UILabel(const TextData& p_textData) : textData(p_textData) { }
 
-    void Start() override{}
-
-    void Update(float p_deltaTime) override{}
+    void Awake() override;
 
 	void HandleInput(const Vector2& p_mousePosition, bool p_click) override{}
 
@@ -37,6 +38,7 @@ public:
     void SetText(const std::string& p_text)
     {
         textData.text = p_text;
+
     }
 
     /**
@@ -46,6 +48,7 @@ public:
     void SetFontSize(int p_fontSize)
     {
         textData.fontSize = p_fontSize;
+
     }
 
     /**
@@ -64,6 +67,7 @@ public:
     void SetFontId(const std::string& p_fontId)
     {
         textData.fontId = p_fontId;
+
     }
 
     /**
@@ -73,6 +77,7 @@ public:
     void SetTextData(const TextData& p_textData)
     {
         textData = p_textData;
+
     }
 
     /**
@@ -87,12 +92,12 @@ public:
 	template <class Archive>
     void save(Archive& archive) const
     {
-        archive(cereal::base_class < UIComponent>(this), textData);
+        archive( textData);
     }
 	template <class Archive>
 	void load(Archive& archive)
 	{
-		archive(cereal::base_class < UIComponent>(this), textData);
+		archive(textData);
 	}
 
 };

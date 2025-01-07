@@ -1,6 +1,6 @@
 #pragma once
 #include <cmath>
-
+#include <ostream>
 
 struct Vector2
 {
@@ -255,7 +255,7 @@ public:
 
 		const float angleInRadians = acos(dot / (magA * magB));
 
-		const float angleInDegrees = angleInRadians * 57.29 ; // 
+		const float angleInDegrees = angleInRadians * 57.29f; // 
 		return angleInDegrees;
 	}
 
@@ -272,7 +272,7 @@ public:
 
 	float GetAngle() const
 	{
-		return (atan2(x, y) * 57.29);
+		return (atan2(x, y) * 57.29f);
 	}
 };
 

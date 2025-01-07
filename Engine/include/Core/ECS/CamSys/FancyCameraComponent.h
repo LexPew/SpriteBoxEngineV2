@@ -1,5 +1,6 @@
 #pragma once
 #include "RawCameraComponent.h"
+#include "Debug/DebugMacros.h"
 class TransformComponent;
 /**
  * Camera component based upon the RawCameraComponent,
@@ -51,7 +52,6 @@ public:
 
 	~FancyCameraComponent() = default;
 
-	void Start() override;
 	void CalculateCameraSmoothing(float p_deltaTime);
 
 	void CalculateZoomSmoothing(float p_deltaTime);
@@ -100,6 +100,7 @@ public:
 			shakeDuration,
 			shakeElapsedTime,
 			isShaking);
+		DEBUG_LOG("FancyCameraComponent saved");
 	}
 
 	template<class Archive>
@@ -127,6 +128,7 @@ public:
 			shakeDuration,
 			shakeElapsedTime,
 			isShaking);
+		DEBUG_LOG("FancyCameraComponent loaded");
 	}
 };
 CEREAL_REGISTER_TYPE(FancyCameraComponent)

@@ -3,104 +3,147 @@
 #include "Core/InputManager.h"
 #include "Core/Scene.h"
 #include "Core/SceneManager.h"
-#include "Core/ECS/PhysicsActor.h"
-#include "Core/ECS/PlayerActor.h"
-#include "Core/ECS/RigidBodyComponent.h"
-#include "Core/ECS/SpriteComponent.h"
-#include "Core/ECS/CamSys/FancyCameraComponent.h"
+
+#include "PlayerActor.h"
+#include "Core/ECS/SpriteSolid.h"
 #include "Graphics/Renderer.h"
 #include "SFML/Graphics.hpp"
 
-void inline SmallGameTest()
+#include <imgui.h>
+
+#include "imgui-SFML.h"
+
+class SmallDemoTest
 {
-	//---> Small Game Test <---//
+public:
+	SmallDemoTest() = default;
+	~SmallDemoTest() = default;
 
-	// Create the asset manager
-	AssetManager assetManager;
-	assetManager.SetAssetRoot("Engine/assets");
-	assetManager.LoadSprite("Sprites/TemplateAssets/Adventurer.json");
+	bool isRunning{ true };
 
-	//Create the physics engine
-	Physics physicsEngine;
-	physicsEngine.SetGravity({ 0, 50 });
-	physicsEngine.SetGroundedGravity({ 0, 1 });
+    void SmallGameTest()
+    {
+        //---> SCENE EDITOR <---//
 
-	//Create the input manager
-	InputManager inputManager;
-	inputManager.RegisterKey(sf::Keyboard::Key::R);
-	//Create the renderer and window
-	sf::RenderWindow window(sf::VideoMode(800, 600), "Small Game Test");
-	Renderer renderer(&window);
+        // Create the renderer and window
+        sf::RenderWindow window(sf::VideoMode::getDesktopMode(), "Small Game Test");
+        Renderer::GetInstance().SetWindow(&window);
 
-	//Create the scene
-	std::shared_ptr<Scene> smallGameTestScene = std::make_shared<Scene>();
+        //CREATE SCENE
 
+        // Create the asset manager
+        AssetManager::GetInstance().SetAssetRoot("SpriteBound/assets");
+        AssetManager::GetInstance().LoadSprite("sprites/Adventurer.json");
+        AssetManager::GetInstance().LoadSprite("sprites/Grass_Platform.json");
+        AssetManager::GetInstance().LoadSprite("sprites/Grass_PlatformShort.json");
 
+        // Load and add parallax background layers
+        for (int i = 1; i < 6; i++)
+        {
+            std::string textureId = "PB" + std::to_string(i);
+            std::string texturePath = "sprites/parallaxbackground/" + std::to_string(i) + ".png";
+            AssetManager::GetInstance().LoadTexture(textureId, texturePath);
+            Renderer::GetInstance().AddBackgroundLayer(textureId, static_cast<float>(i));
+        }
 
-	auto player = std::make_shared<PlayerActor>("Player", Vector2::Zero(), Vector2::One(), "Adventurer");
-	//Set the origin offset
+        // Create the scene
+        std::shared_ptr<Scene> smallGameTestScene = std::make_shared<Scene>();
 
+        auto player = std::make_shared<PlayerActor>("Player", Vector2::Zero(), Vector2::One(), "Adventurer");
 
-	
+        // Set the origin offset
+        std::srand(static_cast<unsigned>(std::time(nullptr))); // Seed for randomness
 
+        // Ensure the first platform is below the player
+        Vector2 firstPlatformPosition(0, 100); // Position the first platform below the player
+        Vector2 firstPlatformScale(1.0f, 1.0f);
+        auto firstPlatform = std::make_shared<SpriteSolid>("Floor", firstPlatformPosition, firstPlatformScale, "Grass_Platform", false);
+        smallGameTestScene->AddEntity(firstPlatform);
 
-	for (int i = 0; i < 10; i++)
-	{
-		auto platform = std::make_shared<Solid>("Platform" + std::to_string(i), Vector2(150 * i, 200), 
-			Vector2(1, 1), Rect(0, 0, 64, 64));
-		smallGameTestScene->AddEntity(platform);
-	}
+        // Generate the rest of the platforms with random positions and scales
+        int numberOfPlatforms = 10;
+        for (int i = 1; i < numberOfPlatforms; i++)
+        {
+            float xPos = 200 * i + (std::rand() % 100 - 50); // Randomize x position slightly
+            float yPos = 50 + (std::rand() % 100 - 50); // Randomize y position slightly
+            Vector2 position(xPos, yPos);
+            Vector2 scale(1.0f + static_cast<float>(std::rand() % 50) / 100.0f, 1.0f); // Randomize scale slightly
 
-	//Add the entities to the scene
-	smallGameTestScene->AddEntity(player);
+            // Randomly choose between the two platform types
+            std::string platformType = (std::rand() % 2 == 0) ? "Grass_Platform" : "Grass_PlatformShort";
+            auto platform = std::make_shared<SpriteSolid>("Floor", position, scale, platformType, false);
+            smallGameTestScene->AddEntity(platform);
+            // If we are creating the last platform then add another solid as a trigger on top of it
+            if (i == numberOfPlatforms - 1)
+            {
+                Vector2 triggerPosition = position;
+                triggerPosition.y -= 50;
+                auto trigger = std::make_shared<SpriteSolid>("Trigger", triggerPosition, Vector2(1.0f, 1.0f), "Grass_Platform", true);
+                // Set the function for trigger on enter to load the scene MainGame.scene
+				trigger->onTriggerEnter += Sharp::EventHandler::Bind(&SmallDemoTest::SmallGameTest_OnTriggerEnter, this);
+                smallGameTestScene->AddEntity(trigger);
+            }
 
+        }
 
-	//Delta time clock
-	sf::Clock deltaClock;
-
-
-	SceneManager::instance.SetCurrentScene(smallGameTestScene);
-
-	//---> Game Loop <---//
-
-	smallGameTestScene->Start();
-	window.setFramerateLimit(30);
-	while (window.isOpen())
-	{
-		sf::Event event;
-		while (window.pollEvent(event))
-		{
-			if (event.type == sf::Event::Closed)
-			{
-				window.close();
-			}
-		}
-		window.clear();
-		float deltaTime = deltaClock.restart().asSeconds();
-
-		//---> Physics <---//
-		physicsEngine.Update(deltaTime);
-
-
-		//---> Input <---//
-
-		inputManager.Update();
-
-		
-
-		//---> Update <---//
-	
-		smallGameTestScene->Update(deltaTime);
+        // Add the entities to the scene
+        smallGameTestScene->AddEntity(player);
+        SceneManager::SaveScene(smallGameTestScene, "scenes/Level1.scene");
+        SceneManager::GetInstance().SetCurrentScene(smallGameTestScene);
 
 
-		//---> Render <---//
+        //GAME
 
-		smallGameTestScene->Render(renderer);
+        // Delta time clock
+        sf::Clock deltaClock;
 
-		window.display();
-	}
+        //---> Game Loop <---//
+        SceneManager::GetInstance().GetCurrentScene()->Awake();
+        SceneManager::GetInstance().GetCurrentScene()->Start();
+        window.setFramerateLimit(144);
 
-	SceneManager::SaveScene(smallGameTestScene, "SmallGameTestScene.scene");
+        while (window.isOpen())
+        {
+            sf::Event event;
+            while (window.pollEvent(event))
+            {
+                if (event.type == sf::Event::Closed)
+                {
+                    window.close();
+                }
+                if (event.type == sf::Event::MouseWheelScrolled)
+                {
+                    InputManager::GetInstance().UpdateScrollWheelDelta(event.mouseWheelScroll.delta);
+                }
+            }
+
+            float deltaTime = deltaClock.restart().asSeconds();
+
+            // Update scene and render
+            InputManager::GetInstance().Update();
+            SceneManager::GetInstance().GetCurrentScene()->Update(deltaTime);
+
+            window.clear();
+
+            // Render background and scene
+            Renderer::GetInstance().DrawBackground();
+            SceneManager::GetInstance().GetCurrentScene()->Render(Renderer::GetInstance());
+
+            window.display();
+        }
+
+        // After the game loop, shutdown ImGui-SFML
+        ImGui::SFML::Shutdown();
+		isRunning = false;
+    }
+
+    void SmallGameTest_OnTriggerEnter(Actor& p_actor)
+    {
+        auto scene = SceneManager::LoadScene("scenes/Level1.scene");
+		SceneManager::GetInstance().SetCurrentScene(scene);
+    }
+};
 
 
-}
+
+

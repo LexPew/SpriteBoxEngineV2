@@ -21,6 +21,6 @@ struct TextData
 	template <class Archive>
 	void serialize(Archive& archive)
 	{
-		archive(text, fontSize, color, fontId);
+		archive(fontId, text, fontSize, color);
 	}
 };

@@ -74,52 +74,52 @@ public:
     //--SPRITE MANAGEMENT--
 
     /**
-     * Loads a sprite using a json asset file
+     * @brief Loads a sprite using a json asset file
      * @param p_path File path of the json sprite asset
      */
     bool LoadSprite(const std::string& p_path);
 
     /**
-     * Loads a font from a file
+     * @brief Loads a font from a file
      * @param p_id
      * @param p_path File path of the font
      */
     bool LoadFont(const std::string& p_id, const std::string& p_path);
 
     /**
-     * Loads a texture from a file
+     * @brief Loads a texture from a file
      * @param p_id
      * @param p_path File path of the texture
      */
     bool LoadTexture(const std::string& p_id, const std::string& p_path);
 
     /**
-     * Loads a sound from a file
+     * @brief Loads a sound from a file
      * @param p_id
      * @param p_path File path of the sound
      */
     bool LoadSound(const std::string& p_id, const std::string& p_path);
 
     /**
-     * Returns texture of texture(ID) if found and loaded
+     * @brief Returns texture of texture(ID) if found and loaded
      * @param p_id Texture Id
      */
-    const sf::Texture& GetTexture(const std::string& p_id) const;
+     sf::Texture& GetTexture(const std::string& p_id);
 
     /**
-     * Returns spriteData of sprite(ID) if found and loaded
+     * @brief Returns spriteData of sprite(ID) if found and loaded
      * @param p_id Sprite Id
      */
     const SpriteData& GetSprite(const std::string& p_id) const;
 
     /**
-    * Returns font of font(ID) if found and loaded
+    * @brief Returns font of font(ID) if found and loaded
     * @param p_id Font Id
     */
     const sf::Font& GetFont(const std::string& p_id) const;
 
     /**
-    * Returns sound buffer of sound(ID) if found and loaded
+    * @brief Returns sound buffer of sound(ID) if found and loaded
     * @param p_id Sound Id
     */
     const sf::SoundBuffer& GetSound(const std::string& p_id) const;
@@ -128,15 +128,16 @@ public:
     void save(Archive& archive) const
     {
 
-        DEBUG_LOG("Saving asset manager");
+
         archive(assetRootString, m_spritePaths, m_fontPaths, m_texturePaths, m_soundPaths);
+		DEBUG_LOG("Saved asset manager");
     }
 
     template <class Archive>
     void load(Archive& archive)
     {
 
-        DEBUG_LOG("Loading asset manager");
+
         archive(assetRootString, m_spritePaths, m_fontPaths, m_texturePaths, m_soundPaths);
         SetAssetRoot(assetRootString);
         DEBUG_LOG("Sprite path size " << m_spritePaths.size());
@@ -160,5 +161,6 @@ public:
             DEBUG_LOG("Sound path " << pair.second);
             LoadSound(pair.first, pair.second);
         }
+        DEBUG_LOG("Loaded asset manager");
     }
 };

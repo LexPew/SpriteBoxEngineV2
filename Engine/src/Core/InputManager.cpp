@@ -1,6 +1,8 @@
 // InputManager.cpp
 #include "Core/InputManager.h"
 
+#include <SFML/Window/Mouse.hpp>
+
 InputManager* InputManager::instance{ nullptr };
 
 void InputManager::RegisterKey(const sf::Keyboard::Key p_key) {
@@ -15,6 +17,16 @@ void InputManager::RegisterKey(const sf::Keyboard::Key p_key) {
 }
 
 void InputManager::Update() {
+    // Mouse state update
+    leftMouseClick = sf::Mouse::isButtonPressed(sf::Mouse::Left);
+    rightMouseClick = sf::Mouse::isButtonPressed(sf::Mouse::Right);
+    middleMouseClick = sf::Mouse::isButtonPressed(sf::Mouse::Middle);
+
+    // Update mouse position
+	mousePosition.x = static_cast<float>(sf::Mouse::getPosition().x);
+	mousePosition.y = static_cast<float>(sf::Mouse::getPosition().y);
+
+	//Key state update
     for (auto& keyState : currentKeyState) {
         previousKeyState[keyState.first] = keyState.second;
         keyState.second = sf::Keyboard::isKeyPressed(keyState.first);
@@ -44,3 +56,5 @@ bool InputManager::IsReleased(const sf::Keyboard::Key p_key) const {
     }
     return false;
 }
+
+

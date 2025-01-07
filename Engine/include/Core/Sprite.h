@@ -10,9 +10,9 @@ class Sprite
 {
 private:
     SpriteData m_data;
-    int m_currentFrame = 0;
-    float m_animationTimer = 0.0f;
-    const AnimationData* m_currentAnimation = nullptr;
+    int currentFrame = 0;
+    float animationTimer = 0.0f;
+    const AnimationData* currentAnimation = nullptr;
 
 public:
     Sprite() = default;
@@ -22,15 +22,14 @@ public:
     }
     ~Sprite()
     {
-		delete m_currentAnimation;
-		m_currentAnimation = nullptr;
+		currentAnimation = nullptr;
     }
 	Sprite(const Sprite& p_copy)
     {
         m_data = p_copy.GetSpriteData();
-        m_currentAnimation = p_copy.m_currentAnimation;
-		m_currentFrame = p_copy.m_currentFrame;
-		m_animationTimer = p_copy.m_animationTimer;
+        currentAnimation = p_copy.currentAnimation;
+		currentFrame = p_copy.currentFrame;
+		animationTimer = p_copy.animationTimer;
     }
     Sprite& operator=(const Sprite& p_copy)
     {
@@ -39,9 +38,9 @@ public:
             return *this;
 		}
 		m_data = p_copy.GetSpriteData();
-		m_currentAnimation = p_copy.m_currentAnimation;
-		m_currentFrame = p_copy.m_currentFrame;
-		m_animationTimer = p_copy.m_animationTimer;
+		currentAnimation = p_copy.currentAnimation;
+		currentFrame = p_copy.currentFrame;
+		animationTimer = p_copy.animationTimer;
 
         return *this;
     }
@@ -62,20 +61,20 @@ public:
         const auto it = m_data.animations.find(p_animation);
         if (it == m_data.animations.end())
             return;
-		if (m_currentAnimation != &it->second)
+		if (currentAnimation != &it->second)
 		{
-			m_currentFrame = it->second.startFrame;
+			currentFrame = it->second.startFrame;
 		}
-        m_currentAnimation = &it->second;
-        m_animationTimer += p_deltaTime;
+        currentAnimation = &it->second;
+        animationTimer += p_deltaTime;
 
-        if (m_animationTimer >= m_currentAnimation->frameDuration)
+        if (animationTimer >= currentAnimation->frameDuration)
         {
-            m_animationTimer = 0.0f;
-            m_currentFrame++;
-			if (m_currentFrame >= m_currentAnimation->endFrame)
+            animationTimer = 0.0f;
+            currentFrame++;
+			if (currentFrame >= currentAnimation->endFrame)
 			{
-				m_currentFrame = m_currentAnimation->startFrame;
+				currentFrame = currentAnimation->startFrame;
 			}
 
         }
@@ -83,8 +82,8 @@ public:
 
 	bool IsAnimationFinished() const
 	{
-		return m_currentFrame == m_currentAnimation->endFrame;
+		return currentFrame == currentAnimation->endFrame;
 	}
-    int GetCurrentFrame() const { return m_currentFrame; }
+    int GetCurrentFrame() const { return currentFrame; }
     const SpriteData& GetSpriteData() const { return m_data; }
 };

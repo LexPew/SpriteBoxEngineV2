@@ -109,12 +109,14 @@ public:
 	{
 
 		p_archive(cereal::base_class<Entity>(this), rect, originOffset);
+		DEBUG_LOG("Actor saved");
 	}
 	template<class Archive>
 	void load(Archive& p_archive)
 	{
 
 		p_archive(cereal::base_class<Entity>(this), rect, originOffset);
+		DEBUG_LOG("Actor loaded");
 	}
 };
 CEREAL_REGISTER_TYPE(Actor)

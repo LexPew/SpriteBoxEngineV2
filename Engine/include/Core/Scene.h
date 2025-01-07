@@ -5,6 +5,8 @@
 #include "Graphics/Renderer.h"
 #include "cereal/types/memory.hpp"
 #include "cereal/types/vector.hpp"
+#include "cereal/types/polymorphic.hpp"
+
 #include "Debug/DebugMacros.h"
 #include "ECS/Actor.h"
 #include "ECS/Solid.h"
@@ -13,20 +15,30 @@
 #include "Core/AssetManager.h"
 class Scene
 {
-private:
+protected:
     std::vector<std::shared_ptr<Entity>> m_entities;
 
 	//Derived from m_entities
 	std::vector<std::shared_ptr<Actor>> m_actors;
 	std::vector<std::shared_ptr<Solid>> m_solids;
-
+	std::string sceneName{ "NULL" };
 public:
+	
 	Scene() = default;
 	~Scene()
 	{
 		m_entities.clear();
 		m_actors.clear();
 		m_solids.clear();
+	}
+
+	const std::string& GetSceneName() const
+	{
+		return sceneName;
+	}
+	void SetSceneName(const std::string& p_name)
+	{
+		sceneName = p_name;
 	}
 	std::shared_ptr<Entity> FindEntityByName(const std::string& p_name)
 	{
@@ -70,6 +82,13 @@ public:
 			m_solids.push_back(solid);
 		}
 	}
+	virtual void Awake()
+	{
+		for (auto& entity : m_entities)
+		{
+			entity->Awake();
+		}
+	}
 	virtual void Start() 
 	{
 		for (auto& entity : m_entities)
@@ -84,6 +103,7 @@ public:
             entity->Update(p_deltaTime);
         }
     }
+
 
     virtual void Render(Renderer& p_renderer)
     {
@@ -104,16 +124,28 @@ public:
 			{
 				uiComponent->HandleInput(p_mousePosition, p_click);
 			}
-
 		}
+	}
+
+	void Clean()
+	{
+		m_entities.clear();
+		m_actors.clear();
+		m_solids.clear();
 	}
 	template<class Archive>
 	void save(Archive& archive) const
 	{
 		// Save the assets used in this scene
 		AssetManager::GetInstance().save(archive);
-
-		archive(m_entities, m_actors, m_solids);
+		//Renderer::GetInstance().save(archive);
+		DEBUG_LOG("Scene saved with " + std::to_string(m_entities.size()) + " entities, " +
+			std::to_string(m_actors.size()) + " actors, and " +
+			std::to_string(m_solids.size()) + " solids.");
+		//archive(m_entities, m_actors, m_solids, sceneName);
+		DEBUG_LOG("Scene saved with " + std::to_string(m_entities.size()) + " entities, " +
+			std::to_string(m_actors.size()) + " actors, and " +
+			std::to_string(m_solids.size()) + " solids.");
 	}
 
 	template<class Archive>
@@ -121,8 +153,13 @@ public:
 	{
 		// Load the assets used in this scene
 		AssetManager::GetInstance().load(archive);
-
-		archive(m_entities, m_actors, m_solids);
+		//Renderer::GetInstance().load(archive);
+		//archive(m_entities, m_actors, m_solids,sceneName);
+		DEBUG_LOG("Scene loaded with " + std::to_string(m_entities.size()) + " entities, " +
+			std::to_string(m_actors.size()) + " actors, and " +
+			std::to_string(m_solids.size()) + " solids.");
 	}
+	
 };
+CEREAL_REGISTER_TYPE(Scene)
 

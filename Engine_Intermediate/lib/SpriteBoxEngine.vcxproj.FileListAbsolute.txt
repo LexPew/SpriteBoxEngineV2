@@ -7,6 +7,13 @@ C:\Users\James\source\repos\SpriteBoxEngine\Engine\builds\Release\bz2.dll
 C:\Users\James\source\repos\SpriteBoxEngine\Engine\builds\Release\libpng16.dll
 C:\Users\James\source\repos\SpriteBoxEngine\Engine\builds\Release\brotlidec.dll
 C:\Users\James\source\repos\SpriteBoxEngine\Engine\builds\Release\brotlicommon.dll
+C:\Users\James\source\repos\SpriteBoxEngine\Engine\builds\Release\sfml-audio-2.dll
+C:\Users\James\source\repos\SpriteBoxEngine\Engine\builds\Release\OpenAL32.dll
+C:\Users\James\source\repos\SpriteBoxEngine\Engine\builds\Release\vorbisenc.dll
+C:\Users\James\source\repos\SpriteBoxEngine\Engine\builds\Release\vorbis.dll
+C:\Users\James\source\repos\SpriteBoxEngine\Engine\builds\Release\ogg.dll
+C:\Users\James\source\repos\SpriteBoxEngine\Engine\builds\Release\vorbisfile.dll
+C:\Users\James\source\repos\SpriteBoxEngine\Engine\builds\Release\FLAC.dll
 C:\Users\James\source\repos\SpriteBoxEngine\Engine\builds\Debug\sfml-graphics-d-2.dll
 C:\Users\James\source\repos\SpriteBoxEngine\Engine\builds\Debug\sfml-window-d-2.dll
 C:\Users\James\source\repos\SpriteBoxEngine\Engine\builds\Debug\sfml-system-d-2.dll

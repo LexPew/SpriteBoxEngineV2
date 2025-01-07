@@ -2,34 +2,44 @@
 #include "Core/ECS/Component.h"
 #include "Maths/Vector2.h"
 
+#include "ThirdParty/Event.h"
+
+
 /**
  * Transform component, used to define the position and scale of an entity
  */
 class TransformComponent : public Component
 {
 private:
-    Vector2 position;
-	Vector2 scale;
+    Vector2 position{0,0};
+	Vector2 scale{1,1};
 public:
+	Event<Vector2&> onPositionChanged;
+	Event<Vector2&> onScaledChanged;
 
     /**
 	 * Creates a new transform component with default values
      */
-    TransformComponent() : position(Vector2::Zero()), scale(Vector2::One()) {}
+    TransformComponent()
+    {
+        onPositionChanged(position);
+        onScaledChanged(scale);
+    }
 
 
     /**
 	 * Creates a new transform component with the given position and scale
      */
-    TransformComponent(const Vector2& p_position, const Vector2& p_scale) : position(p_position), scale(p_scale) {}
+    TransformComponent(const Vector2& p_position, const Vector2& p_scale) : position(p_position), scale(p_scale)
+    {
+        onPositionChanged(position);
+        onScaledChanged(scale);
+    }
+
 
   
 
     void Start() override;
-
-    void Update(float p_deltaTime) override;
-
-    void Render(Renderer& p_renderer) override;
 
     /**
 	 * Sets the position of the entity
@@ -37,6 +47,7 @@ public:
     void SetPosition(const Vector2& p_position)
     {
 		position = p_position;
+		onPositionChanged(position);
     }
 
     /**
@@ -53,6 +64,7 @@ public:
     void SetScale(const Vector2& p_scale)
     {
         scale = p_scale;
+		onScaledChanged(scale);
     }
 
     /**
@@ -67,13 +79,13 @@ public:
     template <class Archive>
     void save(Archive& ar) const
     {
-		ar(cereal::base_class<Component>(this),position, scale);
+		ar(position, scale);
     }
 
     template <class Archive>
     void load(Archive& ar)
     {
-		ar(cereal::base_class<Component>(this),position, scale);
+		ar(position, scale);
     }
 };
 CEREAL_REGISTER_TYPE(TransformComponent)

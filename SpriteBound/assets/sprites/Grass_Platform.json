@@ -1,0 +1,8 @@
+{
+  "id": "Grass_Platform",
+  "texturePath": "sprites/Grass_Platform.png",
+  "animations": {
+  },
+  "spriteSheetRows": 1,
+  "spriteSheetColumns": 1
+}

@@ -3,10 +3,17 @@
 
 class MainMenu : public Scene
 {
+private:
+	float parallaxRange = 5.0f;
+	Vector2 parallaxOffset{ 0.0f, 0.0f };
+
 public:
 	MainMenu();
 	~MainMenu() = default;
 	void CreateMenu();
+	void Update(const float p_deltaTime) override;
+
+	
 	template<class Archive>
 	void save(Archive& archive) const
 	{

@@ -1,0 +1,8 @@
+{
+  "id": "Goal",
+  "texturePath": "sprites/Goal.png",
+  "animations": {
+  },
+  "spriteSheetRows": 1,
+  "spriteSheetColumns": 1
+}

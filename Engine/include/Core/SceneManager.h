@@ -1,8 +1,8 @@
 #pragma once
-#include <cereal/archives/binary.hpp>
-#include "cereal/types/memory.hpp"
-#include "Core/Scene.h"
 
+#include "Core/Scene.h"
+#include <cereal/archives/binary.hpp>
+#include <cereal/types/memory.hpp>
 //Class: SceneManager
 //Purpose: Manages the current scene and provides functionality
 //			to save and load scenes using cereal
@@ -48,13 +48,13 @@ public:
 	 * @brief Set the current scene
 	 * @param p_scene Scene to set as the current scene
 	 */
-	void SetCurrentScene(const std::shared_ptr<Scene>& p_scene) { currentScene = p_scene; }
+	void SetCurrentScene(const std::shared_ptr<Scene>& p_scene);
 
 	/**
 	* @brief Get the current scene
 	* @return std::shared_ptr<Scene> The current scene
 	*/
-	std::shared_ptr<Scene> GetCurrentScene() const { return currentScene; }
+	std::shared_ptr<Scene> GetCurrentScene();
 
 	static SceneManager& GetInstance()
 	{

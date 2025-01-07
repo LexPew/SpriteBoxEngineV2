@@ -52,6 +52,7 @@ void AssetManager::LoadFallBackFont()
 std::string AssetManager::ResolvePath(const std::string& p_relativePath) const
 {
     std::filesystem::path fullPath = assetRoot / p_relativePath;
+    DEBUG_LOG(fullPath.string());
     return fullPath.string();  // Return as std::filesystem::path
 }
 
@@ -139,7 +140,7 @@ bool AssetManager::LoadSound(const std::string& p_id, const std::string& p_path)
     return true;
 }
 
-const sf::Texture& AssetManager::GetTexture(const std::string& p_id) const
+ sf::Texture& AssetManager::GetTexture(const std::string& p_id)
 {
     if (m_textures.find(p_id) != m_textures.end())
     {
@@ -169,7 +170,7 @@ const sf::Font& AssetManager::GetFont(const std::string& p_id) const
         return m_fonts.find(p_id)->second;
     }
     DEBUG_LOG_ERROR("Failed to retrieve font id: " << p_id << "\n Returning fallback font");
-    DEBUG_SHOW_WINDOWS_DIALOG_BOX(L"Failed to load font, please verify game files");
+    //DEBUG_SHOW_WINDOWS_DIALOG_BOX(L"Failed to load font, please verify game files");
     return fallBackFont;
 }
 

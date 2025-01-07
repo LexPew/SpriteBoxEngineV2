@@ -6,17 +6,10 @@
 
 void TransformComponent::Start()
 {
-	//Start stuff
-}
+	//Broadcast the position and scale on start
+	onPositionChanged(position);
+	onScaledChanged(scale);
 
-void TransformComponent::Update(float p_deltaTime)
-{
-	//Update stuff
-}
-
-void TransformComponent::Render(Renderer& p_renderer)
-{
-	//Render stuff
 }
 
 

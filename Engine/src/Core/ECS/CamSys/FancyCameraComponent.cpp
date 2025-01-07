@@ -3,11 +3,6 @@
 #include "Core/ECS/Entity.h"
 #include <random>
 
-void FancyCameraComponent::Start()
-{
-	//RawCameraComponent::Start();
-
-}
 
 void FancyCameraComponent::CalculateCameraSmoothing(float p_deltaTime)
 {
@@ -52,6 +47,12 @@ void FancyCameraComponent::Update(float p_deltaTime)
 	CalculateCameraRotation(p_deltaTime);
 	CalculateZoomSmoothing(p_deltaTime);
 	ApplyCameraShake(p_deltaTime);
+
+	// Update the view with the camera's settings
+	sf::View view;
+	view.setCenter(position.x + shakeOffset.x, position.y + shakeOffset.y);
+	view.setSize(viewSize.x / currentZoom, viewSize.y / currentZoom);
+	view.setRotation(currentRotation);
 }
 
 void FancyCameraComponent::Render(Renderer& p_renderer)

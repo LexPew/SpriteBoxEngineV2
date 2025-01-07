@@ -9,6 +9,7 @@
 #include "cereal/types/string.hpp"
 #include "cereal/types/polymorphic.hpp"
 #include "cereal/types/unordered_map.hpp"
+#include "Debug/DebugMacros.h"
 
 
 class Renderer;
@@ -43,6 +44,7 @@ public:
     }
 
     std::string GetName() const { return name; }
+	void SetName(const std::string& p_name) { name = p_name; }
     void AddTransform(const Vector2& p_position, const Vector2& p_scale);
     /**
      * Adds a component to this entity if we don't have one already
@@ -50,6 +52,18 @@ public:
     template<typename T>
     bool AddComponent(std::shared_ptr<T> p_component);
 
+	template <typename T>
+	bool RemoveComponent(T p_component)
+	{
+		std::string typeName = typeid(T).name();
+		auto it = m_components.find(typeName);
+		if (it != m_components.end())
+		{
+			m_components.erase(it);
+			return true;
+		}
+		return false;
+	}
     /**
      * Gets a component of the specified type if it exists
      */
@@ -58,6 +72,10 @@ public:
     template <class T>
     std::shared_ptr<T> GetComponentByType();
 
+    /**
+	 * Called when the entity is created, used to set up initial state
+     */
+    virtual void Awake();
     /**
      * Call start on all components attached to this entity
      */
@@ -83,6 +101,7 @@ public:
     {
 
         ar(name, active, m_components);
+		DEBUG_LOG("Entity saved");
     }
 
     template <class Archive>
@@ -94,6 +113,7 @@ public:
 		{
 			pair.second->owner = this;
 		}
+		DEBUG_LOG("Entity loaded");
     }
 
 };
@@ -135,5 +155,5 @@ std::shared_ptr<T> Entity::GetComponentByType()
 	}
 	return nullptr;
 }
-
+CEREAL_REGISTER_TYPE(Entity)
 

@@ -1,7 +1,9 @@
+C:\Users\James\source\repos\SpriteBoxEngine\Engine\src\Core\ECS\UI\UIButton.cpp;C:\Users\James\source\repos\SpriteBoxEngine\Engine_Intermediate\lib\UIButton.obj
 C:\Users\James\source\repos\SpriteBoxEngine\Engine\src\Core\ECS\UI\UILabel.cpp;C:\Users\James\source\repos\SpriteBoxEngine\Engine_Intermediate\lib\UILabel.obj
 C:\Users\James\source\repos\SpriteBoxEngine\Engine\src\Core\SoundPlayer.cpp;C:\Users\James\source\repos\SpriteBoxEngine\Engine_Intermediate\lib\SoundPlayer.obj
 C:\Users\James\source\repos\SpriteBoxEngine\Engine\src\Debug\PerfomanceMetrics.cpp;C:\Users\James\source\repos\SpriteBoxEngine\Engine_Intermediate\lib\PerfomanceMetrics.obj
 C:\Users\James\source\repos\SpriteBoxEngine\SpriteBound\src\Game.cpp;C:\Users\James\source\repos\SpriteBoxEngine\Engine_Intermediate\lib\Game.obj
+C:\Users\James\source\repos\SpriteBoxEngine\SpriteBound\src\Level1.cpp;C:\Users\James\source\repos\SpriteBoxEngine\Engine_Intermediate\lib\Level1.obj
 C:\Users\James\source\repos\SpriteBoxEngine\SpriteBound\src\MainMenu.cpp;C:\Users\James\source\repos\SpriteBoxEngine\Engine_Intermediate\lib\MainMenu.obj
 C:\Users\James\source\repos\SpriteBoxEngine\SpriteBound\src\Source.cpp;C:\Users\James\source\repos\SpriteBoxEngine\Engine_Intermediate\lib\Source.obj
 C:\Users\James\source\repos\SpriteBoxEngine\Engine\src\Core\ECS\PhysicsActor.cpp;C:\Users\James\source\repos\SpriteBoxEngine\Engine_Intermediate\lib\PhysicsActor.obj
@@ -20,4 +22,4 @@ C:\Users\James\source\repos\SpriteBoxEngine\Engine\src\Core\ECS\Entity.cpp;C:\Us
 C:\Users\James\source\repos\SpriteBoxEngine\Engine\src\Core\ECS\CamSys\FancyCameraComponent.cpp;C:\Users\James\source\repos\SpriteBoxEngine\Engine_Intermediate\lib\FancyCameraComponent.obj
 C:\Users\James\source\repos\SpriteBoxEngine\Engine\src\Core\ECS\ScriptComponent.cpp;C:\Users\James\source\repos\SpriteBoxEngine\Engine_Intermediate\lib\ScriptComponent.obj
 C:\Users\James\source\repos\SpriteBoxEngine\Engine\src\Core\LineIntersectionTest.cpp;C:\Users\James\source\repos\SpriteBoxEngine\Engine_Intermediate\lib\LineIntersectionTest.obj
-C:\Users\James\source\repos\SpriteBoxEngine\Engine\src\Core\ECS\PlayerActor.cpp;C:\Users\James\source\repos\SpriteBoxEngine\Engine_Intermediate\lib\PlayerActor.obj
+C:\Users\James\source\repos\SpriteBoxEngine\SpriteBound\src\PlayerActor.cpp;C:\Users\James\source\repos\SpriteBoxEngine\Engine_Intermediate\lib\PlayerActor.obj

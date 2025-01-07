@@ -7,6 +7,14 @@ void Entity::AddTransform(const Vector2& p_position, const Vector2& p_scale)
     AddComponent(std::make_shared<TransformComponent>(p_position, p_scale));
 }
 
+void Entity::Awake()
+{
+	for (auto& pair : m_components)
+	{
+		pair.second->Awake();
+	}
+}
+
 void Entity::Start()
 {
 	for (auto& pair : m_components)

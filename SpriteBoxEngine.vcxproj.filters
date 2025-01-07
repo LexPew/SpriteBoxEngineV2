@@ -63,7 +63,7 @@
     <ClCompile Include="Engine\src\Core\ECS\PhysicsActor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\src\Core\ECS\PlayerActor.cpp">
+    <ClCompile Include="SpriteBound\src\PlayerActor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SpriteBound\src\Source.cpp">
@@ -82,6 +82,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Engine\src\Debug\PerfomanceMetrics.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\src\Core\ECS\UI\UIButton.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SpriteBound\src\Level1.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -167,7 +173,7 @@
     <ClInclude Include="Engine\include\Debug\DebugMacros.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\include\Core\ECS\PlayerActor.h">
+    <ClInclude Include="SpriteBound\include\PlayerActor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SpriteBound\include\Game.h">
@@ -195,6 +201,18 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Engine\include\Debug\PerformanceMetrics.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Downloads\Event\Event.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\include\ThirdParty\Event.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\include\Core\ECS\SpriteSolid.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SpriteBound\include\Level1.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

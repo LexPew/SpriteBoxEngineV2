@@ -84,6 +84,15 @@ void Renderer::DrawText(const TextData& p_textData, const Vector2& p_position)
     window->draw(text);
 }
 
+Vector2 Renderer::GetTextSize(const TextData& p_textData)
+{
+    text.setString(p_textData.text);
+	text.setCharacterSize(p_textData.fontSize);
+	text.setFont(AssetManager::GetInstance().GetFont(p_textData.fontId));
+	Vector2 textSize = Vector2{ text.getGlobalBounds().width, text.getGlobalBounds().height };
+    return textSize;
+}
+
 Vector2 Renderer::GetSpriteBounds(const SpriteData& p_spriteData)
 {
     float frameWidth = p_spriteData.texture.getSize().x / p_spriteData.spriteSheetColumns;
@@ -92,31 +101,67 @@ Vector2 Renderer::GetSpriteBounds(const SpriteData& p_spriteData)
     return Vector2{ frameWidth, frameHeight };
 }
 
-void Renderer::SetBackground(const std::string& p_textureId)
+
+
+void Renderer::AddBackgroundLayer(const std::string& p_textureId, const float p_parallaxFactor)
 {
-    const sf::Texture& texture = AssetManager::GetInstance().GetTexture(p_textureId);
-    backgroundSprite.setTexture(texture);
-    backgroundSet = true;
+    BackgroundLayer layer;
+
+	sf::Texture& texture = AssetManager::GetInstance().GetTexture(p_textureId);
+	texture.setRepeated(true);
+    layer.textureId = p_textureId;
+    layer.sprite.setTexture(texture);
+    layer.parallaxFactor = p_parallaxFactor;
+
+	//Set origin to the center of the texture
+	sf::Vector2u textureSize = texture.getSize();
+
+    backgroundLayers.push_back(layer);
+
+	// Set the scale of the background layer to match the window size
     HandleWindowSizeUpdate();
 }
 
-void Renderer::DrawBackground() const
+void Renderer::UpdateBackgroundPosition(const Vector2& p_velocity)
 {
-    if (backgroundSet)
+    backgroundPosition += p_velocity;  // Update the background position based on velocity
+}
+
+void Renderer::SetBackGroundPosition(const Vector2& p_position)
+{
+	backgroundPosition = p_position;
+}
+
+
+void Renderer::DrawBackground()
+{
+    sf::View currentView = window->getView();
+    sf::Vector2f viewCenter = currentView.getCenter();
+    sf::Vector2f viewSize = currentView.getSize();
+
+    for (auto& layer : backgroundLayers)
     {
-        window->draw(backgroundSprite);
+        // Calculate the offset based on parallax factor
+        float offsetX = fmod(backgroundPosition.x * layer.parallaxFactor, viewSize.x);
+        float offsetY = fmod(backgroundPosition.y * layer.parallaxFactor, viewSize.y);
+
+        // Set the texture rect to create a repeating background
+        layer.sprite.setTextureRect(sf::IntRect(static_cast<int>(offsetX), static_cast<int>(offsetY), viewSize.x, viewSize.y));
+
+        // Set the position of the background layer to match the view center
+        layer.sprite.setPosition(viewCenter.x - viewSize.x / 2, viewCenter.y - viewSize.y / 2);
+
+        window->draw(layer.sprite);
     }
 }
 
 void Renderer::HandleWindowSizeUpdate()
 {
-    if (backgroundSet)
+	sf::View currentView = window->getView();
+	sf::Vector2f viewSize = currentView.getSize();
+    for(auto& layer : backgroundLayers)
     {
-        // Scale texture to window size
-        sf::Vector2u windowSize = window->getSize();
-        sf::Vector2u textureSize = backgroundSprite.getTexture()->getSize();
-        float scaleX = static_cast<float>(windowSize.x) / textureSize.x;
-        float scaleY = static_cast<float>(windowSize.y) / textureSize.y;
-        backgroundSprite.setScale(scaleX, scaleY);
+        layer.sprite.setScale(viewSize.x / layer.sprite.getTexture()->getSize().x, viewSize.y / layer.sprite.getTexture()->getSize().y);
     }
 }
+

@@ -8,9 +8,9 @@
  */
 struct AnimationData
 {
-	int startFrame;
-	int endFrame;
-	float frameDuration;
+	int startFrame{0};
+	int endFrame{0};
+	float frameDuration{0};
 
 };
 

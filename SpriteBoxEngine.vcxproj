@@ -19,10 +19,12 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Engine\src\Core\ECS\UI\UIButton.cpp" />
     <ClCompile Include="Engine\src\Core\ECS\UI\UILabel.cpp" />
     <ClCompile Include="Engine\src\Core\SoundPlayer.cpp" />
     <ClCompile Include="Engine\src\Debug\PerfomanceMetrics.cpp" />
     <ClCompile Include="SpriteBound\src\Game.cpp" />
+    <ClCompile Include="SpriteBound\src\Level1.cpp" />
     <ClCompile Include="SpriteBound\src\MainMenu.cpp" />
     <ClCompile Include="SpriteBound\src\Source.cpp" />
     <ClCompile Include="Engine\src\Core\ECS\PhysicsActor.cpp" />
@@ -41,9 +43,10 @@
     <ClCompile Include="Engine\src\Core\ECS\CamSys\FancyCameraComponent.cpp" />
     <ClCompile Include="Engine\src\Core\ECS\ScriptComponent.cpp" />
     <ClCompile Include="Engine\src\Core\LineIntersectionTest.cpp" />
-    <ClCompile Include="Engine\src\Core\ECS\PlayerActor.cpp" />
+    <ClCompile Include="SpriteBound\src\PlayerActor.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\Downloads\Event\Event.h" />
     <ClInclude Include="Engine\include\Core\Color4.h" />
     <ClInclude Include="Engine\include\Core\ECS\PhysicsActor.h" />
     <ClInclude Include="Engine\include\Core\Action.h" />
@@ -54,6 +57,7 @@
     <ClInclude Include="Engine\include\Core\AssetManager.h" />
     <ClInclude Include="Engine\include\Core\ECS\RigidBodyComponent.h" />
     <ClInclude Include="Engine\include\Core\ECS\Solid.h" />
+    <ClInclude Include="Engine\include\Core\ECS\SpriteSolid.h" />
     <ClInclude Include="Engine\include\Core\ECS\UI\TextData.h" />
     <ClInclude Include="Engine\include\Core\ECS\UI\UIButton.h" />
     <ClInclude Include="Engine\include\Core\ECS\UI\UIComponent.h" />
@@ -78,7 +82,9 @@
     <ClInclude Include="Engine\include\Core\ECS\ScriptComponent.h" />
     <ClInclude Include="Engine\include\Tests\InputSystemTest.h" />
     <ClInclude Include="Engine\include\Tests\SmallDemoTest.h" />
-    <ClInclude Include="Engine\include\Core\ECS\PlayerActor.h" />
+    <ClInclude Include="SpriteBound\include\Level1.h" />
+    <ClInclude Include="SpriteBound\include\PlayerActor.h" />
+    <ClInclude Include="Engine\include\ThirdParty\Event.h" />
     <ClInclude Include="SpriteBound\include\Game.h" />
     <ClInclude Include="SpriteBound\include\MainMenu.h" />
   </ItemGroup>
@@ -186,7 +192,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>C:\Users\James\source\repos\SpriteBoxEngine\SpriteBound\include;C:\Users\James\source\repos\SpriteBoxEngine\Engine\include\Utils;SFML\include;Engine\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)SpriteBound/include;C:\Users\James\source\repos\SpriteBoxEngine\Engine\include\Utils;Engine/Editor/include;Engine\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -204,7 +210,7 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>C:\Users\James\source\repos\SpriteBoxEngine\SpriteBound\include;C:\Users\James\source\repos\SpriteBoxEngine\Engine\include\Utils;SFML\include;Engine\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)SpriteBound/include;C:\Users\James\source\repos\SpriteBoxEngine\Engine\include\Utils;Engine/Editor/include;Engine\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

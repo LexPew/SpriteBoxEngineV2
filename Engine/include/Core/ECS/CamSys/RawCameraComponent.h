@@ -2,6 +2,7 @@
 #include <SFML/Graphics/View.hpp>
 
 #include "Core/ECS/Component.h"
+#include "Debug/DebugMacros.h"
 #include "Maths/Vector2.h"
 
 /**
@@ -33,6 +34,7 @@ public:
 	void save(Archive& p_archive) const
 	{
 		p_archive(viewSize.x, viewSize.y);
+		DEBUG_LOG("RawCameraComponent saved");
 	}
 
 	template<class Archive>
@@ -40,6 +42,7 @@ public:
 	{
 		p_archive(viewSize.x, viewSize.y);
 		cameraView.setSize(viewSize.x, viewSize.y);
+		DEBUG_LOG("RawCameraComponent loaded");
 	}
 };
 CEREAL_REGISTER_TYPE(RawCameraComponent)

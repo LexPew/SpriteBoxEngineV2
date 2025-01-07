@@ -35,8 +35,9 @@ void PhysicsActor::Update(float p_deltaTime)
 
 	// Check if the character is grounded
 	isGrounded = CollideAt(SceneManager::GetInstance().GetCurrentScene()->GetSolids(), GetTransform()->GetPosition() + Vector2(0, 1));
-    if(isGrounded)
+	if (isGrounded && velocityY > 0)
     {
+        DEBUG_LOG("Hi");
 		jumpCount = 0;
 		onLand.Invoke();
     }
@@ -44,11 +45,14 @@ void PhysicsActor::Update(float p_deltaTime)
 
 void PhysicsActor::Jump()
 {
+
     if (!isGrounded && jumpCount == 0) return;
     if (jumpCount < maxJumps)
     {
+		DEBUG_LOG("Jumping");
+		DEBUG_LOG(jumpCount);
         velocityY = jumpStrength;
-        jumpCount++;
+        jumpCount += 1;
         isGrounded = false;
     }
 }
